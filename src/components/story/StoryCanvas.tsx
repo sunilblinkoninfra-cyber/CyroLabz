@@ -7,8 +7,10 @@ import { storyBus, useStoryStore, HoverGlowTarget } from "@/lib/storyStore";
 interface NetworkNode {
   x: number;
   y: number;
-  col: number;
-  row: number;
+  col?: number;
+  row?: number;
+  layer?: number;
+  cluster?: number;
 }
 
 interface NetworkEdge {
@@ -45,7 +47,7 @@ export const StoryCanvas: React.FC = () => {
     const M = STORY_META.M; // 11,000 max points
     const isSmall =
       window.innerWidth < 768 || (navigator.hardwareConcurrency || 8) <= 4;
-    // Keep particle counts as specified: 9,000 desktop, 5,000 phones
+    // 9,000 desktop, 5,000 mobile
     const N = isSmall ? 5000 : 9000;
 
     const SIDES = [1, -1, 1, -1];
@@ -69,13 +71,17 @@ export const StoryCanvas: React.FC = () => {
       for (let i = 0; i < N; i++) arr[i] = sc.t[i] / 255;
       return arr;
     });
-    // Tone buffer for Scene 5 (network)
-    tones.push(new Float32Array(N));
 
-    // Target positions array (0: Skyline, 1: Circuit, 2: Face, 3: Logo, 4: Network)
+    // Add tone buffers for Services Stages (4: Consulting, 5: Connect, 6: Intelligence, 7: Visibility)
+    tones.push(new Float32Array(N)); // 4: Consulting
+    tones.push(new Float32Array(N)); // 5: Connect
+    tones.push(new Float32Array(N)); // 6: Intelligence
+    tones.push(new Float32Array(N)); // 7: Visibility
+
+    // Target positions array (0..3 Story, 4..7 Services)
     const tx: Float32Array[] = [];
     const ty: Float32Array[] = [];
-    for (let k = 0; k < 5; k++) {
+    for (let k = 0; k < 8; k++) {
       tx.push(new Float32Array(N));
       ty.push(new Float32Array(N));
     }
@@ -94,7 +100,7 @@ export const StoryCanvas: React.FC = () => {
     const ph = new Float32Array(N);
 
     for (let i = 0; i < N; i++) {
-      delay[i] = rnd() * 0.35; // Per-particle delay up to 0.35
+      delay[i] = rnd() * 0.35;
       ax[i] = rnd() * 2 - 1;
       ay[i] = rnd() * 2 - 1;
       dep[i] = 0.5 + rnd();
@@ -144,14 +150,12 @@ export const StoryCanvas: React.FC = () => {
     let faceReady = false;
     let markReady = false;
 
-    // Tinted offscreen canvases
     const skCv = document.createElement("canvas");
     const ciCv = document.createElement("canvas");
     const fcCv = document.createElement("canvas");
     const mkCv = document.createElement("canvas");
 
     function tintCutouts() {
-      // 1. Skyline
       if (skyReady) {
         skCv.width = skyImg.naturalWidth;
         skCv.height = skyImg.naturalHeight;
@@ -165,7 +169,6 @@ export const StoryCanvas: React.FC = () => {
         }
       }
 
-      // 2. Circuit
       if (circReady) {
         ciCv.width = circImg.naturalWidth;
         ciCv.height = circImg.naturalHeight;
@@ -179,7 +182,6 @@ export const StoryCanvas: React.FC = () => {
         }
       }
 
-      // 3. Face
       if (faceReady) {
         fcCv.width = faceImg.naturalWidth;
         fcCv.height = faceImg.naturalHeight;
@@ -201,7 +203,6 @@ export const StoryCanvas: React.FC = () => {
         }
       }
 
-      // 4. Logo mark
       if (markReady) {
         mkCv.width = markImg.naturalWidth;
         mkCv.height = markImg.naturalHeight;
@@ -261,12 +262,22 @@ export const StoryCanvas: React.FC = () => {
       attributeFilter: ["data-theme", "class"],
     });
 
-    // Network graph structures for lines & hover glow
-    let networkNodes: NetworkNode[] = [];
-    let networkEdges: NetworkEdge[] = [];
-    let travelSignals: TravelSignal[] = [];
+    // Distinct Graph structures for the Four Stages
+    let nodesStage1: NetworkNode[] = [];
+    let edgesStage1: NetworkEdge[] = [];
 
-    // Rebuild network targets on resize with seeded random
+    let nodesStage2: NetworkNode[] = [];
+    let edgesStage2: NetworkEdge[] = [];
+
+    let nodesStage3: NetworkNode[] = [];
+    let edgesStage3: NetworkEdge[] = [];
+    let travelSignalsStage3: TravelSignal[] = [];
+
+    let nodesStage4: NetworkNode[] = [];
+    let edgesStage4: NetworkEdge[] = [];
+    let ringRadiiStage4: number[] = [];
+
+    // Rebuild targets and layouts on resize with seeded random
     function layout() {
       W = window.innerWidth;
       H = window.innerHeight;
@@ -277,7 +288,6 @@ export const StoryCanvas: React.FC = () => {
       canvas.height = Math.round(H * dpr);
       canvas.style.width = `${W}px`;
       canvas.style.height = `${H}px`;
-      // Chapters 0-3 art center: 50% on desktop, 16% on mobile (retained)
       cy = wide ? H * 0.50 : H * 0.16;
 
       // 1. Chapters 0 to 3 retain their exact placement & bounds
@@ -300,173 +310,401 @@ export const StoryCanvas: React.FC = () => {
         }
       }
 
-      // 2. Scene 5: Network targets across full stage with seeded random generator
-      let netSeed = 20261016;
+      let netSeed = 20261017;
       function netRnd() {
         netSeed = (netSeed * 1664525 + 1013904223) >>> 0;
         return netSeed / 4294967296;
       }
 
-      // Desktop: 8 columns; Phones: 5 columns
-      const C = wide ? 8 : 5;
-      const padX = W * (wide ? 0.05 : 0.04);
-      const padY = H * (wide ? 0.08 : 0.06);
-      const usableW = W - 2 * padX;
-      const usableH = H - 2 * padY;
+      // =========================================================================
+      // STAGE ONE: CONSULTING | Diagnose (k = 4)
+      // Dispersed, interconnected network with fine discovery lines.
+      // 4 cluster hubs representing system components; fine lines connect neighbors.
+      // =========================================================================
+      nodesStage1 = [];
+      edgesStage1 = [];
+      const clusters = [
+        { cx: W * 0.22, cy: H * 0.35, r: Math.min(W, H) * 0.18 },
+        { cx: W * 0.36, cy: H * 0.68, r: Math.min(W, H) * 0.20 },
+        { cx: W * 0.68, cy: H * 0.32, r: Math.min(W, H) * 0.19 },
+        { cx: W * 0.80, cy: H * 0.66, r: Math.min(W, H) * 0.21 },
+      ];
 
-      const columns: NetworkNode[][] = [];
-      networkNodes = [];
-
-      for (let c = 0; c < C; c++) {
-        const colNodes: NetworkNode[] = [];
-        // Each column has 6 to 8 nodes, evenly spread vertically with a little random offset
-        const nRows = 6 + Math.floor(netRnd() * 3);
-        const colBaseX = padX + ((c + 0.5) / C) * usableW;
-
-        for (let r = 0; r < nRows; r++) {
-          const x = colBaseX + (netRnd() - 0.5) * ((usableW / C) * 0.45);
-          const y = padY + ((r + 0.5 + (netRnd() - 0.5) * 0.6) / nRows) * usableH;
-          const node: NetworkNode = { x, y, col: c, row: r };
-          colNodes.push(node);
-          networkNodes.push(node);
+      for (let c = 0; c < clusters.length; c++) {
+        const cl = clusters[c];
+        const nNodes = wide ? 8 : 6;
+        const cNodes: NetworkNode[] = [];
+        for (let j = 0; j < nNodes; j++) {
+          const ang = netRnd() * Math.PI * 2;
+          const rad = Math.sqrt(netRnd()) * cl.r;
+          const node: NetworkNode = {
+            x: cl.cx + rad * Math.cos(ang),
+            y: cl.cy + rad * Math.sin(ang),
+            cluster: c,
+          };
+          cNodes.push(node);
+          nodesStage1.push(node);
         }
-        colNodes.sort((a, b) => a.y - b.y);
-        columns.push(colNodes);
-      }
 
-      // Connect every node to its 2 nearest nodes in next column, plus 3rd with 30% probability
-      networkEdges = [];
-      const incomingEdgesCount = new Map<NetworkNode, number>();
-      networkNodes.forEach((n) => incomingEdgesCount.set(n, 0));
-
-      for (let c = 0; c < C - 1; c++) {
-        const currCol = columns[c];
-        const nextCol = columns[c + 1];
-
-        for (const u of currCol) {
-          const sortedNext = [...nextCol]
-            .map((v) => ({
-              node: v,
-              dist: Math.hypot(v.x - u.x, v.y - u.y),
-            }))
-            .sort((a, b) => a.dist - b.dist);
-
-          // 2 nearest
-          for (let ki = 0; ki < Math.min(2, sortedNext.length); ki++) {
-            const v = sortedNext[ki].node;
-            const len = sortedNext[ki].dist;
-            networkEdges.push({
-              u,
-              v,
-              len,
-              mx: (u.x + v.x) / 2,
-              my: (u.y + v.y) / 2,
-            });
-            incomingEdgesCount.set(v, (incomingEdgesCount.get(v) || 0) + 1);
-          }
-
-          // 3rd with 30% probability
-          if (sortedNext.length >= 3 && netRnd() < 0.3) {
-            const v = sortedNext[2].node;
-            const len = sortedNext[2].dist;
-            networkEdges.push({
-              u,
-              v,
-              len,
-              mx: (u.x + v.x) / 2,
-              my: (u.y + v.y) / 2,
-            });
-            incomingEdgesCount.set(v, (incomingEdgesCount.get(v) || 0) + 1);
-          }
-        }
-      }
-
-      // Make sure every node has at least one incoming edge
-      for (let c = 1; c < C; c++) {
-        const prevCol = columns[c - 1];
-        for (const v of columns[c]) {
-          if ((incomingEdgesCount.get(v) || 0) === 0) {
-            let nearestU = prevCol[0];
-            let minDist = Math.hypot(nearestU.x - v.x, nearestU.y - v.y);
-            for (let i = 1; i < prevCol.length; i++) {
-              const d = Math.hypot(prevCol[i].x - v.x, prevCol[i].y - v.y);
-              if (d < minDist) {
-                minDist = d;
-                nearestU = prevCol[i];
-              }
+        // Intra-cluster discovery lines
+        for (let a = 0; a < cNodes.length; a++) {
+          for (let b = a + 1; b < cNodes.length; b++) {
+            const d = Math.hypot(cNodes[a].x - cNodes[b].x, cNodes[a].y - cNodes[b].y);
+            if (d < cl.r * 1.1) {
+              edgesStage1.push({
+                u: cNodes[a],
+                v: cNodes[b],
+                len: d,
+                mx: (cNodes[a].x + cNodes[b].x) / 2,
+                my: (cNodes[a].y + cNodes[b].y) / 2,
+              });
             }
-            networkEdges.push({
-              u: nearestU,
-              v,
-              len: minDist,
-              mx: (nearestU.x + v.x) / 2,
-              my: (nearestU.y + v.y) / 2,
-            });
-            incomingEdgesCount.set(v, 1);
           }
         }
       }
 
-      // About 24 small accent-colour squares (3px) travelling along random edges at slow constant speed
-      travelSignals = [];
-      for (let i = 0; i < 24; i++) {
-        travelSignals.push({
-          edgeIdx: Math.floor(netRnd() * networkEdges.length),
-          speed: 0.12 + netRnd() * 0.16,
+      // Inter-cluster diagnostic bridge lines
+      for (let i = 0; i < clusters.length - 1; i++) {
+        const nA = nodesStage1.filter((n) => n.cluster === i);
+        const nB = nodesStage1.filter((n) => n.cluster === i + 1);
+        if (nA.length > 0 && nB.length > 0) {
+          const u = nA[Math.floor(netRnd() * nA.length)];
+          const v = nB[Math.floor(netRnd() * nB.length)];
+          edgesStage1.push({
+            u,
+            v,
+            len: Math.hypot(u.x - v.x, u.y - v.y),
+            mx: (u.x + v.x) / 2,
+            my: (u.y + v.y) / 2,
+          });
+        }
+      }
+
+      // Stage 1 Particle assignment:
+      const X4 = tx[4];
+      const Y4 = ty[4];
+      const T4 = tones[4];
+      const nNodes1 = Math.round(N * 0.12);
+      for (let i = 0; i < nNodes1; i++) {
+        const node = nodesStage1[i % nodesStage1.length];
+        const r = netRnd() * 3.5;
+        const th = netRnd() * Math.PI * 2;
+        X4[i] = node.x + r * Math.cos(th);
+        Y4[i] = node.y + r * Math.sin(th);
+        T4[i] = 0.85;
+      }
+      let eIdx1 = nNodes1;
+      let totalLen1 = edgesStage1.reduce((acc, e) => acc + e.len, 0) || 1;
+      for (const e of edgesStage1) {
+        const count = Math.round((e.len / totalLen1) * (N * 0.72));
+        for (let j = 0; j < count && eIdx1 < N; j++) {
+          const t = netRnd();
+          const jitter = (netRnd() * 2 - 1) * 2;
+          X4[eIdx1] = e.u.x + (e.v.x - e.u.x) * t + jitter;
+          Y4[eIdx1] = e.u.y + (e.v.y - e.u.y) * t + jitter;
+          T4[eIdx1] = 0.45;
+          eIdx1++;
+        }
+      }
+      while (eIdx1 < N) {
+        // Dispersed floating discovery nodes
+        X4[eIdx1] = W * (0.1 + netRnd() * 0.8);
+        Y4[eIdx1] = H * (0.1 + netRnd() * 0.8);
+        T4[eIdx1] = 0.25;
+        eIdx1++;
+      }
+
+      // =========================================================================
+      // STAGE TWO: CONNECT | Build (k = 5)
+      // Geometric architectural structure, horizontal API data buses & vertical pipelines.
+      // =========================================================================
+      nodesStage2 = [];
+      edgesStage2 = [];
+
+      const busYs = [H * 0.28, H * 0.50, H * 0.72];
+      const pipeXs = wide
+        ? [W * 0.14, W * 0.32, W * 0.50, W * 0.68, W * 0.86]
+        : [W * 0.16, W * 0.50, W * 0.84];
+
+      for (const x of pipeXs) {
+        for (const y of busYs) {
+          nodesStage2.push({ x, y });
+        }
+      }
+
+      // Horizontal bus edges
+      for (const y of busYs) {
+        for (let i = 0; i < pipeXs.length - 1; i++) {
+          const u = nodesStage2.find((n) => Math.abs(n.x - pipeXs[i]) < 1 && Math.abs(n.y - y) < 1)!;
+          const v = nodesStage2.find((n) => Math.abs(n.x - pipeXs[i + 1]) < 1 && Math.abs(n.y - y) < 1)!;
+          if (u && v) {
+            edgesStage2.push({
+              u,
+              v,
+              len: v.x - u.x,
+              mx: (u.x + v.x) / 2,
+              my: y,
+            });
+          }
+        }
+      }
+
+      // Vertical pipeline edges
+      for (const x of pipeXs) {
+        for (let j = 0; j < busYs.length - 1; j++) {
+          const u = nodesStage2.find((n) => Math.abs(n.x - x) < 1 && Math.abs(n.y - busYs[j]) < 1)!;
+          const v = nodesStage2.find((n) => Math.abs(n.x - x) < 1 && Math.abs(n.y - busYs[j + 1]) < 1)!;
+          if (u && v) {
+            edgesStage2.push({
+              u,
+              v,
+              len: v.y - u.y,
+              mx: x,
+              my: (u.y + v.y) / 2,
+            });
+          }
+        }
+      }
+
+      // Diagonal cross-connects (45° engineering routes)
+      for (let i = 0; i < pipeXs.length - 1; i++) {
+        if (i % 2 === 0) {
+          const u = nodesStage2.find((n) => Math.abs(n.x - pipeXs[i]) < 1 && Math.abs(n.y - busYs[0]) < 1);
+          const v = nodesStage2.find((n) => Math.abs(n.x - pipeXs[i + 1]) < 1 && Math.abs(n.y - busYs[1]) < 1);
+          if (u && v) {
+            edgesStage2.push({
+              u,
+              v,
+              len: Math.hypot(v.x - u.x, v.y - u.y),
+              mx: (u.x + v.x) / 2,
+              my: (u.y + v.y) / 2,
+            });
+          }
+        }
+      }
+
+      // Stage 2 Particle assignment:
+      const X5 = tx[5];
+      const Y5 = ty[5];
+      const T5 = tones[5];
+      const nNodes2 = Math.round(N * 0.15);
+      for (let i = 0; i < nNodes2; i++) {
+        const node = nodesStage2[i % nodesStage2.length];
+        const r = netRnd() * 3.0;
+        const th = netRnd() * Math.PI * 2;
+        X5[i] = node.x + r * Math.cos(th);
+        Y5[i] = node.y + r * Math.sin(th);
+        T5[i] = 0.90;
+      }
+      let eIdx2 = nNodes2;
+      let totalLen2 = edgesStage2.reduce((acc, e) => acc + e.len, 0) || 1;
+      for (const e of edgesStage2) {
+        const count = Math.round((e.len / totalLen2) * (N * 0.85));
+        for (let j = 0; j < count && eIdx2 < N; j++) {
+          const t = netRnd();
+          const jitter = (netRnd() * 2 - 1) * 0.8; // Clean architectural precision
+          X5[eIdx2] = e.u.x + (e.v.x - e.u.x) * t + jitter;
+          Y5[eIdx2] = e.u.y + (e.v.y - e.u.y) * t + jitter;
+          T5[eIdx2] = 0.55;
+          eIdx2++;
+        }
+      }
+      while (eIdx2 < N) {
+        const e = edgesStage2[eIdx2 % edgesStage2.length];
+        const t = netRnd();
+        X5[eIdx2] = e.u.x + (e.v.x - e.u.x) * t;
+        Y5[eIdx2] = e.u.y + (e.v.y - e.u.y) * t;
+        T5[eIdx2] = 0.5;
+        eIdx2++;
+      }
+
+      // =========================================================================
+      // STAGE THREE: INTELLIGENCE | Think (k = 6)
+      // Neural network organic wave/ribbon with dense synaptic mesh.
+      // Direct homage to user reference image: flowing 3D ribbon of connected intelligence.
+      // =========================================================================
+      nodesStage3 = [];
+      edgesStage3 = [];
+      const C3 = wide ? 9 : 6;
+      const layers: NetworkNode[][] = [];
+
+      for (let c = 0; c < C3; c++) {
+        const layerNodes: NetworkNode[] = [];
+        const xFrac = (c + 0.5) / C3;
+        const x = W * (0.06 + xFrac * 0.88);
+        // Parametric wave curve across canvas
+        const centerY = H * (0.50 + 0.16 * Math.sin(2.8 * Math.PI * xFrac) + 0.05 * Math.cos(4.2 * Math.PI * xFrac));
+        const thickness = H * (0.24 * (0.8 + 0.4 * Math.sin(Math.PI * xFrac)));
+        const nInCol = wide ? 7 + Math.floor(netRnd() * 3) : 5 + Math.floor(netRnd() * 2);
+
+        for (let r = 0; r < nInCol; r++) {
+          const y = centerY + ((r + 0.5) / nInCol - 0.5) * thickness + (netRnd() - 0.5) * 16;
+          const node: NetworkNode = { x, y, col: c, row: r, layer: c };
+          layerNodes.push(node);
+          nodesStage3.push(node);
+        }
+        layers.push(layerNodes);
+      }
+
+      // Dense synaptic connections between layers
+      for (let c = 0; c < C3 - 1; c++) {
+        const curr = layers[c];
+        const next = layers[c + 1];
+        for (const u of curr) {
+          const sorted = [...next]
+            .map((v) => ({ v, d: Math.hypot(v.x - u.x, v.y - u.y) }))
+            .sort((a, b) => a.d - b.d);
+          // Connect to 3 nearest in next layer
+          for (let k = 0; k < Math.min(3, sorted.length); k++) {
+            const v = sorted[k].v;
+            edgesStage3.push({
+              u,
+              v,
+              len: sorted[k].d,
+              mx: (u.x + v.x) / 2,
+              my: (u.y + v.y) / 2,
+            });
+          }
+        }
+      }
+
+      // Stage 3 travel signals (data pulses travelling along synaptic connections)
+      travelSignalsStage3 = [];
+      for (let i = 0; i < (wide ? 32 : 18); i++) {
+        travelSignalsStage3.push({
+          edgeIdx: Math.floor(netRnd() * edgesStage3.length),
+          speed: 0.15 + netRnd() * 0.22,
           offset: netRnd(),
         });
       }
 
-      // Assign about 10% particles to nodes (small disc radius up to 4px)
-      const N_nodes = Math.round(N * 0.10);
-      const N_edges = N - N_nodes;
-      const X4 = tx[4];
-      const Y4 = ty[4];
-      const tone4 = tones[4];
-
-      for (let i = 0; i < N_nodes; i++) {
-        const node = networkNodes[i % networkNodes.length];
+      // Stage 3 Particle assignment:
+      const X6 = tx[6];
+      const Y6 = ty[6];
+      const T6 = tones[6];
+      const nNodes3 = Math.round(N * 0.15);
+      for (let i = 0; i < nNodes3; i++) {
+        const node = nodesStage3[i % nodesStage3.length];
         const r = netRnd() * 4.0;
-        const theta = netRnd() * Math.PI * 2;
-        X4[i] = node.x + r * Math.cos(theta);
-        Y4[i] = node.y + r * Math.sin(theta);
-        tone4[i] = 0.8 + netRnd() * 0.2;
+        const th = netRnd() * Math.PI * 2;
+        X6[i] = node.x + r * Math.cos(th);
+        Y6[i] = node.y + r * Math.sin(th);
+        T6[i] = 0.85 + netRnd() * 0.15;
       }
-
-      // Assign rest (90%) along edges in proportion to edge length, with 1 to 2px of sideways jitter
-      let totalEdgeLen = 0;
-      for (const e of networkEdges) totalEdgeLen += e.len;
-
-      let pIdx = N_nodes;
-      for (const e of networkEdges) {
-        const edgeParticles = Math.round((e.len / (totalEdgeLen || 1)) * N_edges);
+      let eIdx3 = nNodes3;
+      let totalLen3 = edgesStage3.reduce((acc, e) => acc + e.len, 0) || 1;
+      for (const e of edgesStage3) {
+        const count = Math.round((e.len / totalLen3) * (N * 0.80));
         const dx = (e.v.x - e.u.x) / (e.len || 1);
         const dy = (e.v.y - e.u.y) / (e.len || 1);
         const nx = -dy;
         const ny = dx;
-
-        for (let j = 0; j < edgeParticles && pIdx < N; j++) {
+        for (let j = 0; j < count && eIdx3 < N; j++) {
           const t = netRnd();
-          const jitter = (netRnd() * 2 - 1) * 1.5; // 1 to 2px sideways jitter
-          X4[pIdx] = e.u.x + (e.v.x - e.u.x) * t + nx * jitter;
-          Y4[pIdx] = e.u.y + (e.v.y - e.u.y) * t + ny * jitter;
-          tone4[pIdx] = 0.3 + netRnd() * 0.5;
-          pIdx++;
+          const jitter = (netRnd() * 2 - 1) * 2.0;
+          X6[eIdx3] = e.u.x + (e.v.x - e.u.x) * t + nx * jitter;
+          Y6[eIdx3] = e.u.y + (e.v.y - e.u.y) * t + ny * jitter;
+          T6[eIdx3] = 0.4 + netRnd() * 0.45;
+          eIdx3++;
         }
       }
-      while (pIdx < N) {
-        const e = networkEdges[pIdx % networkEdges.length];
+      while (eIdx3 < N) {
+        const e = edgesStage3[eIdx3 % edgesStage3.length];
         const t = netRnd();
-        X4[pIdx] = e.u.x + (e.v.x - e.u.x) * t;
-        Y4[pIdx] = e.u.y + (e.v.y - e.u.y) * t;
-        tone4[pIdx] = 0.5;
-        pIdx++;
+        X6[eIdx3] = e.u.x + (e.v.x - e.u.x) * t;
+        Y6[eIdx3] = e.u.y + (e.v.y - e.u.y) * t;
+        T6[eIdx3] = 0.5;
+        eIdx3++;
+      }
+
+      // =========================================================================
+      // STAGE FOUR: VISIBILITY | Discover (k = 7)
+      // Outward-propagating information hub: concentric signal patterns & radial citation vectors.
+      // =========================================================================
+      nodesStage4 = [];
+      edgesStage4 = [];
+      const hubX = W * 0.50;
+      const hubY = H * 0.48;
+      const minDim = Math.min(W, H);
+
+      ringRadiiStage4 = [
+        minDim * 0.08,
+        minDim * 0.18,
+        minDim * 0.30,
+        minDim * 0.44,
+        minDim * 0.60,
+      ];
+
+      // Central Hub Node
+      const centralNode: NetworkNode = { x: hubX, y: hubY };
+      nodesStage4.push(centralNode);
+
+      // Radial rays & orbital nodes
+      const nRays = wide ? 16 : 12;
+      for (let ri = 0; ri < ringRadiiStage4.length; ri++) {
+        const rad = ringRadiiStage4[ri];
+        for (let ray = 0; ray < nRays; ray++) {
+          const ang = (ray / nRays) * Math.PI * 2;
+          const node: NetworkNode = {
+            x: hubX + rad * Math.cos(ang),
+            y: hubY + rad * Math.sin(ang),
+          };
+          nodesStage4.push(node);
+
+          // Radial connection from inner ring or center
+          if (ri === 0) {
+            edgesStage4.push({
+              u: centralNode,
+              v: node,
+              len: rad,
+              mx: (centralNode.x + node.x) / 2,
+              my: (centralNode.y + node.y) / 2,
+            });
+          }
+        }
+      }
+
+      // Stage 4 Particle assignment:
+      const X7 = tx[7];
+      const Y7 = ty[7];
+      const T7 = tones[7];
+      const nCenter = Math.round(N * 0.15);
+      for (let i = 0; i < nCenter; i++) {
+        const node = nodesStage4[i % nodesStage4.length];
+        const r = netRnd() * 3.5;
+        const th = netRnd() * Math.PI * 2;
+        X7[i] = node.x + r * Math.cos(th);
+        Y7[i] = node.y + r * Math.sin(th);
+        T7[i] = 0.90;
+      }
+      // Concentric orbital particles (45%)
+      const nRings = Math.round(N * 0.45);
+      for (let i = 0; i < nRings; i++) {
+        const rad = ringRadiiStage4[i % ringRadiiStage4.length];
+        const ang = netRnd() * Math.PI * 2;
+        const jitter = (netRnd() * 2 - 1) * 1.5;
+        X7[nCenter + i] = hubX + (rad + jitter) * Math.cos(ang);
+        Y7[nCenter + i] = hubY + (rad + jitter) * Math.sin(ang);
+        T7[nCenter + i] = 0.55;
+      }
+      // Outward radiating citation vectors (40%)
+      let pIdx4 = nCenter + nRings;
+      while (pIdx4 < N) {
+        const ray = Math.floor(netRnd() * nRays);
+        const ang = (ray / nRays) * Math.PI * 2;
+        const dist = netRnd() * (minDim * 0.65);
+        const jitter = (netRnd() * 2 - 1) * 1.5;
+        X7[pIdx4] = hubX + dist * Math.cos(ang) - Math.sin(ang) * jitter;
+        Y7[pIdx4] = hubY + dist * Math.sin(ang) + Math.cos(ang) * jitter;
+        T7[pIdx4] = 0.45;
+        pIdx4++;
       }
     }
+
     layout();
     window.addEventListener("resize", layout);
 
-    // Mouse pointer push effect: listen on window, ignore touch pointers
+    // Mouse pointer repulsion over window
     let ptx = -9999;
     let pty = -9999;
     let pw = 0;
@@ -504,7 +742,7 @@ export const StoryCanvas: React.FC = () => {
     let animId = 0;
     let isTabVisible = !document.hidden;
     let lastEmittedS = -999;
-    let glowIntensity = 0; // Eased hover glow alpha
+    let glowIntensity = 0;
 
     const onVisibilityChange = () => {
       isTabVisible = !document.hidden;
@@ -516,7 +754,6 @@ export const StoryCanvas: React.FC = () => {
 
     function render(now: number) {
       animId = requestAnimationFrame(render);
-      // Pause rendering when tab is hidden
       if (!isTabVisible) return;
 
       const dt = Math.min(0.1, (now - lastTime) / 1000);
@@ -526,7 +763,7 @@ export const StoryCanvas: React.FC = () => {
 
       reduce = reduceMQ.matches;
 
-      // Ease s toward target: s += (target - s) * min(1, dt * 7)
+      // Ease s toward target
       const target = storyBus.targetS;
       if (useStoryStore.getState().isTraveling) {
         s = storyBus.s;
@@ -537,6 +774,12 @@ export const StoryCanvas: React.FC = () => {
       }
       storyBus.s = s;
       storyBus.activeChapter = Math.min(4, Math.max(0, Math.round(s)));
+      if (s >= 3.5) {
+        storyBus.activeServiceStage = Math.min(3, Math.max(0, Math.floor(s - 3.5)));
+      } else {
+        storyBus.activeServiceStage = 0;
+      }
+
       if (Math.abs(s - lastEmittedS) > 0.002) {
         lastEmittedS = s;
         storyBus.emit(s, target);
@@ -545,21 +788,28 @@ export const StoryCanvas: React.FC = () => {
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, W, H);
 
-      // Chapter k index (0, 1, 2, 3)
-      const k = Math.min(3, Math.max(0, Math.floor(s)));
+      // Active integer chapter/stage k (0 to 6)
+      const k = Math.min(6, Math.max(0, Math.floor(s)));
 
-      // Morph progress between k and k+1:
-      // For k=0..2: smoothstep((s - k - 0.3) / 0.5)
-      // For k=3 (logo to network): runs from s = 3.3 to 3.8
+      // Morph progress between k and k+1
       let m = 0;
       if (k < 3) {
         m = smooth((s - k - 0.3) / 0.5);
-      } else {
-        // Morph itself runs from s = 3.3 to 3.8
+      } else if (k === 3) {
+        // Logo to Stage 1 (Consulting)
         m = smooth((s - 3.3) / 0.5);
+      } else if (k === 4) {
+        // Stage 1 (Consulting) to Stage 2 (Connect)
+        m = smooth((s - 4.3) / 0.7);
+      } else if (k === 5) {
+        // Stage 2 (Connect) to Stage 3 (Intelligence)
+        m = smooth((s - 5.1) / 0.8);
+      } else {
+        // Stage 3 (Intelligence) to Stage 4 (Visibility)
+        m = smooth((s - 6.1) / 0.8);
       }
 
-      // Artwork reveals:
+      // Story reveals for chapters 0 to 3
       const skylineReveal =
         (1 - smooth((s - 0.18) / 0.12)) * smooth((hold - 0.4) / 1.3);
       const networkReveal =
@@ -567,8 +817,6 @@ export const StoryCanvas: React.FC = () => {
       const faceReveal =
         smooth((s - 1.74) / 0.16) * (1 - smooth((s - 2.2) / 0.1));
 
-      // Release crisp logo image just before morph:
-      // fade-in multiplied by (1 - smoothstep((s - 3.2) / 0.1))
       const logoRamp = smooth((s - 2.78) / 0.22);
       const logoFadeOut = 1 - smooth((s - 3.2) / 0.1);
       const logoAlpha = logoRamp * logoFadeOut;
@@ -580,14 +828,13 @@ export const StoryCanvas: React.FC = () => {
         logoAlpha
       );
 
-      // Dim particles while sharp reveal is active
       let particleAlphaScale = 1 - 0.72 * maxReveal;
 
-      // After morph: netAmt = smoothstep((s - 3.55) / 0.45)
+      // NetAmt for services section (s >= 3.55)
       const netAmt = smooth((s - 3.55) / 0.45);
       if (netAmt > 0) {
-        // Dim particles by 35% so lines read as structure
-        particleAlphaScale *= (1 - 0.35 * netAmt);
+        // Dim base particles slightly so structured network lines read cleanly through frosted glass
+        particleAlphaScale *= 1 - 0.32 * netAmt;
       }
 
       const A = tx[k];
@@ -600,7 +847,7 @@ export const StoryCanvas: React.FC = () => {
       const cxB = cxs[Math.min(3, k + 1)];
 
       const live = reduce ? 0 : 1;
-      const R = 75;
+      const R = 80;
       const R2 = R * R;
       const push = 28 * pw;
       const offX = reduce ? 0 : pxn * 16;
@@ -610,7 +857,6 @@ export const StoryCanvas: React.FC = () => {
       context.fillStyle = ink;
 
       for (let i = 0; i < N; i++) {
-        // Per-particle delay up to 0.35 so particles stream rather than slide
         const q = (m - delay[i]) * 1.5385;
         const e = q <= 0 ? 0 : q >= 1 ? 1 : q * q * (3 - 2 * q);
 
@@ -621,16 +867,13 @@ export const StoryCanvas: React.FC = () => {
         const arc = Math.sin(Math.PI * e);
         if (arc > 0.001) {
           if (k === 0) {
-            // Skyline windows fall and form network
             x += ax[i] * 0.08 * W * arc;
             y += (0.15 + 0.25 * Math.abs(ay[i])) * H * arc;
           } else if (k === 1) {
-            // Network bursts outward and gathers into face
             const k2 = 0.35 + 0.35 * Math.abs(ax[i]);
             x += (A[i] - cxA) * k2 * arc;
             y += (Ay[i] - cy) * k2 * arc;
           } else if (k === 2) {
-            // Face spirals into logo mark
             const cxt = cxA + (cxB - cxA) * e;
             const th = arc * (0.9 + 0.9 * ax[i]) * (ay[i] < 0 ? -1 : 1);
             const dx0 = x - cxt;
@@ -640,31 +883,31 @@ export const StoryCanvas: React.FC = () => {
             x = cxt + dx0 * cs - dy0 * sn;
             y = cy + dx0 * sn + dy0 * cs;
           } else {
-            // Logo-to-network morph: curved path offset sideways by 0.2 * ax[i] * dist * sin(pi * e)
+            // Smooth curved trajectories between service stages
             const dist = Math.hypot(B[i] - A[i], By[i] - Ay[i]);
             if (dist > 0.01) {
               const dx = (B[i] - A[i]) / dist;
               const dy = (By[i] - Ay[i]) / dist;
               const nx = -dy;
               const ny = dx;
-              const offset = 0.2 * ax[i] * dist * arc;
+              const offset = 0.18 * ax[i] * dist * arc;
               x += nx * offset;
               y += ny * offset;
             }
           }
         }
 
-        // Idle drift (skipped with prefers-reduced-motion)
+        // Idle drift
         const calm = live * (1 - 0.7 * arc);
-        x += Math.sin(hold * 0.8 + ph[i]) * 0.9 * calm;
-        y += Math.cos(hold * 0.7 + ph[i] * 1.3) * 0.9 * calm;
+        x += Math.sin(hold * 0.7 + ph[i]) * 0.85 * calm;
+        y += Math.cos(hold * 0.65 + ph[i] * 1.3) * 0.85 * calm;
 
         // Depth parallax
         const z = dep[i];
         x += offX * z;
         y += offY * z;
 
-        // Pointer repulsion (works over whole window)
+        // Pointer repulsion
         if (push > 0.05) {
           const ddx = x - ptx;
           const ddy = y - pty;
@@ -747,87 +990,246 @@ export const StoryCanvas: React.FC = () => {
         );
       }
 
-      // After morph (netAmt > 0): draw crisp lines, node circles, and traveling signals
-      if (netAmt > 0.001 && networkEdges.length > 0) {
-        // 1. Every edge as a 1px line in the ink colour at 12% opacity
-        context.strokeStyle = ink;
-        context.lineWidth = 1;
-        context.globalAlpha = 0.12 * netAmt;
-        context.beginPath();
-        for (let ei = 0; ei < networkEdges.length; ei++) {
-          const e = networkEdges[ei];
-          context.moveTo(e.u.x, e.u.y);
-          context.lineTo(e.v.x, e.v.y);
-        }
-        context.stroke();
+      // =======================================================================
+      // SERVICES SECTION VISUAL NARRATIVE (s >= 3.5)
+      // Progressively transforms across the 4 stages as user scrolls!
+      // =======================================================================
+      if (netAmt > 0.001) {
+        // Compute stage weights for smooth transitions between network states
+        // Stage 1 (Consulting): centered ~4.0 to 4.4
+        // Stage 2 (Connect): centered ~5.0
+        // Stage 3 (Intelligence): centered ~6.0
+        // Stage 4 (Visibility): centered ~7.0
+        const w1 = Math.max(0, 1 - Math.abs(s - 4.2) / 0.9);
+        const w2 = Math.max(0, 1 - Math.abs(s - 5.0) / 0.9);
+        const w3 = Math.max(0, 1 - Math.abs(s - 6.0) / 0.9);
+        const w4 = Math.max(0, Math.min(1, (s - 6.2) / 0.8));
 
-        // 2. Every node as a 2.4px circle at 50% opacity
-        context.fillStyle = ink;
-        context.globalAlpha = 0.50 * netAmt;
-        context.beginPath();
-        for (let ni = 0; ni < networkNodes.length; ni++) {
-          const n = networkNodes[ni];
-          context.moveTo(n.x + 2.4, n.y);
-          context.arc(n.x, n.y, 2.4, 0, Math.PI * 2);
-        }
-        context.fill();
-
-        // 3. About 24 small accent-colour squares (3px) travelling along random edges at slow constant speed
-        if (!reduce) {
-          context.fillStyle = accent;
-          context.globalAlpha = 0.85 * netAmt;
-          for (let si = 0; si < travelSignals.length; si++) {
-            const sig = travelSignals[si];
-            const e = networkEdges[sig.edgeIdx];
-            if (!e) continue;
-            const progressAlong = ((hold * sig.speed + sig.offset) % 1 + 1) % 1;
-            const sx = e.u.x + (e.v.x - e.u.x) * progressAlong;
-            const sy = e.u.y + (e.v.y - e.u.y) * progressAlong;
-            context.fillRect(sx - 1.5, sy - 1.5, 3, 3);
-          }
-        }
-      }
-
-      // Hover glow around active service card
-      const activeGlow = storyBus.hoverGlow;
-      if (activeGlow && netAmt > 0.001) {
-        glowIntensity += (1.0 - glowIntensity) * Math.min(1, dt * 7);
-      } else {
-        glowIntensity += (0.0 - glowIntensity) * Math.min(1, dt * 7);
-      }
-
-      if (glowIntensity > 0.01 && activeGlow && netAmt > 0.001) {
-        const rEdges = activeGlow.rEdges;
-        const rNodes = activeGlow.rNodes;
-        const gcx = activeGlow.cx;
-        const gcy = activeGlow.cy;
-
-        // Glowing edges: 1.5px, 80% opacity in accent
-        context.strokeStyle = accent;
-        context.lineWidth = 1.5;
-        context.globalAlpha = 0.80 * netAmt * glowIntensity;
-        context.beginPath();
-        for (let ei = 0; ei < networkEdges.length; ei++) {
-          const e = networkEdges[ei];
-          if (Math.hypot(e.mx - gcx, e.my - gcy) <= rEdges) {
+        // 1. Stage 1 Network (CONSULTING | Diagnose):
+        // Dispersed discovery lines and diagnostic node clusters
+        if (w1 > 0.01 && edgesStage1.length > 0) {
+          // As s progresses through Consulting & Audits (4.0 -> 4.4), lines become clearer
+          const stage1Clarity = 0.09 + 0.10 * smooth((s - 3.8) / 0.6);
+          context.strokeStyle = ink;
+          context.lineWidth = 1;
+          context.globalAlpha = stage1Clarity * w1 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < edgesStage1.length; i++) {
+            const e = edgesStage1[i];
             context.moveTo(e.u.x, e.u.y);
             context.lineTo(e.v.x, e.v.y);
           }
-        }
-        context.stroke();
+          context.stroke();
 
-        // Glowing nodes: 3.6px circle in accent
-        context.fillStyle = accent;
-        context.globalAlpha = 0.90 * netAmt * glowIntensity;
-        context.beginPath();
-        for (let ni = 0; ni < networkNodes.length; ni++) {
-          const n = networkNodes[ni];
-          if (Math.hypot(n.x - gcx, n.y - gcy) <= rNodes) {
-            context.moveTo(n.x + 3.6, n.y);
-            context.arc(n.x, n.y, 3.6, 0, Math.PI * 2);
+          // Nodes
+          context.fillStyle = ink;
+          context.globalAlpha = 0.45 * w1 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < nodesStage1.length; i++) {
+            const n = nodesStage1[i];
+            context.moveTo(n.x + 2.4, n.y);
+            context.arc(n.x, n.y, 2.4, 0, Math.PI * 2);
+          }
+          context.fill();
+        }
+
+        // 2. Stage 2 Network (CONNECT | Build):
+        // Geometric architectural bus lines & orthogonal API highways
+        if (w2 > 0.01 && edgesStage2.length > 0) {
+          context.strokeStyle = ink;
+          context.lineWidth = 1.2;
+          context.globalAlpha = 0.16 * w2 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < edgesStage2.length; i++) {
+            const e = edgesStage2[i];
+            context.moveTo(e.u.x, e.u.y);
+            context.lineTo(e.v.x, e.v.y);
+          }
+          context.stroke();
+
+          // Architectural junction nodes
+          context.fillStyle = ink;
+          context.globalAlpha = 0.60 * w2 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < nodesStage2.length; i++) {
+            const n = nodesStage2[i];
+            context.moveTo(n.x + 2.8, n.y);
+            context.arc(n.x, n.y, 2.8, 0, Math.PI * 2);
+          }
+          context.fill();
+        }
+
+        // 3. Stage 3 Network (INTELLIGENCE | Think):
+        // Dense neural network wave & synaptic pulses (User reference image)
+        if (w3 > 0.01 && edgesStage3.length > 0) {
+          context.strokeStyle = ink;
+          context.lineWidth = 0.9;
+          context.globalAlpha = 0.15 * w3 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < edgesStage3.length; i++) {
+            const e = edgesStage3[i];
+            context.moveTo(e.u.x, e.u.y);
+            context.lineTo(e.v.x, e.v.y);
+          }
+          context.stroke();
+
+          // Sequential activating neural nodes
+          for (let i = 0; i < nodesStage3.length; i++) {
+            const n = nodesStage3[i];
+            // Sequential wave pulse across columns
+            const pulse = Math.sin(hold * 2.5 - (n.col || 0) * 0.7);
+            const isLit = pulse > 0.6;
+            context.fillStyle = isLit ? accent : ink;
+            context.globalAlpha = (isLit ? 0.85 : 0.40) * w3 * netAmt;
+            context.beginPath();
+            const rad = isLit ? 3.0 : 2.2;
+            context.arc(n.x, n.y, rad, 0, Math.PI * 2);
+            context.fill();
+          }
+
+          // Data pulses travelling along synaptic connections
+          if (!reduce) {
+            context.fillStyle = accent;
+            context.globalAlpha = 0.85 * w3 * netAmt;
+            for (let si = 0; si < travelSignalsStage3.length; si++) {
+              const sig = travelSignalsStage3[si];
+              const e = edgesStage3[sig.edgeIdx];
+              if (!e) continue;
+              const progressAlong = ((hold * sig.speed + sig.offset) % 1 + 1) % 1;
+              const sx = e.u.x + (e.v.x - e.u.x) * progressAlong;
+              const sy = e.u.y + (e.v.y - e.u.y) * progressAlong;
+              context.fillRect(sx - 1.5, sy - 1.5, 3, 3);
+            }
           }
         }
-        context.fill();
+
+        // 4. Stage 4 Network (VISIBILITY | Discover):
+        // Outward-propagating information hub & concentric discovery waves
+        if (w4 > 0.01 && nodesStage4.length > 0) {
+          const hubX = W * 0.50;
+          const hubY = H * 0.48;
+
+          // Radial citation vectors
+          context.strokeStyle = ink;
+          context.lineWidth = 1;
+          context.globalAlpha = 0.12 * w4 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < edgesStage4.length; i++) {
+            const e = edgesStage4[i];
+            context.moveTo(e.u.x, e.u.y);
+            context.lineTo(e.v.x, e.v.y);
+          }
+          context.stroke();
+
+          // Concentric signal rings
+          context.strokeStyle = ink;
+          context.lineWidth = 1;
+          for (let ri = 0; ri < ringRadiiStage4.length; ri++) {
+            const rad = ringRadiiStage4[ri];
+            context.globalAlpha = (0.16 - ri * 0.02) * w4 * netAmt;
+            context.beginPath();
+            context.arc(hubX, hubY, rad, 0, Math.PI * 2);
+            context.stroke();
+          }
+
+          // Dynamic outward-expanding signal waves (answers & citations being discovered across platforms)
+          if (!reduce) {
+            const maxWaveR = Math.min(W, H) * 0.65;
+            for (let wi = 0; wi < 3; wi++) {
+              const waveProgress = ((hold * 0.35 + wi * 0.33) % 1 + 1) % 1;
+              const waveR = waveProgress * maxWaveR;
+              const waveAlpha = (1 - waveProgress) * 0.35 * w4 * netAmt;
+              if (waveAlpha > 0.01) {
+                context.strokeStyle = accent;
+                context.lineWidth = 1.2;
+                context.globalAlpha = waveAlpha;
+                context.beginPath();
+                context.arc(hubX, hubY, waveR, 0, Math.PI * 2);
+                context.stroke();
+              }
+            }
+          }
+
+          // Hub and satellite nodes
+          context.fillStyle = ink;
+          context.globalAlpha = 0.65 * w4 * netAmt;
+          context.beginPath();
+          for (let i = 0; i < nodesStage4.length; i++) {
+            const n = nodesStage4[i];
+            context.moveTo(n.x + 2.5, n.y);
+            context.arc(n.x, n.y, 2.5, 0, Math.PI * 2);
+          }
+          context.fill();
+
+          // Central Hub highlight
+          context.fillStyle = accent;
+          context.globalAlpha = 0.90 * w4 * netAmt;
+          context.beginPath();
+          context.arc(hubX, hubY, 4.5, 0, Math.PI * 2);
+          context.fill();
+        }
+
+        // =====================================================================
+        // HOVER GLOW AROUND ACTIVE SERVICE CARDS
+        // Subtly illuminates lines & nodes behind frosted card
+        // =====================================================================
+        const activeGlow = storyBus.hoverGlow;
+        if (activeGlow) {
+          glowIntensity += (1.0 - glowIntensity) * Math.min(1, dt * 7);
+        } else {
+          glowIntensity += (0.0 - glowIntensity) * Math.min(1, dt * 7);
+        }
+
+        if (glowIntensity > 0.01 && activeGlow) {
+          const rEdges = activeGlow.rEdges;
+          const rNodes = activeGlow.rNodes;
+          const gcx = activeGlow.cx;
+          const gcy = activeGlow.cy;
+
+          // Select edges from the currently prominent stages
+          const activeEdges =
+            w3 > 0.3
+              ? edgesStage3
+              : w2 > 0.3
+              ? edgesStage2
+              : w4 > 0.3
+              ? edgesStage4
+              : edgesStage1;
+
+          const activeNodes =
+            w3 > 0.3
+              ? nodesStage3
+              : w2 > 0.3
+              ? nodesStage2
+              : w4 > 0.3
+              ? nodesStage4
+              : nodesStage1;
+
+          context.strokeStyle = accent;
+          context.lineWidth = 1.5;
+          context.globalAlpha = 0.80 * netAmt * glowIntensity;
+          context.beginPath();
+          for (let ei = 0; ei < activeEdges.length; ei++) {
+            const e = activeEdges[ei];
+            if (Math.hypot(e.mx - gcx, e.my - gcy) <= rEdges) {
+              context.moveTo(e.u.x, e.u.y);
+              context.lineTo(e.v.x, e.v.y);
+            }
+          }
+          context.stroke();
+
+          context.fillStyle = accent;
+          context.globalAlpha = 0.90 * netAmt * glowIntensity;
+          context.beginPath();
+          for (let ni = 0; ni < activeNodes.length; ni++) {
+            const n = activeNodes[ni];
+            if (Math.hypot(n.x - gcx, n.y - gcy) <= rNodes) {
+              context.moveTo(n.x + 3.6, n.y);
+              context.arc(n.x, n.y, 3.6, 0, Math.PI * 2);
+            }
+          }
+          context.fill();
+        }
       }
 
       context.globalAlpha = 1;

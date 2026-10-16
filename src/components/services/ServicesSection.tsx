@@ -1,24 +1,33 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { ServiceCard, ServiceCardData } from "./ServiceCard";
 import { storyBus } from "@/lib/storyStore";
 
-interface ServiceGroup {
+interface ServiceGroupData {
   id: string;
-  label: string;
-  tagline: string;
-  isPair?: boolean;
+  stageIdx: number;
+  stageNum: string;
+  stageName: string;
+  stageAction: string;
+  eyebrow: string;
+  headline: string;
+  description: string;
   services: ServiceCardData[];
 }
 
-const SERVICE_GROUPS: ServiceGroup[] = [
+const SERVICE_GROUPS: ServiceGroupData[] = [
   {
-    id: "group-1",
-    label: "GROUP 1: FOUNDATION",
-    tagline: "Know where you stand.",
-    isPair: true,
+    id: "carousel-consulting",
+    stageIdx: 0,
+    stageNum: "01",
+    stageName: "CONSULTING",
+    stageAction: "Diagnose",
+    eyebrow: "STAGE 01 // CONSULTING | DIAGNOSE",
+    headline: "Understand the system before changing it.",
+    description:
+      "Map your systems, data flows, and bottlenecks to build an actionable, sequenced roadmap before engineering begins.",
     services: [
       {
         num: "01",
@@ -49,9 +58,15 @@ const SERVICE_GROUPS: ServiceGroup[] = [
     ],
   },
   {
-    id: "group-2",
-    label: "GROUP 2: CONNECT",
-    tagline: "Build it. Wire it together.",
+    id: "carousel-connect",
+    stageIdx: 1,
+    stageNum: "02",
+    stageName: "CONNECT",
+    stageAction: "Build",
+    eyebrow: "STAGE 02 // CONNECT | BUILD",
+    headline: "Turn the roadmap into connected digital solutions.",
+    description:
+      "Digitise manual processes and engineer platforms, APIs, custom software, and interactive 3D experiences into one unified architecture.",
     services: [
       {
         num: "03",
@@ -95,10 +110,15 @@ const SERVICE_GROUPS: ServiceGroup[] = [
     ],
   },
   {
-    id: "group-3",
-    label: "GROUP 3: INTELLIGENCE",
-    tagline: "Make it think.",
-    isPair: true,
+    id: "carousel-intelligence",
+    stageIdx: 2,
+    stageNum: "03",
+    stageName: "INTELLIGENCE",
+    stageAction: "Think",
+    eyebrow: "STAGE 03 // INTELLIGENCE | THINK",
+    headline: "Connect systems with intelligence.",
+    description:
+      "Deploy domain-grounded copilots, autonomous workflows, and production-grade AI with built-in security, evaluation, and governance.",
     services: [
       {
         num: "06",
@@ -129,9 +149,15 @@ const SERVICE_GROUPS: ServiceGroup[] = [
     ],
   },
   {
-    id: "group-4",
-    label: "GROUP 4: VISIBILITY",
-    tagline: "Be found. Be answered. Be cited.",
+    id: "carousel-visibility",
+    stageIdx: 3,
+    stageNum: "04",
+    stageName: "VISIBILITY",
+    stageAction: "Discover",
+    eyebrow: "STAGE 04 // VISIBILITY | DISCOVER",
+    headline: "Make knowledge discoverable across search and AI platforms.",
+    description:
+      "Ensure your brand, technical authority, and answers are indexed, recommended, and cited across modern search engines and AI assistants.",
     services: [
       {
         num: "08",
@@ -179,17 +205,233 @@ const SERVICE_GROUPS: ServiceGroup[] = [
   },
 ];
 
+interface GlassCarouselCardProps {
+  group: ServiceGroupData;
+  isActiveStage: boolean;
+}
+
+const GlassCarouselCard: React.FC<GlassCarouselCardProps> = ({
+  group,
+  isActiveStage,
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const total = group.services.length;
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Swipe handling for touch devices
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const handlePrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  }, [total]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    touchStartX.current = null;
+    touchStartY.current = null;
+
+    // Horizontal swipe threshold 40px, ensuring horizontal intent
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      handleNext();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      handlePrev();
+    }
+  };
+
+  return (
+    <div
+      id={group.id}
+      ref={containerRef}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className={`glass-carousel-container scroll-fade-up p-6 sm:p-8 lg:p-10 transition-all duration-300 ${
+        isActiveStage ? "is-active-stage" : ""
+      }`}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={`${group.stageName} carousel: ${group.headline}`}
+    >
+      {/* 1. Header Bar: Eyebrow, Headline, Description, and Navigation Controls */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-line/60 mb-8">
+        <div className="max-w-2xl space-y-2">
+          <div className="flex items-center gap-2.5">
+            <span className="inline-block w-2 h-2 rounded-full bg-accent" aria-hidden="true" />
+            <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold">
+              {group.eyebrow}
+            </span>
+          </div>
+          <h3 className="font-display text-2xl sm:text-3xl font-semibold text-ink leading-tight">
+            {group.headline}
+          </h3>
+          <p className="text-muted text-sm sm:text-base leading-relaxed">
+            {group.description}
+          </p>
+        </div>
+
+        {/* Carousel Controls Cluster */}
+        <div className="flex items-center gap-4 self-start lg:self-end">
+          {/* Step Counter */}
+          <span className="font-mono text-xs tracking-wider text-muted font-medium select-none">
+            0{activeIndex + 1} / 0{total}
+          </span>
+
+          {/* Interactive Pagination Indicator Pills */}
+          <div
+            className="flex items-center gap-1.5"
+            role="tablist"
+            aria-label={`${group.stageName} card navigation`}
+          >
+            {group.services.map((svc, idx) => (
+              <button
+                key={svc.slug}
+                type="button"
+                role="tab"
+                aria-selected={idx === activeIndex}
+                aria-label={`Go to ${svc.title}`}
+                onClick={() => setActiveIndex(idx)}
+                className={`glass-pagination-pill focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                  idx === activeIndex ? "is-active" : ""
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Prev / Next Buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="glass-ctrl-btn"
+              onClick={handlePrev}
+              aria-label={`Previous service in ${group.stageName}`}
+            >
+              <svg
+                viewBox="0 0 20 20"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12.5 15l-5-5 5-5" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="glass-ctrl-btn"
+              onClick={handleNext}
+              aria-label={`Next service in ${group.stageName}`}
+            >
+              <svg
+                viewBox="0 0 20 20"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7.5 5l5 5-5 5" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Responsive Viewport:
+          - On mobile (< 768px): Smoothly sliding track displaying 1 card at a time with swipe & buttons
+          - On desktop (>= 768px): Refined grid layout with active card focus highlight and seamless hover glow */}
+      <div className="block md:hidden overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{
+            transform: `translateX(-${activeIndex * 100}%)`,
+          }}
+        >
+          {group.services.map((service, idx) => (
+            <div key={service.slug} className="w-full flex-shrink-0 px-1">
+              <ServiceCard service={service} isActive={idx === activeIndex} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop & Tablet Layout (>= 768px): Balanced Grid with Proportional Alignment */}
+      <div
+        className={`hidden md:grid gap-5 ${
+          total === 2
+            ? "grid-cols-2"
+            : "grid-cols-2 lg:grid-cols-3"
+        }`}
+        style={{ perspective: "1400px" }}
+      >
+        {group.services.map((service, idx) => (
+          <div
+            key={service.slug}
+            onClick={() => setActiveIndex(idx)}
+            className="h-full cursor-pointer"
+          >
+            <ServiceCard service={service} isActive={idx === activeIndex} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const ServicesSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const headPanelRef = useRef<HTMLDivElement | null>(null);
-  const closePanelRef = useRef<HTMLDivElement | null>(null);
+  const [activeStage, setActiveStage] = useState(0);
 
-  // Fade up observers for the header panel, group headers, and closing panel
+  // Subscribe to storyBus for active service stage (0..3)
+  useEffect(() => {
+    const unsub = storyBus.subscribe((s) => {
+      if (s >= 3.5) {
+        const stage = Math.min(3, Math.max(0, Math.floor(s - 3.5)));
+        setActiveStage(stage);
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  // Fade up observers for panels
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return;
 
-    const panels = root.querySelectorAll<HTMLElement>(".scroll-fade-up:not([data-service-card])");
+    const panels = root.querySelectorAll<HTMLElement>(
+      ".scroll-fade-up:not([data-service-card])"
+    );
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       panels.forEach((p) => p.classList.add("is-visible"));
       return;
@@ -234,13 +476,14 @@ export const ServicesSection: React.FC = () => {
         if (!section) return;
 
         const secRect = section.getBoundingClientRect();
-        // Only active if services section is in view
         if (secRect.bottom < 0 || secRect.top > window.innerHeight) {
           storyBus.setHoverGlow(null);
           return;
         }
 
-        const cards = section.querySelectorAll<HTMLElement>("[data-service-card='true']");
+        const cards = section.querySelectorAll<HTMLElement>(
+          "[data-service-card='true']"
+        );
         const centerY = window.innerHeight / 2;
         let bestDist = Infinity;
         let bestCard: HTMLElement | null = null;
@@ -285,69 +528,42 @@ export const ServicesSection: React.FC = () => {
       className="relative z-20 pt-[14vh] pb-[20vh] px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
       aria-label="Services"
     >
-      {/* 1. Heading Panel (max-width 640px) */}
-      <div
-        ref={headPanelRef}
-        className="services-panel scroll-fade-up max-w-[640px] rounded-lg p-7 sm:p-8 mb-16 sm:mb-20"
-      >
-        <span className="font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold block mb-3">
-          Services
+      {/* 1. Services Section Intro Panel */}
+      <div className="services-panel scroll-fade-up max-w-[680px] rounded-2xl p-7 sm:p-9 mb-16 sm:mb-20">
+        <span className="font-mono text-xs uppercase tracking-widest text-accent font-semibold block mb-3">
+          Services // Four Core Chapters
         </span>
         <h2 className="font-display text-2xl sm:text-3xl lg:text-[2.25rem] font-semibold text-ink leading-tight">
           Everything the story needs, in one team.
         </h2>
         <p className="text-muted text-sm sm:text-base leading-relaxed mt-4">
-          Ten services across strategy, build, intelligence and visibility. Choose
-          one, or let us wire them together.
+          Ten services across strategy, engineering, intelligence, and discoverability.
+          Navigate each stage below as our connected digital architecture unfolds.
         </p>
       </div>
 
-      {/* 2. Four Groups */}
+      {/* 2. Four Visually Distinct Glassmorphic Carousels */}
       <div className="space-y-16 sm:space-y-20">
         {SERVICE_GROUPS.map((group) => (
-          <div key={group.id} className="space-y-6">
-            {/* Small Header Panel (accent label + short line) */}
-            <div className="services-panel scroll-fade-up rounded-lg px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border border-line">
-              <span className="font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold">
-                {group.label}
-              </span>
-              <span className="font-display text-sm sm:text-base text-ink font-medium">
-                {group.tagline}
-              </span>
-            </div>
-
-            {/* Card Grid: auto-fit columns with min 310px, 18px gap, perspective 1400px */}
-            <div
-              className={`grid gap-[18px] ${
-                group.isPair
-                  ? "grid-cols-1 md:grid-cols-2"
-                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-              }`}
-              style={{
-                perspective: "1400px",
-              }}
-            >
-              {group.services.map((service) => (
-                <ServiceCard key={service.slug} service={service} />
-              ))}
-            </div>
-          </div>
+          <GlassCarouselCard
+            key={group.id}
+            group={group}
+            isActiveStage={activeStage === group.stageIdx}
+          />
         ))}
       </div>
 
-      {/* 3. Closing Panel (max-width 640px) */}
-      <div
-        ref={closePanelRef}
-        className="services-panel scroll-fade-up max-w-[640px] rounded-lg p-7 sm:p-8 mt-20 sm:mt-24 mx-auto text-center"
-      >
+      {/* 3. Closing Panel with Contact CTA */}
+      <div className="services-panel scroll-fade-up max-w-[640px] rounded-2xl p-7 sm:p-8 mt-20 sm:mt-24 mx-auto text-center">
         <p className="text-sm sm:text-base text-ink leading-relaxed">
-          Search and AI results change all the time. For SEO, AEO and GEO we
-          commit to the work and the measurement, not to a ranking.
+          Search, answer, and generative AI platforms evolve continuously. For SEO,
+          AEO, and GEO we commit to the rigorous engineering and transparent
+          measurement, not to an arbitrary ranking.
         </p>
         <div className="mt-6">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-6 py-3.5 rounded bg-accent text-on-accent hover:bg-accent-hover font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+            className="inline-flex items-center justify-center font-mono text-xs uppercase tracking-widest px-6 py-3.5 rounded bg-accent text-on-accent hover:bg-accent-hover font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
           >
             Start a project
           </Link>

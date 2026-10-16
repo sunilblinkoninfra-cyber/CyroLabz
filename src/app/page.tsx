@@ -112,7 +112,48 @@ export default function HomePage() {
         } else if (scrollY < dStory + dMorph) {
           target = 3 + (scrollY - dStory) / dMorph;
         } else {
-          target = 4;
+          // Continuous scroll progress across the four service carousels:
+          // Stage 1 (Consulting): ~4.0 to 4.4
+          // Stage 2 (Connect): ~5.0
+          // Stage 3 (Intelligence): ~6.0
+          // Stage 4 (Visibility): ~7.0
+          const c0 = document.getElementById("carousel-consulting");
+          const c1 = document.getElementById("carousel-connect");
+          const c2 = document.getElementById("carousel-intelligence");
+          const c3 = document.getElementById("carousel-visibility");
+
+          if (c0 && c1 && c2 && c3) {
+            const vCenter = window.innerHeight * 0.5;
+            const r0 = c0.getBoundingClientRect();
+            const r1 = c1.getBoundingClientRect();
+            const r2 = c2.getBoundingClientRect();
+            const r3 = c3.getBoundingClientRect();
+
+            const y0 = r0.top + r0.height * 0.5;
+            const y1 = r1.top + r1.height * 0.5;
+            const y2 = r2.top + r2.height * 0.5;
+            const y3 = r3.top + r3.height * 0.5;
+
+            if (vCenter <= y0) {
+              const dist = y0 - vCenter;
+              const frac = Math.max(0, Math.min(1, 1 - dist / (window.innerHeight * 0.75)));
+              target = 4.0 + frac * 0.4;
+            } else if (vCenter <= y1) {
+              const t = (vCenter - y0) / Math.max(1, y1 - y0);
+              target = 4.4 + t * 0.6; // 4.4 -> 5.0
+            } else if (vCenter <= y2) {
+              const t = (vCenter - y1) / Math.max(1, y2 - y1);
+              target = 5.0 + t * 1.0; // 5.0 -> 6.0
+            } else if (vCenter <= y3) {
+              const t = (vCenter - y2) / Math.max(1, y3 - y2);
+              target = 6.0 + t * 1.0; // 6.0 -> 7.0
+            } else {
+              const extra = Math.min(1, (vCenter - y3) / (window.innerHeight * 0.6));
+              target = 7.0 + extra * 0.2;
+            }
+          } else {
+            target = 4;
+          }
         }
 
         storyBus.targetS = target;

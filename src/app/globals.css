@@ -809,40 +809,188 @@ html.lenis body {
    Translucent panels, 14-16px blur, 14px accent corner brackets & 3D tilt
    ========================================================================== */
 
+/* ==========================================================================
+   SERVICES SECTION & GLASSMORPHIC CAROUSELS
+   Restrained outer glass containers, subtle frosted cards, 3D tilt & reticles
+   ========================================================================== */
+
 .services-panel {
   background-color: var(--card);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
   border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 8px 30px rgba(11, 12, 14, 0.04);
 }
 
+:root[data-theme="dark"] .services-panel {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .services-panel {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 36px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* 1. Distinct Glassmorphic Carousel Container */
+.glass-carousel-container {
+  position: relative;
+  background-color: rgba(244, 245, 247, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+  border: 1px solid rgba(211, 215, 220, 0.75);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 36px rgba(11, 12, 14, 0.04);
+  border-radius: 1.25rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+:root[data-theme="dark"] .glass-carousel-container {
+  background-color: rgba(16, 18, 22, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 44px rgba(0, 0, 0, 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .glass-carousel-container {
+    background-color: rgba(16, 18, 22, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 44px rgba(0, 0, 0, 0.45);
+  }
+}
+
+.glass-carousel-container.is-active-stage {
+  border-color: rgba(47, 107, 255, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 40px rgba(47, 107, 255, 0.06);
+}
+
+:root[data-theme="dark"] .glass-carousel-container.is-active-stage {
+  border-color: rgba(108, 151, 255, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .glass-carousel-container.is-active-stage {
+    border-color: rgba(108, 151, 255, 0.35);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 16px 48px rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* 2. Glassmorphic Service Card (Subtler blur to prevent heavy stacking slowdowns) */
 .svc-card {
   position: relative;
-  background-color: var(--card);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-  border: 1px solid var(--line);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease-out;
+  background-color: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(211, 215, 220, 0.85);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 4px 18px rgba(11, 12, 14, 0.03);
+  border-radius: 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease-out, background-color 0.25s ease;
   transform-style: preserve-3d;
   will-change: transform;
+}
+
+:root[data-theme="dark"] .svc-card {
+  background-color: rgba(24, 27, 33, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .svc-card {
+    background-color: rgba(24, 27, 33, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 22px rgba(0, 0, 0, 0.35);
+  }
 }
 
 .svc-card:hover,
 .svc-card:focus-within {
   border-color: var(--ink);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+  background-color: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 12px 34px rgba(11, 12, 14, 0.08);
 }
 
 :root[data-theme="dark"] .svc-card:hover,
 :root[data-theme="dark"] .svc-card:focus-within {
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  border-color: var(--accent);
+  background-color: rgba(28, 32, 40, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 14px 40px rgba(0, 0, 0, 0.55);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .svc-card:hover,
   :root:not([data-theme="light"]) .svc-card:focus-within {
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+    border-color: var(--accent);
+    background-color: rgba(28, 32, 40, 0.88);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 14px 40px rgba(0, 0, 0, 0.55);
   }
+}
+
+/* 3. Glassmorphic Navigation Controls */
+.glass-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme="dark"] .glass-ctrl-btn {
+  background-color: rgba(30, 34, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .glass-ctrl-btn {
+    background-color: rgba(30, 34, 42, 0.85);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.glass-ctrl-btn:hover:not(:disabled) {
+  border-color: var(--ink);
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] .glass-ctrl-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.glass-ctrl-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+.glass-ctrl-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 4. Glass Pagination Indicators */
+.glass-pagination-pill {
+  height: 6px;
+  width: 6px;
+  border-radius: 9999px;
+  background-color: var(--line);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-pagination-pill.is-active {
+  width: 22px;
+  background-color: var(--accent);
 }
 
 /* Accent corner brackets (14px, 2px) at top-left and bottom-right */

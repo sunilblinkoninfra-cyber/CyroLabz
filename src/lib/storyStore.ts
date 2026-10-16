@@ -4,11 +4,13 @@ export interface StoryState {
   s: number;
   targetS: number;
   activeChapter: number;
+  activeServiceStage: number; // 0: Consulting, 1: Connect, 2: Intelligence, 3: Visibility
   isTraveling: boolean;
   holdTime: number; // in seconds
   setS: (s: number) => void;
   setTargetS: (targetS: number) => void;
   setActiveChapter: (ch: number) => void;
+  setActiveServiceStage: (stage: number) => void;
   setIsTraveling: (isTraveling: boolean) => void;
   travelTo: (chapter: number, durationMs?: number) => void;
 }
@@ -31,6 +33,7 @@ export const storyBus = {
   targetS: 0,
   holdTime: 0,
   activeChapter: 0,
+  activeServiceStage: 0, // 0: Consulting, 1: Connect, 2: Intelligence, 3: Visibility
   hoverGlow: null as HoverGlowTarget | null,
   subscribe(fn: Listener) {
     listeners.add(fn);
@@ -42,6 +45,11 @@ export const storyBus = {
     storyBus.s = s;
     storyBus.targetS = targetS;
     storyBus.activeChapter = Math.min(4, Math.max(0, Math.round(s)));
+    if (s >= 3.5) {
+      storyBus.activeServiceStage = Math.min(3, Math.max(0, Math.floor(s - 3.5)));
+    } else {
+      storyBus.activeServiceStage = 0;
+    }
     listeners.forEach((fn) => fn(s, targetS));
   },
   setHoverGlow(target: HoverGlowTarget | null) {
@@ -64,12 +72,15 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   s: 0,
   targetS: 0,
   activeChapter: 0,
+  activeServiceStage: 0,
   isTraveling: false,
   holdTime: 0,
   setS: (s: number) => {
     storyBus.s = s;
     storyBus.activeChapter = Math.min(4, Math.max(0, Math.round(s)));
-    set({ s, activeChapter: storyBus.activeChapter });
+    const stage = s >= 3.5 ? Math.min(3, Math.max(0, Math.floor(s - 3.5))) : 0;
+    storyBus.activeServiceStage = stage;
+    set({ s, activeChapter: storyBus.activeChapter, activeServiceStage: stage });
   },
   setTargetS: (targetS: number) => {
     storyBus.targetS = targetS;
@@ -78,6 +89,10 @@ export const useStoryStore = create<StoryState>((set, get) => ({
   setActiveChapter: (activeChapter: number) => {
     storyBus.activeChapter = activeChapter;
     set({ activeChapter });
+  },
+  setActiveServiceStage: (activeServiceStage: number) => {
+    storyBus.activeServiceStage = activeServiceStage;
+    set({ activeServiceStage });
   },
   setIsTraveling: (isTraveling: boolean) => set({ isTraveling }),
   travelTo: (chapter: number, durationMs = 800) => {

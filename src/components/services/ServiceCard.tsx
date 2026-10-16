@@ -17,9 +17,10 @@ export interface ServiceCardData {
 
 interface ServiceCardProps {
   service: ServiceCardData;
+  isActive?: boolean;
 }
 
-export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
+export const ServiceCard: React.FC<ServiceCardProps> = ({ service, isActive = false }) => {
   const cardRef = useRef<HTMLElement | null>(null);
   const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
   const [isVisible, setIsVisible] = useState(false);
@@ -225,9 +226,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       style={tiltStyle}
-      className={`svc-card rounded-lg p-6 sm:p-7 flex flex-col justify-between scroll-fade-up ${
+      className={`svc-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between h-full scroll-fade-up ${
         isVisible ? "is-visible" : ""
-      }`}
+      } ${isActive ? "border-accent ring-1 ring-accent/30 shadow-lg" : ""}`}
     >
       {/* Top Row: Number on left, 40px icon box on right */}
       <div
