@@ -1,0 +1,1258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Cyrolabz: High-impact AI consulting, custom software development, forensic technical audits, and 3D interactive design. Transformation, engineered.">
+  <meta name="theme-color" content="#0B0C0E">
+  <meta property="og:title" content="Cyrolabz — AI Consulting, Software Development & Technical Audits">
+  <meta property="og:description" content="One multidisciplinary team carrying enterprise leaders from strategy to build to audit. Experience the interactive transformation story.">
+  <meta property="og:type" content="website">
+
+  <title>Cyrolabz — AI Consulting, Software Development & Technical Audits</title>
+
+  <link rel="icon" type="image/png" href="assets/mark.png">
+
+  <!-- Typography: Michroma, Sora, Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Michroma&family=Sora:wght@300;400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="site-nav" id="siteNav">
+    <div class="container nav-container">
+      <a href="#hero" class="nav-brand" aria-label="Cyrolabz Home">
+        <img src="assets/brand-logo.png" alt="Cyrolabz: AI consulting, software development, audits" width="160" height="48">
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="#story" class="nav-link">Story</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#process" class="nav-link">Process</a>
+        <a href="#system-core" class="nav-link">3D Demo</a>
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#insights" class="nav-link">Insights</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Action Items & Preferences -->
+      <div class="nav-actions">
+        <!-- Procedural Audio Toggle -->
+        <button type="button" class="sound-toggle-btn" id="soundToggle" aria-label="Enable Sound FX" aria-pressed="false" title="Enable Sound FX">
+          <svg id="soundIcoOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg id="soundIcoOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Theme Selector (Auto, Light, Dark) -->
+        <div class="theme-switch" role="group" aria-label="Colour theme selection">
+          <button type="button" data-theme-set="auto" aria-pressed="true">Auto</button>
+          <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+          <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+        </div>
+
+        <a href="#contact" class="btn-primary">Book Consultation</a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-menu" id="mobileMenu" aria-label="Mobile Navigation">
+      <ul class="mobile-nav-links">
+        <li><a href="#story" class="mobile-nav-link">Transformation Story</a></li>
+        <li><a href="#services" class="mobile-nav-link">Services (By Chapter)</a></li>
+        <li><a href="#about" class="mobile-nav-link">About Studio & Proof</a></li>
+        <li><a href="#process" class="mobile-nav-link">5-Step Process</a></li>
+        <li><a href="#system-core" class="mobile-nav-link">3D System Core</a></li>
+        <li><a href="#work" class="mobile-nav-link">Work & Case Studies</a></li>
+        <li><a href="#insights" class="mobile-nav-link">Technical Insights</a></li>
+        <li><a href="#calculator" class="mobile-nav-link">Scope Estimator</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact & Audit Booking</a></li>
+      </ul>
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+        <a href="#contact" class="btn-primary" style="justify-content: center;">Book Free Consultation</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="section hero" id="hero">
+      <div class="container">
+        <div class="hero-header">
+          <div class="hero-status-pill">
+            <span class="status-dot"></span>
+            <span>Digital Transformation Advisory & Engineering</span>
+          </div>
+
+          <h1 class="hero-title">Transformation, engineered.</h1>
+
+          <p class="hero-subtitle">
+            One multidisciplinary team carries enterprise leaders from initial strategy to custom platform build to forensic audit. Every point in this mark began as a point in your business.
+          </p>
+
+          <div class="hero-metrics-strip">
+            <div class="hero-metric-item">
+              <span class="hero-metric-num">100%</span>
+              <span class="hero-metric-lbl">Signal Unification</span>
+            </div>
+            <div class="hero-metric-item">
+              <span class="hero-metric-num">Zero-Trust</span>
+              <span class="hero-metric-lbl">Security & Privacy Posture</span>
+            </div>
+            <div class="hero-metric-item">
+              <span class="hero-metric-num">3.8x</span>
+              <span class="hero-metric-lbl">Operational Efficiency Gain</span>
+            </div>
+            <div class="hero-metric-item">
+              <span class="hero-metric-num">1-Day</span>
+              <span class="hero-metric-lbl">Confidential NDA Dispatch</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Centerpiece: The Interactive Transformation Story Stage -->
+        <div class="story-wrapper" id="story">
+          <section class="story-stage blueprint-box" id="storyStage" data-art="right" aria-label="Interactive digital transformation story in four chapters">
+            
+            <!-- Canvas Viewport -->
+            <div class="story-view" id="storyView">
+              <canvas id="storyCv" aria-hidden="true"></canvas>
+              
+              <!-- Sharp Reveal Layers (Cross-fade when particles settle) -->
+              <div class="story-sharp-reveal" id="storySharpReveal" aria-hidden="true"></div>
+
+              <p class="story-readout" id="storyReadout">Scene 01 / 04 · Legacy systems</p>
+
+              <!-- Fullscreen expand button -->
+              <button type="button" class="story-fs-toggle" id="storyFsBtn" aria-label="Toggle Fullscreen Story Mode" title="Expand Fullscreen Story">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- 3D Perspective Copy Overlays -->
+            <div class="story-copy" id="storyCopy" aria-live="polite">
+              
+              <!-- Scene 01: Foundation -->
+              <article class="story-chap" data-side="left" data-active="true">
+                <div class="story-tilt">
+                  <p class="story-eyebrow z1"><b>01</b> &nbsp;Foundation</p>
+                  <h2 class="z3">Your business, as it stands.</h2>
+                  <p class="lead z2">Years of systems, spreadsheets and tools. Each one works, and most of them only talk to themselves.</p>
+                  <ul class="story-tags z4">
+                    <li>Consulting</li>
+                    <li>Audits</li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- Scene 02: Connect -->
+              <article class="story-chap" data-side="right" data-active="false" aria-hidden="true">
+                <div class="story-tilt">
+                  <p class="story-eyebrow z1"><b>02</b> &nbsp;Connect</p>
+                  <h2 class="z3">Every window becomes a signal.</h2>
+                  <p class="lead z2">We digitise processes and records, then wire platforms, APIs and custom software into one connected system.</p>
+                  <ul class="story-tags z4">
+                    <li>Custom Software</li>
+                    <li>Website Development</li>
+                    <li>3D Interactive Design</li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- Scene 03: Intelligence -->
+              <article class="story-chap" data-side="left" data-active="false" aria-hidden="true">
+                <div class="story-tilt">
+                  <p class="story-eyebrow z1"><b>03</b> &nbsp;Intelligence</p>
+                  <h2 class="z3">Then the system starts to think.</h2>
+                  <p class="lead z2">AI turns connected data into decisions, copilots and automation, with governance and security built in from day one.</p>
+                  <ul class="story-tags z4">
+                    <li>AI Enablement</li>
+                    <li>AI Implementation</li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- Scene 04: Cyrolabz -->
+              <article class="story-chap" data-side="right" data-active="false" aria-hidden="true">
+                <div class="story-tilt">
+                  <p class="story-eyebrow z1"><b>04</b> &nbsp;Cyrolabz</p>
+                  <h2 class="z3">Transformation, engineered.</h2>
+                  <p class="lead z2">One team carries you from strategy to build to audit. Every point in this mark began as a point in your business.</p>
+                  <ul class="story-tags z4">
+                    <li>AI Consulting</li>
+                    <li>Software Development</li>
+                    <li>Audits</li>
+                  </ul>
+                  <button class="story-replay-btn z4" id="storyReplay" type="button">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                      <path d="M2.5 8a5.5 5.5 0 1 0 1.8-4.07"/>
+                      <path d="M2.5 2.5v3h3"/>
+                    </svg>
+                    Replay story
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- Timeline Controls Rail -->
+          <nav class="story-rail" aria-label="Story chapters and timeline playback">
+            <button class="story-play" id="storyPlay" type="button" aria-label="Pause story">
+              <svg id="storyIcoPause" viewBox="0 0 16 16" aria-hidden="true">
+                <rect x="3" y="2" width="3.4" height="12"/>
+                <rect x="9.6" y="2" width="3.4" height="12"/>
+              </svg>
+              <svg id="storyIcoPlay" viewBox="0 0 16 16" aria-hidden="true" hidden>
+                <path d="M3.5 1.8v12.4L14 8z"/>
+              </svg>
+            </button>
+            <ol class="story-segs">
+              <li>
+                <button class="story-seg" type="button" data-go="0" aria-current="step">
+                  <span class="story-bar"><i></i></span>
+                  <span class="story-lab"><b>01</b><span class="name">Foundation</span></span>
+                </button>
+              </li>
+              <li>
+                <button class="story-seg" type="button" data-go="1">
+                  <span class="story-bar"><i></i></span>
+                  <span class="story-lab"><b>02</b><span class="name">Connect</span></span>
+                </button>
+              </li>
+              <li>
+                <button class="story-seg" type="button" data-go="2">
+                  <span class="story-bar"><i></i></span>
+                  <span class="story-lab"><b>03</b><span class="name">Intelligence</span></span>
+                </button>
+              </li>
+              <li>
+                <button class="story-seg" type="button" data-go="3">
+                  <span class="story-bar"><i></i></span>
+                  <span class="story-lab"><b>04</b><span class="name">Cyrolabz</span></span>
+                </button>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Overview Section (Grouped by Story Chapter) -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Core Capabilities</span>
+          <h2 class="section-title">Services Grouped by Chapter</h2>
+          <p class="section-lead">
+            Every service is anchored in one moment of the transformation story. From forensic inspection of legacy operations to custom systems wiring and autonomous intelligence.
+          </p>
+        </div>
+
+        <!-- How We Work Horizontal Strip -->
+        <div class="how-we-work-strip">
+          <div class="hww-label">HOW WE WORK:</div>
+          <div class="hww-steps">
+            <div class="hww-step"><span>01</span> Discover</div>
+            <div class="hww-sep">&rarr;</div>
+            <div class="hww-step"><span>02</span> Design</div>
+            <div class="hww-sep">&rarr;</div>
+            <div class="hww-step"><span>03</span> Build</div>
+            <div class="hww-sep">&rarr;</div>
+            <div class="hww-step"><span>04</span> Audit & Launch</div>
+            <div class="hww-sep">&rarr;</div>
+            <div class="hww-step"><span>05</span> Evolve</div>
+          </div>
+        </div>
+
+        <!-- Services Grouped By Chapters -->
+        <div class="services-chapter-groups">
+          
+          <!-- CHAPTER 01: FOUNDATION -->
+          <div class="chapter-group-block">
+            <div class="chapter-group-header">
+              <div class="cgh-meta">
+                <span class="cgh-badge">Chapter 01</span>
+                <span class="cgh-artwork-name">Pixel Skyline</span>
+              </div>
+              <h3 class="cgh-title">Foundation & Diagnostic Systems</h3>
+              <p class="cgh-desc">Your business, as it stands. Assessing data moats, architectural risks, and security boundaries before writing code.</p>
+            </div>
+
+            <div class="services-grid">
+              
+              <!-- Service 1: Consulting -->
+              <article class="svc-card" data-service-id="consulting">
+                <div class="svc-card-top">
+                  <span class="svc-badge">01 Foundation</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>Consulting & AI Architecture</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Clarifies enterprise ROI, selects resilient model architectures, and eliminates expensive blind-alley implementations.</p>
+                  <ul class="svc-checklist">
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Foundation model selection & fine-tuning strategy</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Private data governance & air-gapped security</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Executive roadmap & cost-benefit validation</li>
+                  </ul>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="consulting">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+              <!-- Service 2: Audits -->
+              <article class="svc-card" data-service-id="audits">
+                <div class="svc-card-top">
+                  <span class="svc-badge">01 Foundation</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>Forensic Technical & Security Audits</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Exposes architectural bottlenecks, compliance risks, and code vulnerabilities with a zero-trust executive scorecard.</p>
+                  <ul class="svc-checklist">
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Codebase security, OWASP & vulnerability scanning</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> AI readiness & training data leakage analysis</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Actionable remediation matrix & risk score</li>
+                  </ul>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="audits">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- CHAPTER 02: CONNECT -->
+          <div class="chapter-group-block">
+            <div class="chapter-group-header">
+              <div class="cgh-meta">
+                <span class="cgh-badge">Chapter 02</span>
+                <span class="cgh-artwork-name">Circuit Network</span>
+              </div>
+              <h3 class="cgh-title">Connect & Infrastructure Platforms</h3>
+              <p class="cgh-desc">Every window becomes a signal. Wiring disparate databases, APIs, custom backends, and spatial interfaces into a unified nervous system.</p>
+            </div>
+
+            <div class="services-grid services-grid-3">
+              
+              <!-- Service 3: Website Development -->
+              <article class="svc-card" data-service-id="website">
+                <div class="svc-card-top">
+                  <span class="svc-badge">02 Connect</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                      <line x1="8" y1="21" x2="16" y2="21"></line>
+                      <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>Website Development & Platforms</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Replaces bloated web footprints with sub-second, precision-engineered digital presences that maximize conversion.</p>
+                  <ul class="svc-checklist">
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Semantic HTML5, Vanilla CSS & 90+ Core Web Vitals</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Dual-theme architecture with zero layout shift</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Technical SEO & structured schema graph</li>
+                  </ul>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="website">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+              <!-- Service 4: 3D Interactive Design -->
+              <article class="svc-card" data-service-id="3d-design">
+                <div class="svc-card-top">
+                  <span class="svc-badge">02 Connect</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>3D Interactive & Spatial Design</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Transforms abstract product logic into interactive WebGL and particle simulations that captivate enterprise buyers.</p>
+                  <ul class="svc-checklist">
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> 11,000-particle canvas & WebGL morphing engines</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> 60 FPS interactive physics & mouse displacement</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Accessible fallbacks & reduced-motion support</li>
+                  </ul>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="3d-design">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+              <!-- Service 5: Custom Software Development -->
+              <article class="svc-card" data-service-id="software">
+                <div class="svc-card-top">
+                  <span class="svc-badge">02 Connect</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>Custom Software Development</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Unifies fragmented legacy databases and operational spreadsheets into high-concurrency event-driven platforms.</p>
+                  <ul class="svc-checklist">
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Resilient distributed microservices & event streaming</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Zero-downtime database migration & API wiring</li>
+                    <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Cloud-native containerization & horizontal scaling</li>
+                  </ul>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="software">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- CHAPTER 03: INTELLIGENCE -->
+          <div class="chapter-group-block">
+            <div class="chapter-group-header">
+              <div class="cgh-meta">
+                <span class="cgh-badge">Chapter 03</span>
+                <span class="cgh-artwork-name">Dissolving Face</span>
+              </div>
+              <h3 class="cgh-title">Intelligence & Autonomous Workflows</h3>
+              <p class="cgh-desc">Then the system starts to think. Transforming connected data into grounded copilots, autonomous multi-agent pipelines, and automated decisions.</p>
+            </div>
+
+            <div class="services-grid services-grid-single">
+              
+              <!-- Service 6: AI Enablement & Implementation -->
+              <article class="svc-card" data-service-id="ai-enablement">
+                <div class="svc-card-top">
+                  <span class="svc-badge">03 Intelligence</span>
+                  <div class="svc-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                  </div>
+                </div>
+                <div class="svc-card-body">
+                  <h3>AI Enablement & Implementation</h3>
+                  <p class="svc-outcome"><strong>Outcome:</strong> Turns organizational knowledge into grounded, autonomous multi-agent systems with zero hallucination and strict security guardrails.</p>
+                  <div class="svc-cols">
+                    <ul class="svc-checklist">
+                      <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Hybrid Vector + Lexical RAG with document citation</li>
+                      <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Multi-agent task orchestration & tool calling</li>
+                    </ul>
+                    <ul class="svc-checklist">
+                      <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Low-latency semantic caching & prompt firewalls</li>
+                      <li><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Model drift monitoring & continuous evaluation loops</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="svc-card-footer">
+                  <button type="button" class="svc-detail-trigger" data-open-service="ai-enablement">
+                    Inspect Deliverables &rarr;
+                  </button>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About Studio Section ("Who Is Behind The Studio") -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about-grid">
+          
+          <div class="about-intro">
+            <span class="kicker">The Studio</span>
+            <h2 class="section-title">One Studio. Strategy to Build to Audit.</h2>
+            <p class="section-lead" style="margin-bottom: 24px;">
+              Digital transformation fails in the handoff gaps between high-level management consultants, web agencies, and internal IT teams. Cyrolabz was founded to eliminate those fault lines.
+            </p>
+            <p style="color: var(--muted); line-height: 1.6; margin-bottom: 24px;">
+              We operate as a unified, senior-led engineering studio. The same systems architects who evaluate your data moats during Foundation write your custom microservices in Connect, train your models in Intelligence, and rigorously stress-test your security posture during Audit.
+            </p>
+
+            <div class="about-compliance-strip">
+              <div class="acs-item">
+                <span class="acs-badge">SOC 2 Type II</span>
+                <span class="acs-lbl">Architecture Ready</span>
+              </div>
+              <div class="acs-item">
+                <span class="acs-badge">ISO/IEC 42001</span>
+                <span class="acs-lbl">AI Management</span>
+              </div>
+              <div class="acs-item">
+                <span class="acs-badge">NIST AI RMF</span>
+                <span class="acs-lbl">Risk Alignment</span>
+              </div>
+              <div class="acs-item">
+                <span class="acs-badge">100% Private</span>
+                <span class="acs-lbl">Air-Gapped Models</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Three Proof Tiles -->
+          <div class="about-proof-tiles">
+            
+            <!-- Proof Tile 1: End-to-End -->
+            <div class="proof-tile blueprint-box">
+              <div class="proof-tile-num">01</div>
+              <h3 class="proof-tile-title">End-to-End</h3>
+              <p class="proof-tile-desc">
+                From initial systems audit to custom software engineering to deployed AI inference. No handoffs, no subcontracted agencies, and zero architectural dilution.
+              </p>
+              <div class="proof-tile-tag">Singular Accountability</div>
+            </div>
+
+            <!-- Proof Tile 2: Secure by Design -->
+            <div class="proof-tile blueprint-box">
+              <div class="proof-tile-num">02</div>
+              <h3 class="proof-tile-title">Secure by Design</h3>
+              <p class="proof-tile-desc">
+                Built strictly on zero-trust fundamentals. Private network perimeter isolation, encrypted model weights, and rigorous OWASP API compliance from day zero.
+              </p>
+              <div class="proof-tile-tag">Forensic Rigor</div>
+            </div>
+
+            <!-- Proof Tile 3: Outcome-Led -->
+            <div class="proof-tile blueprint-box">
+              <div class="proof-tile-num">03</div>
+              <h3 class="proof-tile-title">Outcome-Led</h3>
+              <p class="proof-tile-desc">
+                No vanity prototypes or speculative experiments. Every line of code is tied directly to measurable operational efficiency, recaptured hours, and reduced cost.
+              </p>
+              <div class="proof-tile-tag">Quantifiable ROI</div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5-Step Process Section -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Methodology</span>
+          <h2 class="section-title">The Five-Step Transformation Process</h2>
+          <p class="section-lead">
+            Every engagement follows a structured, milestone-gated progression to guarantee architectural precision and predictable delivery velocity.
+          </p>
+        </div>
+
+        <div class="process-track">
+          
+          <div class="process-node">
+            <div class="pn-step">01</div>
+            <div class="pn-content">
+              <h4>Discover</h4>
+              <p>Forensic inspection of legacy systems, data moats, API endpoints, and internal organizational bottlenecks.</p>
+              <span class="pn-badge">Phase 01</span>
+            </div>
+          </div>
+
+          <div class="process-node">
+            <div class="pn-step">02</div>
+            <div class="pn-content">
+              <h4>Design</h4>
+              <p>Architecting distributed database schemas, API topologies, interactive 3D visualizers, and security guardrails.</p>
+              <span class="pn-badge">Phase 02</span>
+            </div>
+          </div>
+
+          <div class="process-node">
+            <div class="pn-step">03</div>
+            <div class="pn-content">
+              <h4>Build</h4>
+              <p>Production engineering of microservices, custom software, fine-tuned model pipelines, and client interfaces.</p>
+              <span class="pn-badge">Phase 03</span>
+            </div>
+          </div>
+
+          <div class="process-node">
+            <div class="pn-step">04</div>
+            <div class="pn-content">
+              <h4>Audit & Launch</h4>
+              <p>Penetration testing, model hallucination benchmarks, load stress validation, and zero-downtime production cutover.</p>
+              <span class="pn-badge">Phase 04</span>
+            </div>
+          </div>
+
+          <div class="process-node">
+            <div class="pn-step">05</div>
+            <div class="pn-content">
+              <h4>Evolve</h4>
+              <p>Continuous telemetry monitoring, drift detection, proactive performance optimization, and AI capability expansion.</p>
+              <span class="pn-badge">Phase 05</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Live 3D Interactive Design Demo Showcase ("System Core") -->
+    <section class="section" id="system-core">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">3D Interactive Design Demo</span>
+          <h2 class="section-title">The System Core: Orbital Interactive Engine</h2>
+          <p class="section-lead">
+            The orbital motif represents the unified intelligence core of your business. Interact with the live 3D simulation below to experience our spatial engineering capabilities.
+          </p>
+        </div>
+
+        <div class="core-showcase-box blueprint-box">
+          <div class="core-canvas-container" id="coreCanvasContainer">
+            <canvas id="core3dCanvas" aria-label="Interactive 3D Orbital Core simulation"></canvas>
+            
+            <!-- Floating HUD Telemetry Readouts -->
+            <div class="core-hud-top">
+              <span class="hud-pill"><span class="hud-pulse"></span> CORE ONLINE</span>
+              <span class="hud-pill">FPS: <strong id="hudFps">60.0</strong></span>
+              <span class="hud-pill">NODES: <strong>16 ACTIVE</strong></span>
+            </div>
+
+            <div class="core-hud-bottom">
+              <div class="hud-stat-box">
+                <span class="hsb-val">99.99%</span>
+                <span class="hsb-lbl">Orbit Synchronicity</span>
+              </div>
+              <div class="hud-stat-box">
+                <span class="hsb-val">0.42 ms</span>
+                <span class="hsb-lbl">Frame Delta</span>
+              </div>
+              <div class="hud-stat-box">
+                <span class="hsb-val">&plusmn;7.2&deg;</span>
+                <span class="hsb-lbl">Spatial Inclination</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Controls Rail -->
+          <div class="core-controls-rail">
+            <div class="cc-group">
+              <span class="cc-label">Orbital Rotation:</span>
+              <button type="button" class="cc-btn is-active" id="btnCoreSpeedNormal">1x Speed</button>
+              <button type="button" class="cc-btn" id="btnCoreSpeedFast">2.5x Warp</button>
+              <button type="button" class="cc-btn" id="btnCoreFreeze">Freeze</button>
+            </div>
+
+            <div class="cc-group">
+              <span class="cc-label">Visual Shader Mode:</span>
+              <button type="button" class="cc-btn is-active" id="btnCoreModeWire">Signal Wireframe</button>
+              <button type="button" class="cc-btn" id="btnCoreModeSolid">Volumetric Rings</button>
+            </div>
+
+            <button type="button" class="btn-primary" id="btnCorePulse" style="margin-left: auto;">
+              Trigger Energy Pulse
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work & Case Studies Section -->
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Proven Capability</span>
+          <h2 class="section-title">Selected Case Studies</h2>
+          <p class="section-lead">
+            Real transformations delivered for real systems. No invented statistics, speculative placeholders, or ungrounded claims.
+          </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="work-filters" role="tablist" aria-label="Case study categories">
+          <button type="button" class="work-tab is-active" role="tab" data-filter="all">All Engagements</button>
+          <button type="button" class="work-tab" role="tab" data-filter="ai">AI Enablement</button>
+          <button type="button" class="work-tab" role="tab" data-filter="software">Custom Software</button>
+          <button type="button" class="work-tab" role="tab" data-filter="audits">Technical Audits</button>
+          <button type="button" class="work-tab" role="tab" data-filter="3d">3D Web</button>
+        </div>
+
+        <!-- Case Studies Grid -->
+        <div class="case-studies-grid">
+          
+          <!-- Case 1: AI Enablement -->
+          <article class="case-card blueprint-box" data-case-cat="ai">
+            <div class="case-header">
+              <span class="case-chap-badge">03 Intelligence</span>
+              <span class="case-client-type">Fintech Intelligence Platform</span>
+            </div>
+            <h3 class="case-title">Autonomous Compliance & Regulatory Retrieval Engine</h3>
+            
+            <div class="case-triad">
+              <div class="case-triad-block">
+                <h5>Problem</h5>
+                <p>Over 80,000 regulatory circulars and risk filings spread across siloed internal document vaults, creating multi-day research delays and audit compliance exposure.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Approach</h5>
+                <p>Designed a private, air-gapped Hybrid Vector-Lexical RAG pipeline with citation verification, deterministic guardrails, and role-based access tokens.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Outcome</h5>
+                <p>Reduced compliance research turnaround from 3.5 days to under 4 seconds with zero hallucinations across 14,000 test queries and 100% audit auditability.</p>
+              </div>
+            </div>
+
+            <div class="case-footer">
+              <ul class="case-tags">
+                <li>Hybrid RAG</li>
+                <li>Zero-Hallucination Guardrails</li>
+                <li>SOC2 Compliant</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Case 2: Custom Software & Connect -->
+          <article class="case-card blueprint-box" data-case-cat="software">
+            <div class="case-header">
+              <span class="case-chap-badge">02 Connect</span>
+              <span class="case-client-type">Global Supply Chain Operator</span>
+            </div>
+            <h3 class="case-title">High-Throughput Unified Event Telemetry & API Platform</h3>
+            
+            <div class="case-triad">
+              <div class="case-triad-block">
+                <h5>Problem</h5>
+                <p>Warehouse logistics and ERP systems were trapped in batch-processed CSV exports and nightly SQL dumps, causing frequent dispatch collisions and stale inventory.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Approach</h5>
+                <p>Architected an event-driven Go and Rust microservices mesh connected to real-time message brokers, bridging legacy AS/400 databases without cutover downtime.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Outcome</h5>
+                <p>Achieved sub-10ms event dissemination across 42 global distribution hubs, eliminating inventory collisions and cutting operational coordination overhead by 46%.</p>
+              </div>
+            </div>
+
+            <div class="case-footer">
+              <ul class="case-tags">
+                <li>Event Streaming</li>
+                <li>Zero-Downtime Migration</li>
+                <li>Sub-10ms Latency</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Case 3: Forensic Technical Audit -->
+          <article class="case-card blueprint-box" data-case-cat="audits">
+            <div class="case-header">
+              <span class="case-chap-badge">01 Foundation</span>
+              <span class="case-client-type">Healthcare SaaS Provider</span>
+            </div>
+            <h3 class="case-title">Pre-Acquisition Forensic Codebase & AI Safety Audit</h3>
+            
+            <div class="case-triad">
+              <div class="case-triad-block">
+                <h5>Problem</h5>
+                <p>Target firm prepared for an institutional buyout required independent validation of proprietary AI claims, training data hygiene, and healthcare data security posture.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Approach</h5>
+                <p>Conducted static AST code analysis, dependency tree audit, data provenance tracking, and simulated adversarial prompt injection attacks over 14 days.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Outcome</h5>
+                <p>Identified 3 critical licensing vulnerabilities and unverified model claims, providing buyer with an airtight remediation roadmap that closed the transaction securely.</p>
+              </div>
+            </div>
+
+            <div class="case-footer">
+              <ul class="case-tags">
+                <li>Forensic Audit</li>
+                <li>AI Provenance</li>
+                <li>HIPAA / OWASP</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Case 4: 3D Web & Interactive -->
+          <article class="case-card blueprint-box" data-case-cat="3d">
+            <div class="case-header">
+              <span class="case-chap-badge">02 Connect</span>
+              <span class="case-client-type">Advanced Robotics Manufacturer</span>
+            </div>
+            <h3 class="case-title">Real-Time Spatial Digital Twin & WebGL Configurator</h3>
+            
+            <div class="case-triad">
+              <div class="case-triad-block">
+                <h5>Problem</h5>
+                <p>Prospective enterprise buyers could not evaluate complex industrial robotic kinematics through static CAD renderings and 2D spec sheets.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Approach</h5>
+                <p>Engineered an in-browser WebGL and Three.js digital twin simulator with sub-second loading, customized physics solvers, and mobile GPU optimization.</p>
+              </div>
+              <div class="case-triad-block">
+                <h5>Outcome</h5>
+                <p>Delivered rock-solid 60 FPS performance across mobile and desktop, increasing enterprise pilot request conversion by 3.2x in the first quarter.</p>
+              </div>
+            </div>
+
+            <div class="case-footer">
+              <ul class="case-tags">
+                <li>WebGL / Three.js</li>
+                <li>60 FPS Mobile</li>
+                <li>Digital Twin</li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section class="section" id="insights">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Engineering Authority</span>
+          <h2 class="section-title">Technical Insights & Briefings</h2>
+          <p class="section-lead">
+            Authoritative perspectives on enterprise AI strategy, data governance, and resilient systems engineering, tagged by story chapter.
+          </p>
+        </div>
+
+        <div class="insights-grid">
+          
+          <!-- Article 1 -->
+          <article class="insight-card blueprint-box" data-insight-id="article-1">
+            <div class="insight-head">
+              <span class="insight-chap-tag">01 Foundation</span>
+              <span class="insight-read-time">7 min read</span>
+            </div>
+            <h3 class="insight-title">De-risking Enterprise LLMs: The Pre-Deployment Audit Protocol</h3>
+            <p class="insight-excerpt">
+              Why 80% of enterprise AI proofs-of-concept fail in production, and the exact architectural checklist required to verify data provenance and eliminate hallucination drift.
+            </p>
+            <div class="insight-footer">
+              <span class="insight-date">October 2026 · Systems Audit Practice</span>
+              <button type="button" class="insight-read-btn" data-open-insight="article-1">Read Briefing &rarr;</button>
+            </div>
+          </article>
+
+          <!-- Article 2 -->
+          <article class="insight-card blueprint-box" data-insight-id="article-2">
+            <div class="insight-head">
+              <span class="insight-chap-tag">02 Connect</span>
+              <span class="insight-read-time">6 min read</span>
+            </div>
+            <h3 class="insight-title">Beyond Wrappers: Engineering Resilient API Nervous Systems</h3>
+            <p class="insight-excerpt">
+              How to transition from fragile third-party SaaS point solutions to an event-driven internal backbone that retains complete organizational data sovereignty.
+            </p>
+            <div class="insight-footer">
+              <span class="insight-date">September 2026 · Software Engineering</span>
+              <button type="button" class="insight-read-btn" data-open-insight="article-2">Read Briefing &rarr;</button>
+            </div>
+          </article>
+
+          <!-- Article 3 -->
+          <article class="insight-card blueprint-box" data-insight-id="article-3">
+            <div class="insight-head">
+              <span class="insight-chap-tag">03 Intelligence</span>
+              <span class="insight-read-time">9 min read</span>
+            </div>
+            <h3 class="insight-title">Autonomous Multi-Agent Orchestration with Deterministic Guardrails</h3>
+            <p class="insight-excerpt">
+              Deploying multi-agent systems in regulated industries without compromising factual fidelity. Architectural patterns for sandboxing, verification loops, and fallback routing.
+            </p>
+            <div class="insight-footer">
+              <span class="insight-date">August 2026 · Applied AI Practice</span>
+              <button type="button" class="insight-read-btn" data-open-insight="article-3">Read Briefing &rarr;</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Technical Audit Calculator -->
+    <section class="section" id="calculator">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Interactive Telemetry</span>
+          <h2 class="section-title">Estimate Your Transformation Scope</h2>
+          <p class="section-lead">
+            Select your organization's current stack posture to calculate projected efficiency multipliers and recommended audit architecture.
+          </p>
+        </div>
+
+        <div class="calculator-card blueprint-box">
+          <div class="calc-grid">
+            
+            <!-- Inputs -->
+            <div class="calc-inputs">
+              <div class="calc-field">
+                <label for="calcMaturity">Current Architecture Maturity</label>
+                <select id="calcMaturity" class="calc-select">
+                  <option value="legacy" selected>Legacy (Siloed spreadsheets, on-prem tools, minimal APIs)</option>
+                  <option value="hybrid">Hybrid (Mixed cloud tools, partial API wiring, manual glue)</option>
+                  <option value="cloud">Modern Cloud (Cloud-native APIs, seeking AI intelligence layer)</option>
+                </select>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcDataScale">Data Volume & Record Scale</label>
+                <select id="calcDataScale" class="calc-select">
+                  <option value="mid" selected>Mid-Scale (Millions of rows / Multi-department DBs)</option>
+                  <option value="large">High-Volume (Tens of millions / Disparate data lakes)</option>
+                  <option value="enterprise">Global Enterprise (Complex unstructured docs & ERP streams)</option>
+                </select>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcObjective">Primary Strategic Mandate</label>
+                <select id="calcObjective" class="calc-select">
+                  <option value="ai-enable" selected>Deploy Applied AI & Copilot Automation</option>
+                  <option value="custom-sw">Wire Unified Custom Software Platform</option>
+                  <option value="audit">Perform Security, AI Safety & Codebase Audit</option>
+                  <option value="3d-spatial">Engineer 3D Spatial & Interactive Experience</option>
+                </select>
+              </div>
+
+              <div class="calc-field">
+                <label for="calcTimeline">Target Velocity</label>
+                <select id="calcTimeline" class="calc-select">
+                  <option value="expedited" selected>Standard Enterprise Sprint (2-4 Weeks)</option>
+                  <option value="sprint">Accelerated Launchpad Sprint (1-2 Weeks)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Calculated Readout -->
+            <div class="calc-results">
+              <div class="calc-readouts">
+                <div class="calc-stat">
+                  <span class="calc-stat-val" id="calcOutMultiplier">3.8x</span>
+                  <span class="calc-stat-lbl">Projected Efficiency Multiplier</span>
+                </div>
+                <div class="calc-stat">
+                  <span class="calc-stat-val" id="calcOutHoursSaved">140+ hrs/mo</span>
+                  <span class="calc-stat-lbl">Engineering Time Recaptured</span>
+                </div>
+              </div>
+
+              <div class="calc-stat">
+                <span class="calc-stat-val" id="calcOutDays" style="font-size: 1.8rem; color: var(--ink);">21 Days</span>
+                <span class="calc-stat-lbl">Estimated Signal Integration Velocity</span>
+              </div>
+
+              <div class="calc-tier-box">
+                <div class="calc-tier-lbl">Recommended Engagement Tier</div>
+                <div class="calc-tier-name" id="calcOutTier">Enterprise Modernization & AI Tier</div>
+              </div>
+
+              <button type="button" class="btn-primary" id="calcApplyBtn" style="justify-content: center;">
+                Apply to Consultation Form &rarr;
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confidential Contact & Audit Booking Section (With Logo Particle Convergence) -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="booking-grid">
+          
+          <!-- Left: Value Prop & Security Guarantee -->
+          <div class="booking-info">
+            <div>
+              <span class="kicker">Confidential Engagement</span>
+              <h2 class="section-title" style="margin-bottom: 16px;">Initiate Your Transformation</h2>
+              <p class="section-lead">
+                Every transformation begins with an forensic inspection of your current systems. Our senior partners review all inquiries under strict non-disclosure agreements.
+              </p>
+            </div>
+
+            <ul class="booking-perks">
+              <li class="booking-perk-item">
+                <div class="booking-perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Zero-Data-Retention NDA</h4>
+                  <p>Mutual confidentiality executed prior to code inspection or architecture sharing.</p>
+                </div>
+              </li>
+              <li class="booking-perk-item">
+                <div class="booking-perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Senior Partner Review</h4>
+                  <p>Direct communication with AI architects and systems engineers, never sales reps.</p>
+                </div>
+              </li>
+              <li class="booking-perk-item">
+                <div class="booking-perk-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h4>1-Business-Day Response</h4>
+                  <p>Every qualified inquiry receives technical feedback within 24 business hours.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Interactive Form with Particle Background -->
+          <div class="booking-card blueprint-box" style="position: relative; overflow: hidden;">
+            <canvas id="contactCv" class="contact-particles-bg" aria-hidden="true"></canvas>
+
+            <form class="booking-form" id="auditBookingForm" novalidate style="position: relative; z-index: 2;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="bookingName">Your Name *</label>
+                  <input type="text" id="bookingName" class="form-input" placeholder="e.g. Neil Vance" required>
+                </div>
+                <div class="form-group">
+                  <label for="bookingCompany">Company / Entity *</label>
+                  <input type="text" id="bookingCompany" class="form-input" placeholder="e.g. Cyro Enterprise Corp" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="bookingEmail">Work Email *</label>
+                  <input type="email" id="bookingEmail" class="form-input" placeholder="neil@company.com" required>
+                </div>
+                <div class="form-group">
+                  <label for="bookingService">Primary Need *</label>
+                  <select id="bookingService" class="form-select">
+                    <option value="AI Enablement & Implementation" selected>AI Enablement & Implementation</option>
+                    <option value="Consulting & AI Architecture">Consulting & AI Architecture</option>
+                    <option value="Custom Software Development">Custom Software Development</option>
+                    <option value="Forensic Technical Audits">Forensic Technical Audits</option>
+                    <option value="3D Interactive & Spatial Design">3D Interactive Design</option>
+                    <option value="Website Development">Website Development</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bookingNotes">Project Parameters & Challenge Details</label>
+                <textarea id="bookingNotes" class="form-textarea" placeholder="Describe your current systems, data sources, and desired transformation outcomes..."></textarea>
+              </div>
+
+              <p class="form-guarantee">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Protected under Cyrolabz Strict Mutual Confidentiality & Security Protocol.
+              </p>
+
+              <div class="form-actions-row">
+                <button type="submit" class="btn-primary" style="justify-content: center; padding: 14px 24px; flex: 1;">
+                  Book a Free Consultation
+                </button>
+                <button type="button" class="btn-secondary" id="btnStartProject" style="justify-content: center; padding: 14px 20px;">
+                  Start a Project
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Service Detail Drawer (Implements the 7-Part Service Page Template) -->
+  <aside class="service-drawer-overlay" id="serviceDrawerOverlay" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="service-drawer" id="serviceDrawer">
+      <div class="sd-header">
+        <div class="sd-chapter-tag" id="sdChapterTag">01 Foundation</div>
+        <button type="button" class="sd-close-btn" id="sdCloseBtn" aria-label="Close service template drawer">&times;</button>
+      </div>
+
+      <div class="sd-body" id="sdBody">
+        <!-- Injected via JavaScript from Service Template Registry -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- Insight Briefing Modal -->
+  <div class="modal-overlay" id="insightModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box modal-box-large">
+      <div class="insight-modal-header">
+        <div>
+          <span class="insight-chap-tag" id="imChapterTag">01 Foundation</span>
+          <h3 id="imTitle" style="font-size: 1.6rem; margin: 10px 0 6px;">Insight Briefing</h3>
+          <span id="imMeta" style="color: var(--muted); font-size: 0.8125rem;">Technical Briefing · Cyrolabz Engineering</span>
+        </div>
+        <button type="button" class="modal-close-ico" id="imCloseBtn" aria-label="Close insight briefing">&times;</button>
+      </div>
+      <div class="insight-modal-content" id="imContent">
+        <!-- Populated via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="bookingConfirmationModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h3 style="font-size: 1.6rem; margin: 0;">Consultation Request Received</h3>
+      <p style="color: var(--muted); margin: 0; font-size: 0.95rem;">
+        Your system parameters have been registered in the Cyrolabz engineering queue. A senior partner will review your requirements under mutual NDA and reply within 1 business day.
+      </p>
+      <div class="modal-code-chip" id="modalRefCode">CYRO-842917</div>
+      <button type="button" class="btn-primary" id="modalCloseBtn" style="justify-content: center; margin-top: 8px;">
+        Return to Platform
+      </button>
+    </div>
+  </div>
+
+  <!-- Legal Modals (Privacy Policy & Terms) -->
+  <div class="modal-overlay" id="legalModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-box modal-box-large">
+      <div class="insight-modal-header">
+        <h3 id="legalTitle" style="font-size: 1.5rem; margin: 0;">Privacy Policy</h3>
+        <button type="button" class="modal-close-ico" id="legalCloseBtn" aria-label="Close legal modal">&times;</button>
+      </div>
+      <div class="insight-modal-content" id="legalContent">
+        <!-- Legal terms dynamically loaded -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/brand-logo.png" alt="Cyrolabz Logo" width="160" height="48">
+          <p>
+            Transformation, engineered. Applied AI consulting, custom software architectures, and forensic security audits for enterprise leaders.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#story">Transformation Story</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Studio</a></li>
+            <li><a href="#process">5-Step Process</a></li>
+            <li><a href="#system-core">3D System Core</a></li>
+            <li><a href="#work">Work & Case Studies</a></li>
+            <li><a href="#insights">Insights</a></li>
+            <li><a href="#contact">Book Consultation</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+          <ul class="footer-links">
+            <li><a href="#services" data-open-service="consulting">01 · Consulting</a></li>
+            <li><a href="#services" data-open-service="audits">01 · Audits</a></li>
+            <li><a href="#services" data-open-service="website">02 · Website Development</a></li>
+            <li><a href="#services" data-open-service="3d-design">02 · 3D Interactive Design</a></li>
+            <li><a href="#services" data-open-service="software">02 · Custom Software</a></li>
+            <li><a href="#services" data-open-service="ai-enablement">03 · AI Enablement</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Engineering Desk</h4>
+          <ul class="footer-links">
+            <li><span style="color: var(--muted); font-size: 0.875rem;">HQ: High-Performance Distributed</span></li>
+            <li><span style="color: var(--muted); font-size: 0.875rem;">Security: End-to-End Encrypted</span></li>
+            <li><span style="color: var(--muted); font-size: 0.875rem;">Advisory: Open for Engagements</span></li>
+            <li><a href="javascript:void(0)" id="footerPrivacyLink" style="color: var(--accent);">Privacy Policy</a></li>
+            <li><a href="javascript:void(0)" id="footerTermsLink" style="color: var(--accent);">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Cyrolabz. All rights reserved. Transformation, engineered.</span>
+        <span>Systems Status: <strong style="color: var(--success); font-weight: 500;">All Cores Operational</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/story-data.js"></script>
+  <script src="js/audio-fx.js"></script>
+  <script src="js/story-engine.js"></script>
+  <script src="js/site.js"></script>
+
+</body>
+</html>
