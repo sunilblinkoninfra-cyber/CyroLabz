@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ['three'],
+  transpilePackages: ['three', 'gsap'],
   outputFileTracingRoot: path.join(__dirname),
 };
 

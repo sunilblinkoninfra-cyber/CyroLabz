@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { storyBus, useStoryStore } from "@/lib/storyStore";
-import { ServicesSection } from "@/components/services/ServicesSection";
+import { ServicesCarousel } from "@/components/services/ServicesCarousel";
 
 const READ = [
   "Legacy systems",
@@ -21,19 +21,18 @@ export default function HomePage() {
   const copyRef = useRef<HTMLDivElement | null>(null);
 
   const [activeChapter, setActiveChapter] = useState(0);
+  const [sVal, setSVal] = useState(0);
 
   const travelTo = useStoryStore((state) => state.travelTo);
 
-  // Scroll to chapter index k
+  // Scroll to chapter index k (0..3) in the story
   const go = useCallback((k: number) => {
-    if (!runwayRef.current) return;
-    const maxScroll = Math.max(
-      1,
-      runwayRef.current.offsetHeight - window.innerHeight
-    );
+    const vh = window.innerHeight;
+    const S = 4.6 * vh;
+    const dStory = 0.94 * S;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({
-      top: (0.04 + 0.9 * (k / SEG)) * maxScroll,
+      top: (0.04 + 0.9 * (k / SEG)) * dStory,
       behavior: reduce ? "auto" : "smooth",
     });
   }, []);
@@ -60,6 +59,7 @@ export default function HomePage() {
     let inside = false;
 
     const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch") return;
       const r = viewEl.getBoundingClientRect();
       ptTX = e.clientX - r.left;
       ptTY = e.clientY - r.top;
@@ -88,87 +88,43 @@ export default function HomePage() {
       const W = Math.max(1, viewEl.clientWidth);
       const H = Math.max(1, viewEl.clientHeight);
 
-      // Scroll calculation:
-      // - Progress s runs 0 to 4. 0 to 3 is existing story. From 3 to 4 logo turns into network.
-      // - Story uses first 94% of runway scroll distance; next 85% of 1 viewport height takes s from 3 to 4.
-      // - After that, s stays at 4 while services scroll over fixed canvas.
-      if (runwayRef.current) {
-        const H_storyScroll = Math.max(
-          1,
-          runwayRef.current.offsetHeight - window.innerHeight
-        );
-        const scrollY =
-          window.pageYOffset || document.documentElement.scrollTop || 0;
+      // Scroll calculation according to specification:
+      // Let S be the height of the story's scroll spacer (460vh in the prototype),
+      // vh the viewport height, py the scroll position and t = (py - 0.94 * S) / vh.
+      // Story progress is unchanged and gives s up to 3 at py = 0.94 * S.
+      // After that:
+      // s = 3 + t / 0.85 for t from 0 to 0.85 (logo turns into image 1)
+      // s = 4 + min(3, t - 0.85) for t above 0.85 (one screen of scroll per card)
+      const vh = window.innerHeight;
+      const S = 4.6 * vh;
+      const dStory = 0.94 * S;
+      const py = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const t = (py - dStory) / vh;
 
-        const dStory = 0.94 * H_storyScroll;
-        const dMorph = 0.85 * window.innerHeight;
-
-        let target = 0;
-        if (scrollY <= 0) {
-          target = 0;
-        } else if (scrollY <= dStory) {
-          const prog = scrollY / H_storyScroll;
-          target = Math.max(0, Math.min(1, (prog - 0.04) / 0.9)) * 3;
-        } else if (scrollY < dStory + dMorph) {
-          target = 3 + (scrollY - dStory) / dMorph;
-        } else {
-          // Continuous scroll progress across the four service carousels:
-          // Stage 1 (Consulting): ~4.0 to 4.4
-          // Stage 2 (Connect): ~5.0
-          // Stage 3 (Intelligence): ~6.0
-          // Stage 4 (Visibility): ~7.0
-          const c0 = document.getElementById("carousel-consulting");
-          const c1 = document.getElementById("carousel-connect");
-          const c2 = document.getElementById("carousel-intelligence");
-          const c3 = document.getElementById("carousel-visibility");
-
-          if (c0 && c1 && c2 && c3) {
-            const vCenter = window.innerHeight * 0.5;
-            const r0 = c0.getBoundingClientRect();
-            const r1 = c1.getBoundingClientRect();
-            const r2 = c2.getBoundingClientRect();
-            const r3 = c3.getBoundingClientRect();
-
-            const y0 = r0.top + r0.height * 0.5;
-            const y1 = r1.top + r1.height * 0.5;
-            const y2 = r2.top + r2.height * 0.5;
-            const y3 = r3.top + r3.height * 0.5;
-
-            if (vCenter <= y0) {
-              const dist = y0 - vCenter;
-              const frac = Math.max(0, Math.min(1, 1 - dist / (window.innerHeight * 0.75)));
-              target = 4.0 + frac * 0.4;
-            } else if (vCenter <= y1) {
-              const t = (vCenter - y0) / Math.max(1, y1 - y0);
-              target = 4.4 + t * 0.6; // 4.4 -> 5.0
-            } else if (vCenter <= y2) {
-              const t = (vCenter - y1) / Math.max(1, y2 - y1);
-              target = 5.0 + t * 1.0; // 5.0 -> 6.0
-            } else if (vCenter <= y3) {
-              const t = (vCenter - y2) / Math.max(1, y3 - y2);
-              target = 6.0 + t * 1.0; // 6.0 -> 7.0
-            } else {
-              const extra = Math.min(1, (vCenter - y3) / (window.innerHeight * 0.6));
-              target = 7.0 + extra * 0.2;
-            }
-          } else {
-            target = 4;
-          }
-        }
-
-        storyBus.targetS = target;
+      let target = 0;
+      if (py <= 0) {
+        target = 0;
+      } else if (py <= dStory) {
+        target = Math.max(0, Math.min(1, (py / dStory - 0.04) / 0.9)) * 3;
+      } else if (t <= 0.85) {
+        target = 3 + t / 0.85;
+      } else {
+        target = 4 + Math.min(3, t - 0.85);
       }
 
-      const s = storyBus.s;
-      const c = Math.min(3, Math.max(0, Math.round(s)));
+      storyBus.targetS = target;
 
+      const s = storyBus.s;
+      setSVal(s);
+
+      const c = Math.min(3, Math.max(0, Math.round(Math.min(3, s))));
       if (c !== curChapter) {
         curChapter = c;
         setActiveChapter(c);
       }
 
-      // While s is above 3.3, fade out the story copy, scene caption, and corner brackets around art
-      const storyFadeOpacity = Math.max(0, Math.min(1, 1 - (s - 3.3) / 0.3));
+      // When s is above 3.3, fade out the story copy, the scene caption and the corner brackets
+      const storyFadeOpacity = Math.max(0, Math.min(1, 1 - (s - 3.3) / 0.25));
       copyEl.style.opacity = storyFadeOpacity.toString();
       copyEl.style.pointerEvents = storyFadeOpacity < 0.05 ? "none" : "auto";
       viewEl.style.opacity = storyFadeOpacity.toString();
@@ -204,9 +160,10 @@ export default function HomePage() {
     };
   }, []);
 
-  // Keyboard navigation
+  // Keyboard navigation for story chapters when s <= 3.9
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (storyBus.s > 3.9) return;
       const target = e.target as HTMLElement;
       if (
         target &&
@@ -242,12 +199,14 @@ export default function HomePage() {
           data-art={artSide}
           aria-label="Digital transformation story in four chapters"
         >
+          {/* Corner brackets and readout caption */}
           <div className="view" id="view" ref={viewRef}>
             <p className="readout" id="readout">
               {READ[activeChapter]}
             </p>
           </div>
 
+          {/* Story chapters copy (fades out when s > 3.3) */}
           <div className="copy" id="copy" ref={copyRef} aria-live="polite">
             {/* Chapter 01 */}
             <article
@@ -371,11 +330,11 @@ export default function HomePage() {
               </div>
             </article>
           </div>
+
+          {/* Glass Card Carousel for Services (fades in as logo morphs to image 1, s >= 3.55) */}
+          <ServicesCarousel s={sVal} />
         </section>
       </div>
-
-      {/* Services Section with translucent presentation cards */}
-      <ServicesSection />
     </div>
   );
 }

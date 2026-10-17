@@ -27,6 +27,12 @@
   --f-display: var(--font-sora), 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-label: var(--font-michroma), 'Michroma', 'Sora', system-ui, sans-serif;
   --f-body: var(--font-manrope), 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --glass-a: rgba(255, 255, 255, 0.5);
+  --glass-b: rgba(255, 255, 255, 0.22);
+  --glass-edge: rgba(255, 255, 255, 0.85);
+  --glass-line: rgba(11, 12, 14, 0.12);
+  --glass-shadow: rgba(11, 12, 14, 0.18);
+  --glass-in: rgba(244, 245, 247, 0.74);
 }
 
 /* Explicit forced light theme */
@@ -51,6 +57,12 @@
   --ext2: rgba(11, 12, 14, 0.07);
   --ext3: rgba(11, 12, 14, 0.035);
   --card: rgba(244, 245, 247, 0.74);
+  --glass-a: rgba(255, 255, 255, 0.5);
+  --glass-b: rgba(255, 255, 255, 0.22);
+  --glass-edge: rgba(255, 255, 255, 0.85);
+  --glass-line: rgba(11, 12, 14, 0.12);
+  --glass-shadow: rgba(11, 12, 14, 0.18);
+  --glass-in: rgba(244, 245, 247, 0.74);
 }
 
 /* 2. Redefined under @media (prefers-color-scheme: dark) guarded by :root:not([data-theme="light"]) */
@@ -76,6 +88,12 @@
     --ext2: rgba(238, 240, 243, 0.08);
     --ext3: rgba(238, 240, 243, 0.04);
     --card: rgba(10, 11, 13, 0.70);
+    --glass-a: rgba(255, 255, 255, 0.10);
+    --glass-b: rgba(255, 255, 255, 0.03);
+    --glass-edge: rgba(255, 255, 255, 0.22);
+    --glass-line: rgba(255, 255, 255, 0.12);
+    --glass-shadow: rgba(0, 0, 0, 0.55);
+    --glass-in: rgba(10, 11, 13, 0.7);
   }
 }
 
@@ -101,6 +119,12 @@
   --ext2: rgba(238, 240, 243, 0.08);
   --ext3: rgba(238, 240, 243, 0.04);
   --card: rgba(10, 11, 13, 0.70);
+  --glass-a: rgba(255, 255, 255, 0.10);
+  --glass-b: rgba(255, 255, 255, 0.03);
+  --glass-edge: rgba(255, 255, 255, 0.22);
+  --glass-line: rgba(255, 255, 255, 0.12);
+  --glass-shadow: rgba(0, 0, 0, 0.55);
+  --glass-in: rgba(10, 11, 13, 0.7);
 }
 
 html {
@@ -456,7 +480,7 @@ html.lenis body {
 
 .runway {
   position: relative;
-  height: 560vh;
+  height: calc(460vh + 417vh + 100vh); /* 460vh story + 417vh services runway + 100vh pinned stage */
 }
 
 .stage {

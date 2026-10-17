@@ -44,9 +44,9 @@ export const storyBus = {
   emit(s: number, targetS: number) {
     storyBus.s = s;
     storyBus.targetS = targetS;
-    storyBus.activeChapter = Math.min(4, Math.max(0, Math.round(s)));
-    if (s >= 3.5) {
-      storyBus.activeServiceStage = Math.min(3, Math.max(0, Math.floor(s - 3.5)));
+    storyBus.activeChapter = Math.min(3, Math.max(0, Math.round(Math.min(3, s))));
+    if (s >= 3.8) {
+      storyBus.activeServiceStage = Math.min(3, Math.max(0, Math.round(s - 4)));
     } else {
       storyBus.activeServiceStage = 0;
     }
