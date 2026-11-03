@@ -170,3 +170,4 @@ export const HomeStoryGateway: React.FC = () => {
     </section>
   );
 };
+

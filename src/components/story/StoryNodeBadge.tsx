@@ -50,3 +50,4 @@ export const StoryNodeBadge: React.FC<StoryNodeBadgeProps> = ({
     </div>
   );
 };
+
