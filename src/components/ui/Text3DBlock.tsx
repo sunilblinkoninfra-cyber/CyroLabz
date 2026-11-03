@@ -12,7 +12,7 @@ interface Text3DBlockProps {
   className?: string;
   headlineAs?: "h1" | "h2" | "h3";
   side?: "left" | "right";
-  variant?: "default" | "chassis";
+  variant?: "default" | "chassis" | "plate" | "plain";
 }
 
 export const Text3DBlock: React.FC<Text3DBlockProps> = ({
@@ -25,7 +25,7 @@ export const Text3DBlock: React.FC<Text3DBlockProps> = ({
   className = "",
   headlineAs = "h2",
   side = "left",
-  variant = "default",
+  variant = "plate",
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [rotX, setRotX] = useState(0);
@@ -85,7 +85,7 @@ export const Text3DBlock: React.FC<Text3DBlockProps> = ({
     <>
       {kicker && (
         <div
-          className="layer-kicker mb-3 block"
+          className="layer-kicker mb-3 block font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold"
           style={{ transform: "translateZ(12px)" }}
         >
           {kicker}
@@ -170,6 +170,15 @@ export const Text3DBlock: React.FC<Text3DBlockProps> = ({
             <span className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-accent" />
             <span className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-accent" />
             <span className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-accent" />
+            {content}
+          </div>
+        ) : variant === "plate" || variant === "default" ? (
+          <div className="readable-hero-plate rounded-2xl p-6 sm:p-8 md:p-10 relative">
+            {/* Precision Drafting Reticle Corner Brackets */}
+            <span className="absolute -top-1 -left-1 w-3.5 h-3.5 border-t-2 border-l-2 border-accent pointer-events-none" />
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 border-t-2 border-r-2 border-accent pointer-events-none" />
+            <span className="absolute -bottom-1 -left-1 w-3.5 h-3.5 border-b-2 border-l-2 border-accent pointer-events-none" />
+            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-accent pointer-events-none" />
             {content}
           </div>
         ) : (

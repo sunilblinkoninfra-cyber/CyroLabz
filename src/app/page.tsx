@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { storyBus, useStoryStore } from "@/lib/storyStore";
 import { ServicesCarousel } from "@/components/services/ServicesCarousel";
+import { HomeStoryGateway } from "@/components/story/HomeStoryGateway";
 
 const READ = [
   "Legacy systems",
@@ -335,6 +336,9 @@ export default function HomePage() {
           <ServicesCarousel s={sVal} />
         </section>
       </div>
+
+      {/* Storyline Progression Hub & Chapter Gateway */}
+      <HomeStoryGateway />
     </div>
   );
 }

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { INSIGHTS_DATA } from "@/data/insightsData";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export default function InsightsPage() {
   const [selectedChapter, setSelectedChapter] = useState("All");
@@ -17,6 +19,11 @@ export default function InsightsPage() {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb */}
+      <div className="mb-6 md:text-right">
+        <StoryNodeBadge nodeId="insights" />
+      </div>
+
       {/* Header: aligned right in Scene 04 */}
       <div className="md:min-h-[45vh] flex items-center justify-end mb-16">
         <div className="max-w-2xl text-left">
@@ -81,6 +88,9 @@ export default function InsightsPage() {
           </Link>
         ))}
       </div>
+
+      {/* Storyline Progression to Contact */}
+      <StoryConnect nodeId="insights" className="mt-20" />
     </div>
   );
 }

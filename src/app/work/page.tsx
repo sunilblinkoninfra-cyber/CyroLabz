@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { CASE_STUDIES } from "@/data/workData";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export default function WorkPage() {
   const [selectedFilter, setSelectedFilter] = useState("All");
@@ -40,6 +42,11 @@ export default function WorkPage() {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb */}
+      <div className="mb-6 md:text-right">
+        <StoryNodeBadge nodeId="work" />
+      </div>
+
       {/* Header: aligned right in Scene 02 */}
       <div className="md:min-h-[45vh] flex items-center justify-end mb-16">
         <div className="max-w-2xl text-left">
@@ -145,6 +152,9 @@ export default function WorkPage() {
           </Link>
         ))}
       </div>
+
+      {/* Storyline Progression to About Studio */}
+      <StoryConnect nodeId="work" className="mt-20" />
     </div>
   );
 }

@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SERVICES_DATA } from "@/data/servicesData";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export const metadata: Metadata = {
   title: "Services — Connected Engineering & Applied AI",
@@ -51,6 +53,11 @@ export default function ServicesPage() {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb */}
+      <div className="mb-6 md:text-right">
+        <StoryNodeBadge nodeId="services" />
+      </div>
+
       {/* Header section: aligned right in Scene 02 to complement circuit artwork on left */}
       <div className="md:min-h-[45vh] flex items-center justify-end mb-20">
         <div className="max-w-2xl text-left">
@@ -163,6 +170,9 @@ export default function ServicesPage() {
           ))}
         </div>
       </div>
+
+      {/* Storyline Progression to Foundation (Node 01) */}
+      <StoryConnect nodeId="services" className="mb-24" />
 
       {/* Closing Call to Action */}
       <div className="text-center max-w-xl mx-auto space-y-6">

@@ -3,7 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CASE_STUDIES, CaseStudy } from "@/data/workData";
+import { CASE_STUDY_NODE } from "@/data/storyline";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -32,6 +35,8 @@ export default async function CaseStudyDetailPage({ params }: Props) {
     notFound();
   }
 
+  const currentNodeId = CASE_STUDY_NODE[slug] || "work";
+
   const beats = [
     {
       num: "01",
@@ -55,8 +60,8 @@ export default async function CaseStudyDetailPage({ params }: Props) {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Back button */}
-      <div className="mb-10">
+      {/* Back button & Story Node Badge */}
+      <div className="mb-10 flex flex-wrap items-center justify-between gap-4">
         <Link
           href="/work"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-muted hover:text-ink transition-colors"
@@ -64,6 +69,7 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           <span>←</span>
           <span>Back to all case studies</span>
         </Link>
+        <StoryNodeBadge nodeId={currentNodeId} />
       </div>
 
       {/* Header */}
@@ -143,6 +149,9 @@ export default async function CaseStudyDetailPage({ params }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Storyline Progression Connector */}
+      <StoryConnect nodeId={currentNodeId} className="mb-20" />
 
       {/* Footer CTA */}
       <div className="text-center max-w-xl mx-auto space-y-6 pt-10 border-t border-line/70">

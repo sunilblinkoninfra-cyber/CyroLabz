@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { SERVICES_DATA, ServiceItem } from "@/data/servicesData";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
 import { Interactive3DDemo } from "@/components/interactive/Interactive3DDemo";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -37,6 +39,11 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb Badge */}
+      <div className={`mb-6 ${service.chapterNum === "02" ? "md:text-right" : ""}`}>
+        <StoryNodeBadge nodeId={slug} />
+      </div>
+
       {/* 1. Header with Chapter label & headline (aligned right for Chapter 02) */}
       <div className={`mb-16 max-w-2xl ${service.chapterNum === "02" ? "md:ml-auto" : ""}`}>
         <Text3DBlock
@@ -182,7 +189,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         </div>
       </div>
 
-      {/* 7. Call to Action */}
+      {/* 7. Storyline Progression & Next Node Connector */}
+      <StoryConnect nodeId={slug} className="mb-20" />
+
+      {/* 8. Call to Action */}
       <div className="text-center max-w-xl mx-auto space-y-6 pt-10 border-t border-line/70">
         <h3 className="font-display text-2xl sm:text-3xl font-semibold text-ink">
           Start your {service.title} project.

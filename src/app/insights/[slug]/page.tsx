@@ -3,7 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { INSIGHTS_DATA, Article } from "@/data/insightsData";
+import { INSIGHT_NODE } from "@/data/storyline";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -32,10 +35,12 @@ export default async function InsightArticlePage({ params }: Props) {
     notFound();
   }
 
+  const currentNodeId = INSIGHT_NODE[slug] || "insights";
+
   return (
     <article className="pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      {/* Back link */}
-      <div className="mb-10">
+      {/* Back link & Story Node Badge */}
+      <div className="mb-10 flex flex-wrap items-center justify-between gap-4">
         <Link
           href="/insights"
           className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-muted hover:text-ink transition-colors"
@@ -43,6 +48,7 @@ export default async function InsightArticlePage({ params }: Props) {
           <span>←</span>
           <span>Back to Insights</span>
         </Link>
+        <StoryNodeBadge nodeId={currentNodeId} />
       </div>
 
       {/* Header */}
@@ -91,6 +97,9 @@ export default async function InsightArticlePage({ params }: Props) {
           </Link>
         </div>
       </div>
+
+      {/* Storyline Progression Connector */}
+      <StoryConnect nodeId={currentNodeId} className="mt-16" />
     </article>
   );
 }

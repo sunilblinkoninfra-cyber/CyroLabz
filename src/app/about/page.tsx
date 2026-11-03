@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export const metadata: Metadata = {
   title: "About — Engineering Principles & Founding Story",
@@ -35,6 +37,11 @@ export default function AboutPage() {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb */}
+      <div className="mb-6 md:text-right">
+        <StoryNodeBadge nodeId="about" />
+      </div>
+
       {/* Header with settled mark scene (Scene 04: art on left, copy on right) */}
       <div className="md:min-h-[45vh] flex items-center justify-end mb-20">
         <div className="max-w-2xl text-left">
@@ -134,6 +141,9 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+
+      {/* Storyline Progression to Insights */}
+      <StoryConnect nodeId="about" className="mb-20" />
 
       {/* CTA */}
       <div className="text-center max-w-xl mx-auto space-y-6 pt-10 border-t border-line/70">

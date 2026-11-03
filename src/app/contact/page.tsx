@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Text3DBlock } from "@/components/ui/Text3DBlock";
+import { StoryConnect } from "@/components/story/StoryConnect";
+import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -78,6 +80,11 @@ export default function ContactPage() {
 
   return (
     <div className="pt-[46vh] md:pt-28 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Story Node Breadcrumb */}
+      <div className="w-full lg:w-[48%] lg:ml-auto mb-6">
+        <StoryNodeBadge nodeId="contact" />
+      </div>
+
       {/* In Scene 04, art is on the left; form and copy sit on the right */}
       <div className="w-full lg:w-[48%] lg:ml-auto space-y-8">
         {/* Context Header */}
@@ -342,6 +349,11 @@ export default function ContactPage() {
               </form>
             )}
           </div>
+        </div>
+
+        {/* Full-Width Storyline Completion & Navigation Connector */}
+        <div className="w-full mt-12">
+          <StoryConnect nodeId="contact" />
         </div>
       </div>
   );
