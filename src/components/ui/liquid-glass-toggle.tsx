@@ -355,16 +355,16 @@ export function LiquidToggle({
       if (!s.split && (s.moving || dragging) && sep > G.r * 1.6) {
         s.split = true
         const lo = bodies[1 - s.lead], hi = bodies[s.lead]
-          ;[0.38, 0.62].forEach((t, j) => {
-            s.sats.push({
-              x: lo.x + (hi.x - lo.x) * t,
-              y: G.cy + (Math.random() - 0.5) * G.r * 0.4,
-              vx: (lo.v + hi.v) * 0.4,
-              vy: (Math.random() - 0.5) * 50 * S,
-              r: G.r * (0.36 - j * 0.06),
-              k: 60 + Math.random() * 70,
-            })
+        ;[0.38, 0.62].forEach((t, j) => {
+          s.sats.push({
+            x: lo.x + (hi.x - lo.x) * t,
+            y: G.cy + (Math.random() - 0.5) * G.r * 0.4,
+            vx: (lo.v + hi.v) * 0.4,
+            vy: (Math.random() - 0.5) * 50 * S,
+            r: G.r * (0.36 - j * 0.06),
+            k: 60 + Math.random() * 70,
           })
+        })
       }
       const sink = bodies[s.lead].x
       s.sats = s.sats.filter((d) => {
