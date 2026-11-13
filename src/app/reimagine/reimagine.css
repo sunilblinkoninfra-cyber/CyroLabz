@@ -1,0 +1,136 @@
+/* Scoped Exposed-Spine Engineering Monograph Tokens */
+.reimagine-world {
+  --rg-board: #eae3d5;
+  --rg-paper: #f6f2e9;
+  --rg-paper-inset: #eee8da;
+  --rg-ink: #141311;
+  --rg-ink-soft: #2d2a26;
+  --rg-muted: #575148;
+  --rg-rule: #cfc6b4;
+  --rg-rule-strong: #8d8474;
+  --rg-thread: #1846d6;
+  --rg-thread-hover: #1034a6;
+  --rg-on-thread: #f6f2e9;
+  --rg-linen: #b8aa90;
+  --rg-shadow: 0 22px 48px -18px rgba(20, 19, 17, 0.16);
+  --rg-error: #a62619;
+  --rg-success: #166534;
+
+  background-color: var(--rg-board);
+  color: var(--rg-ink);
+  font-family: var(--font-manrope), "Manrope", system-ui, sans-serif;
+  caret-color: var(--rg-thread);
+  scrollbar-color: var(--rg-rule-strong) var(--rg-board);
+}
+
+:root[data-theme="dark"] .reimagine-world {
+  --rg-board: #0c0b0a;
+  --rg-paper: #151311;
+  --rg-paper-inset: #1d1a17;
+  --rg-ink: #efeae0;
+  --rg-ink-soft: #d4cec2;
+  --rg-muted: #a8a092;
+  --rg-rule: #2e2a25;
+  --rg-rule-strong: #5a5347;
+  --rg-thread: #7ea6ff;
+  --rg-thread-hover: #a1bfff;
+  --rg-on-thread: #0c0b0a;
+  --rg-linen: #5c5447;
+  --rg-shadow: 0 24px 54px -16px rgba(0, 0, 0, 0.68);
+  --rg-error: #f87171;
+  --rg-success: #4ade80;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .reimagine-world {
+    --rg-board: #0c0b0a;
+    --rg-paper: #151311;
+    --rg-paper-inset: #1d1a17;
+    --rg-ink: #efeae0;
+    --rg-ink-soft: #d4cec2;
+    --rg-muted: #a8a092;
+    --rg-rule: #2e2a25;
+    --rg-rule-strong: #5a5347;
+    --rg-thread: #7ea6ff;
+    --rg-thread-hover: #a1bfff;
+    --rg-on-thread: #0c0b0a;
+    --rg-linen: #5c5447;
+    --rg-shadow: 0 24px 54px -16px rgba(0, 0, 0, 0.68);
+    --rg-error: #f87171;
+    --rg-success: #4ade80;
+  }
+}
+
+.reimagine-world ::selection {
+  background-color: var(--rg-thread);
+  color: var(--rg-on-thread);
+}
+
+.reimagine-world :focus-visible {
+  outline: 2px solid var(--rg-thread);
+  outline-offset: 3px;
+}
+
+.reimagine-world a {
+  text-underline-offset: 0.22em;
+}
+
+.reimagine-world p {
+  text-wrap: pretty;
+}
+
+.reimagine-world h1,
+.reimagine-world h2 {
+  text-wrap: balance;
+}
+
+.reimagine-display {
+  font-family: var(--rg-font-display), var(--font-sora), sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.reimagine-serif {
+  font-family: var(--rg-font-serif), Georgia, serif;
+}
+
+.reimagine-mono {
+  font-family: var(--rg-font-mono), ui-monospace, SFMono-Regular, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Ink-tinted chapter plate inside the rag sheet */
+.reimagine-plate-img {
+  mix-blend-mode: multiply;
+  filter: contrast(1.08);
+  transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme="dark"] .reimagine-plate-img {
+  filter: invert(1) contrast(1.06);
+  mix-blend-mode: screen;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .reimagine-plate-img {
+    filter: invert(1) contrast(1.06);
+    mix-blend-mode: screen;
+  }
+}
+
+/* Flat-open folio sheet edge */
+.reimagine-folio-spread {
+  background-color: var(--rg-paper);
+  border: 1px solid var(--rg-rule);
+  box-shadow: var(--rg-shadow);
+}
+
+/* Spine stitch pulse only on active user-selected link, disabled for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reimagine-world *,
+  .reimagine-world *::before,
+  .reimagine-world *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

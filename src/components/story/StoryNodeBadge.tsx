@@ -23,7 +23,14 @@ export const StoryNodeBadge: React.FC<StoryNodeBadgeProps> = ({
 
   return (
     <div
-      className={`inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-line bg-surface/85 backdrop-blur-md shadow-sm font-mono text-[11px] sm:text-xs text-muted ${className}`}
+      style={{
+        background: "var(--glass-b)",
+        border: "1px solid var(--glass-line)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        boxShadow: "inset 0 1px 0 var(--glass-edge)",
+      }}
+      className={`inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full shadow-sm font-mono text-[11px] sm:text-xs text-muted ${className}`}
       aria-label={`Story Progress: Chapter ${beat.num} ${beat.name}, Node ${node.title}`}
     >
       <Link

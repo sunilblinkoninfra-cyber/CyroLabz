@@ -29,7 +29,7 @@ export const HomeStoryGateway: React.FC = () => {
       aria-label="Cyrolabz Transformation Gateway"
     >
       {/* Chapter Overview Container */}
-      <div className="p-8 sm:p-12 md:p-14 rounded-2xl border border-line bg-surface/85 backdrop-blur-xl shadow-xl relative">
+      <div className="story-connect-chassis p-8 sm:p-12 md:p-14 relative">
         {/* Precision Reticles */}
         <span className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-accent pointer-events-none" />
         <span className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-accent pointer-events-none" />
@@ -62,7 +62,14 @@ export const HomeStoryGateway: React.FC = () => {
             return (
               <div
                 key={beat.id}
-                className="group p-6 rounded-xl border border-line bg-surface/70 hover:border-ink transition-all flex flex-col justify-between hover:shadow-md"
+                style={{
+                  background: "var(--glass-in)",
+                  border: "1px solid var(--glass-line)",
+                  backdropFilter: "blur(14px)",
+                  WebkitBackdropFilter: "blur(14px)",
+                  boxShadow: "inset 0 1px 0 var(--glass-edge)",
+                }}
+                className="group p-6 rounded-xl transition-all flex flex-col justify-between hover:border-accent hover:shadow-lg"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between text-xs font-mono text-muted">
@@ -80,7 +87,10 @@ export const HomeStoryGateway: React.FC = () => {
                     {beat.line}
                   </p>
 
-                  <div className="pt-2 border-t border-line/60">
+                  <div
+                    className="pt-2"
+                    style={{ borderTop: "1px solid var(--glass-line)" }}
+                  >
                     <div className="text-[10px] font-mono uppercase text-muted mb-1.5">
                       Disciplines
                     </div>
@@ -100,7 +110,10 @@ export const HomeStoryGateway: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-6 pt-3 border-t border-line/50">
+                <div
+                  className="mt-6 pt-3"
+                  style={{ borderTop: "1px solid var(--glass-line)" }}
+                >
                   <Link
                     href={beat.href}
                     className="inline-flex items-center gap-1.5 text-xs font-mono text-accent font-semibold group-hover:translate-x-1 transition-transform"
@@ -115,7 +128,10 @@ export const HomeStoryGateway: React.FC = () => {
         </div>
 
         {/* The Three Proof Pillars */}
-        <div className="border-t border-line pt-12 mb-14">
+        <div
+          className="pt-12 mb-14"
+          style={{ borderTop: "1px solid var(--glass-line)" }}
+        >
           <div className="text-xs font-mono uppercase tracking-eyebrow text-accent font-semibold mb-6">
             The Studio Standard
           </div>
@@ -123,7 +139,14 @@ export const HomeStoryGateway: React.FC = () => {
             {proofTiles.map((tile) => (
               <div
                 key={tile.num}
-                className="p-6 rounded-xl border border-line/60 bg-bg/50 space-y-2.5"
+                style={{
+                  background: "var(--glass-b)",
+                  border: "1px solid var(--glass-line)",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  boxShadow: "inset 0 1px 0 var(--glass-edge)",
+                }}
+                className="p-6 rounded-xl space-y-2.5"
               >
                 <span className="font-mono text-xs text-accent font-bold">
                   {tile.num}
@@ -140,7 +163,10 @@ export const HomeStoryGateway: React.FC = () => {
         </div>
 
         {/* Action Hub */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-line/70">
+        <div
+          className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8"
+          style={{ borderTop: "1px solid var(--glass-line)" }}
+        >
           <div>
             <h4 className="font-display text-xl font-bold text-ink">
               Ready to begin your transformation?
@@ -160,7 +186,11 @@ export const HomeStoryGateway: React.FC = () => {
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-5 py-3.5 rounded-lg border border-line hover:border-ink text-ink font-medium transition-colors flex-1 sm:flex-initial"
+              style={{
+                background: "var(--glass-b)",
+                border: "1px solid var(--glass-line)",
+              }}
+              className="inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-5 py-3.5 rounded-lg hover:border-accent text-ink font-medium transition-colors flex-1 sm:flex-initial"
             >
               Start a Project
             </Link>
@@ -170,4 +200,3 @@ export const HomeStoryGateway: React.FC = () => {
     </section>
   );
 };
-

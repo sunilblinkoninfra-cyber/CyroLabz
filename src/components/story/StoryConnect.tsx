@@ -31,7 +31,7 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
 
   return (
     <section
-      className={`story-connect-chassis mt-20 relative p-6 sm:p-10 md:p-12 rounded-2xl border border-line bg-surface/85 backdrop-blur-xl shadow-lg ${className}`}
+      className={`story-connect-chassis mt-20 relative p-6 sm:p-10 md:p-12 ${className}`}
       aria-label="Cyrolabz Transformation Storyline Navigator"
     >
       {/* Precision Reticle Corner Brackets */}
@@ -41,7 +41,10 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
       <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 border-b-2 border-r-2 border-accent pointer-events-none" />
 
       {/* Header bar: Storyline position kicker */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-line">
+      <div
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6"
+        style={{ borderBottom: "1px solid var(--glass-line)" }}
+      >
         <div className="space-y-1">
           <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold">
             <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
@@ -61,7 +64,13 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
         <button
           type="button"
           onClick={() => setMapOpen(!mapOpen)}
-          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow px-3.5 py-2 rounded border border-line bg-surface/60 hover:border-ink hover:text-ink text-muted transition-colors self-start sm:self-auto"
+          style={{
+            background: "var(--glass-b)",
+            border: "1px solid var(--glass-line)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+          }}
+          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow px-3.5 py-2 rounded-lg hover:border-accent hover:text-accent text-muted transition-colors self-start sm:self-auto cursor-pointer"
           aria-expanded={mapOpen}
         >
           <span>{mapOpen ? "− Close Map" : "+ View Full Storyline Map"}</span>
@@ -81,11 +90,18 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
                 <li key={b.id} className="relative">
                   <Link
                     href={b.href}
-                    className={`block p-3.5 rounded-lg border transition-all ${
-                      isActive
-                        ? "border-accent bg-accent/10 shadow-sm"
-                        : "border-line/70 bg-surface/50 hover:border-line hover:bg-surface/80"
-                    }`}
+                    style={{
+                      background: isActive ? "var(--glass-a)" : "var(--glass-b)",
+                      border: isActive
+                        ? "1px solid var(--accent)"
+                        : "1px solid var(--glass-line)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      boxShadow: isActive
+                        ? "inset 0 1px 0 var(--glass-edge), 0 8px 24px -6px var(--glass-shadow)"
+                        : "inset 0 1px 0 var(--glass-edge)",
+                    }}
+                    className="block p-3.5 rounded-xl transition-all hover:border-accent"
                     aria-current={isActive ? "step" : undefined}
                   >
                     <div className="flex items-center justify-between mb-1">
@@ -118,8 +134,20 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
 
       {/* Expandable 10-Discipline Transformation Grid */}
       {mapOpen && (
-        <div className="my-6 p-5 sm:p-6 rounded-xl border border-line bg-surface/90 backdrop-blur-lg animate-fadeIn">
-          <div className="flex items-center justify-between mb-4 border-b border-line pb-3">
+        <div
+          className="my-6 p-5 sm:p-6 rounded-xl animate-fadeIn"
+          style={{
+            background: "var(--glass-in)",
+            border: "1px solid var(--glass-line)",
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            boxShadow: "inset 0 1px 0 var(--glass-edge)",
+          }}
+        >
+          <div
+            className="flex items-center justify-between mb-4 pb-3"
+            style={{ borderBottom: "1px solid var(--glass-line)" }}
+          >
             <h4 className="font-display text-base font-semibold text-ink">
               10 Engineering Disciplines in Transformation Sequence
             </h4>
@@ -135,17 +163,27 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
                 <Link
                   key={item.id}
                   href={item.href}
-                  className={`p-3 rounded border text-left flex flex-col justify-between transition-all ${
+                  style={{
+                    background: isCurrent ? "var(--accent)" : "var(--glass-b)",
+                    border: isCurrent
+                      ? "1px solid var(--accent)"
+                      : "1px solid var(--glass-line)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                  }}
+                  className={`p-3 rounded-lg text-left flex flex-col justify-between transition-all ${
                     isCurrent
-                      ? "border-accent bg-accent text-on-accent shadow-sm"
-                      : "border-line/60 bg-bg/60 hover:border-ink hover:bg-surface text-ink"
+                      ? "text-on-accent shadow-sm"
+                      : "hover:border-accent text-ink"
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between text-[10px] font-mono mb-1">
                       <span
                         className={
-                          isCurrent ? "text-on-accent" : "text-accent font-semibold"
+                          isCurrent
+                            ? "text-on-accent font-semibold"
+                            : "text-accent font-semibold"
                         }
                       >
                         {item.stepNum}
@@ -177,9 +215,21 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
       )}
 
       {/* Main Next Node Feature Card */}
-      <div className="mt-6 pt-6 border-t border-line">
+      <div
+        className="mt-6 pt-6"
+        style={{ borderTop: "1px solid var(--glass-line)" }}
+      >
         {next && !isFinalNode ? (
-          <div className="p-6 sm:p-8 rounded-xl border border-line bg-surface/70 hover:border-line/90 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div
+            className="p-6 sm:p-8 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6 transition-colors"
+            style={{
+              background: "var(--glass-in)",
+              border: "1px solid var(--glass-line)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              boxShadow: "inset 0 1px 0 var(--glass-edge)",
+            }}
+          >
             <div className="space-y-2 max-w-2xl">
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold">
                 <span className="w-2 h-2 rounded-full bg-accent" />
@@ -206,7 +256,7 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
 
               {next.deliverable && (
                 <div className="pt-2 flex items-center gap-2 text-xs font-mono text-muted">
-                  <span className="text-accent">Deliverable:</span>
+                  <span className="text-accent font-semibold">Deliverable:</span>
                   <span className="text-ink font-medium">{next.deliverable}</span>
                 </div>
               )}
@@ -236,7 +286,16 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
           </div>
         ) : (
           /* Final Destination State (on /contact or story conclusion) */
-          <div className="p-6 sm:p-8 rounded-xl border border-accent/40 bg-surface/80 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div
+            className="p-6 sm:p-8 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-6"
+            style={{
+              background: "var(--glass-in)",
+              border: "1px solid var(--accent)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              boxShadow: "inset 0 1px 0 var(--glass-edge)",
+            }}
+          >
             <div className="space-y-2 max-w-xl">
               <div className="font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-accent" />
@@ -262,7 +321,11 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
               </Link>
               <Link
                 href="/services/consulting"
-                className="inline-flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-eyebrow px-5 py-2.5 rounded-lg border border-line hover:border-ink text-ink font-medium transition-colors"
+                style={{
+                  background: "var(--glass-b)",
+                  border: "1px solid var(--glass-line)",
+                }}
+                className="inline-flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-eyebrow px-5 py-2.5 rounded-lg hover:border-accent text-ink font-medium transition-colors"
               >
                 <span>Restart at Foundation (01)</span>
               </Link>
@@ -273,7 +336,10 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
 
       {/* Two-Way Navigation Sub-Bar */}
       {previous && !isFinalNode && (
-        <div className="mt-4 pt-4 border-t border-line/60 flex items-center justify-between text-xs font-mono text-muted">
+        <div
+          className="mt-4 pt-4 flex items-center justify-between text-xs font-mono text-muted"
+          style={{ borderTop: "1px solid var(--glass-line)" }}
+        >
           <Link
             href={previous.href}
             className="hover:text-ink flex items-center gap-1 transition-colors"

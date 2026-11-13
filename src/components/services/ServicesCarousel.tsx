@@ -179,10 +179,9 @@ function smoothstep(x: number) {
 }
 
 function renderServiceIcon(icon: string) {
-  const common = "w-[19px] h-[19px] stroke-current text-ink";
+  const common = "w-[18px] h-[18px] stroke-current text-ink";
   switch (icon) {
     case "consulting":
-      // Route between two points
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <circle cx="5" cy="18" r="2.5" />
@@ -192,7 +191,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "audits":
-      // Magnifier with a check
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <circle cx="10.5" cy="10.5" r="7" />
@@ -201,7 +199,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "custom-software":
-      // Code brackets
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <path d="M8 7L3 12L8 17" />
@@ -210,7 +207,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "website":
-      // Browser window
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <rect x="3" y="4" width="18" height="16" rx="2.5" />
@@ -220,7 +216,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "3d":
-      // Cube
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <path d="M12 2.5L20.5 7.5V16.5L12 21.5L3.5 16.5V7.5L12 2.5Z" />
@@ -230,7 +225,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "ai-enablement":
-      // Person with a spark
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <circle cx="8.5" cy="7" r="3.5" />
@@ -240,7 +234,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "ai-implementation":
-      // Chip
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <rect x="5" y="5" width="14" height="14" rx="2" />
@@ -249,7 +242,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "seo":
-      // Magnifier with bars
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <circle cx="10" cy="10" r="7" />
@@ -258,7 +250,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "aeo":
-      // Speech bubble with a question mark
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <path d="M21 11.5C21 15.6 17.2 19 12.5 19C11.1 19 9.8 18.7 8.6 18.1L3.5 19.5L4.9 15.8C3.7 14.6 3 13.1 3 11.5C3 7.4 6.8 4 11.5 4C16.2 4 21 7.4 21 11.5Z" />
@@ -267,7 +258,6 @@ function renderServiceIcon(icon: string) {
         </svg>
       );
     case "geo":
-      // Globe
       return (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={common} aria-hidden="true">
           <circle cx="12" cy="12" r="9" />
@@ -287,7 +277,7 @@ interface ServicesCarouselProps {
 }
 
 export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
-  const [viewportW, setViewportW] = useState(1200);
+  const [viewportW, setViewportW] = useState(1280);
   const [viewportH, setViewportH] = useState(800);
   const pointerStartX = useRef<number | null>(null);
 
@@ -301,14 +291,12 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Container opacity: smoothstep((s - 3.55) / 0.4); hidden when under 0.01; pointer-events only when above 0.9
+  // Container opacity: smoothstep((s - 3.55) / 0.4)
   const containerOpacity = smoothstep((s - 3.55) / 0.4);
   const isContainerVisible = containerOpacity >= 0.01;
   const isInteractive = containerOpacity > 0.9;
 
-  // Carousel position cp:
-  // for s below 4: cp = 0
-  // for s of 4 or more, with a = min(6, floor(s)): cp = (a - 4) + smoothstep((s - a - 0.3) / 0.5)
+  // Carousel position cp
   let cp = 0;
   if (s >= 4) {
     const a = Math.min(6, Math.floor(s));
@@ -373,20 +361,21 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
     }
   };
 
-  // Dimensions & Step calculation
-  // Slide width = min(1000px, W - 2 * max(16px, 4% of W))
-  const marginSide = Math.max(16, 0.04 * viewportW);
-  const slideWidth = Math.min(1000, viewportW - 2 * marginSide);
-  const step = slideWidth + 36;
-
-  // Slide area: 84px below top, 96px above bottom (70px and 90px on mobile)
+  // Layout geometry
   const isMobile = viewportW <= 820;
+  const marginSide = Math.max(16, 0.035 * viewportW);
+  const deckWidth = Math.min(1240, viewportW - 2 * marginSide);
   const topPad = isMobile ? 70 : 84;
-  const bottomPad = isMobile ? 90 : 96;
-  const areaHeight = viewportH - topPad - bottomPad;
+  const bottomPad = isMobile ? 88 : 96;
+  const areaHeight = Math.max(420, viewportH - topPad - bottomPad);
   const areaCenterY = topPad + areaHeight / 2;
 
-  // Note under controls appears only on card 4 (opacity 0 to 1)
+  // Cap desktop diagonal height at 585px so slant bleed (72px) always exceeds tan(11deg) * H/2 (~57px)
+  const desktopDeckHeight = Math.min(585, areaHeight);
+  const collapsedVisible = viewportW >= 1100 ? 124 : 96;
+  const bleedX = 72;
+
+  // Note under controls appears only on slide 4
   const noteOpacity = Math.max(0, Math.min(1, (cp - 2.3) / 0.7));
 
   return (
@@ -404,279 +393,544 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
     >
-      {/* 4 Slides */}
-      <div className="relative w-full h-full">
-        {SLIDES.map((slide, i) => {
-          const d = i - cp;
-          const absD = Math.abs(d);
-          const isCurrent = Math.abs(d) < 0.5;
+      {!isMobile ? (
+        /* DESKTOP: Diagonal Slanted Glass Accordion Deck */
+        <div
+          className="absolute left-1/2"
+          style={{
+            top: `${areaCenterY}px`,
+            width: `${deckWidth}px`,
+            height: `${desktopDeckHeight}px`,
+            transform: "translate(-50%, -50%)",
+            borderRadius: "22px",
+            overflow: "hidden",
+            border: "1px solid var(--glass-line)",
+            boxShadow:
+              "inset 0 1px 0 var(--glass-edge), 0 30px 60px -28px var(--glass-shadow)",
+          }}
+        >
+          <div
+            className="flex h-full"
+            style={{
+              marginLeft: `-${bleedX}px`,
+              marginRight: `-${bleedX}px`,
+              width: `calc(100% + ${bleedX * 2}px)`,
+            }}
+          >
+            {SLIDES.map((slide, i) => {
+              const isCurrent = i === activeSlide;
+              const isFirst = i === 0;
+              const isLast = i === SLIDES.length - 1;
+              const isThreeCol = slide.services.length === 3;
 
-          // Specified transform & styling:
-          // transform: translate(calc(-50% + d * step px), -50%) scale(1 - 0.07 * min(|d|, 1))
-          // opacity: 1 - 0.68 * min(|d|, 1); z-index: 10 - round(|d| * 3); visibility hidden when |d| is above 1.25
-          const scale = 1 - 0.07 * Math.min(absD, 1);
-          const slideOpacity = Math.max(0, 1 - 0.68 * Math.min(absD, 1));
-          const zIndex = 10 - Math.round(absD * 3);
-          const isSlideVisible = absD <= 1.25;
+              // Collapsed width compensates for left/right bleed so visible slice stays uniform
+              const collapsedBasis =
+                isFirst || isLast ? collapsedVisible + bleedX : collapsedVisible;
 
-          const nCols = slide.services.length === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-3";
-
-          return (
-            <article
-              key={slide.num}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${i + 1} of 4: ${slide.group.charAt(0) + slide.group.slice(1).toLowerCase()}`}
-              aria-hidden={!isCurrent}
-              inert={!isCurrent ? true : undefined}
-              className="absolute left-1/2"
-              style={{
-                top: `${areaCenterY}px`,
-                width: `${slideWidth}px`,
-                maxHeight: `${areaHeight}px`,
-                transform: `translate(calc(-50% + ${d * step}px), -50%) scale(${scale})`,
-                opacity: slideOpacity,
-                zIndex,
-                visibility: isSlideVisible ? "visible" : "hidden",
-                pointerEvents: isCurrent && isInteractive ? "auto" : "none",
-                borderRadius: isMobile ? "18px" : "22px",
-                padding: isMobile ? "20px 18px 18px" : "28px 30px 26px",
-                background: "linear-gradient(135deg, var(--glass-a), var(--glass-b))",
-                WebkitBackdropFilter: "blur(9px) saturate(1.5)",
-                backdropFilter: "blur(9px) saturate(1.5)",
-                border: "1px solid var(--glass-line)",
-                boxShadow: "inset 0 1px 0 var(--glass-edge), 0 30px 60px -28px var(--glass-shadow)",
-                overflowY: "auto",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              {/* Top Row: 0N / 04 on left, Group pill on right */}
-              <div className="flex items-center justify-between gap-4 mb-4">
-                <span
+              return (
+                <article
+                  key={slide.num}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${i + 1} of 4: ${slide.group.charAt(0) + slide.group.slice(1).toLowerCase()}`}
+                  data-active={isCurrent ? "true" : "false"}
+                  className="diagonal-slice h-full"
                   style={{
-                    fontFamily: "var(--f-label), 'Michroma', sans-serif",
-                    fontSize: "11px",
-                    letterSpacing: "0.16em",
+                    flex: isCurrent ? "1 1 0%" : `0 0 ${collapsedBasis}px`,
+                    zIndex: 10 - i,
                   }}
-                  className="text-muted uppercase select-none"
                 >
-                  <span className="text-ink font-semibold">{slide.num}</span> / 04
-                </span>
-
-                <span
-                  style={{
-                    fontFamily: "var(--f-label), 'Michroma', sans-serif",
-                    fontSize: "10px",
-                    color: "var(--accent)",
-                    background: "var(--glass-b)",
-                    border: "1px solid var(--glass-line)",
-                    borderRadius: "999px",
-                    padding: "3px 12px 2px",
-                    letterSpacing: "0.12em",
-                  }}
-                  className="uppercase font-medium select-none"
-                >
-                  {slide.group}
-                </span>
-              </div>
-
-              {/* Tagline: h3 Sora, clamp(1.6rem, 2.8vw, 2.3rem) */}
-              <h3
-                style={{
-                  fontFamily: "var(--f-display), 'Sora', sans-serif",
-                  fontSize: "clamp(1.5rem, 2.6vw, 2.2rem)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.025em",
-                  margin: "12px 0 20px",
-                  color: "var(--ink)",
-                }}
-                className="font-medium"
-              >
-                {slide.tagline}
-              </h3>
-
-              {/* Inner Service Panels Grid (2 or 3 columns, 14px gap; 1 column under 820px) */}
-              <div className={`grid ${nCols} gap-[14px]`}>
-                {slide.services.map((svc) => (
-                  <div
-                    key={svc.title}
-                    style={{
-                      borderRadius: "16px",
-                      padding: "18px 18px 16px",
-                      border: "1px solid var(--glass-line)",
-                      background: "var(--glass-in)",
-                      WebkitBackdropFilter: "blur(16px)",
-                      backdropFilter: "blur(16px)",
-                    }}
-                    className="flex flex-col justify-between"
-                  >
-                    <div>
-                      {/* Icon box next to title */}
-                      <div className="flex items-start gap-3 mb-2.5">
-                        <div
-                          style={{
-                            width: "38px",
-                            height: "38px",
-                            minWidth: "38px",
-                            borderRadius: "10px",
-                            border: "1px solid var(--glass-line)",
-                            background: "var(--glass-a)",
-                          }}
-                          className="flex items-center justify-center shrink-0"
-                        >
-                          {renderServiceIcon(svc.icon)}
-                        </div>
-
-                        <div className="min-w-0">
-                          <h4
-                            style={{
-                              fontFamily: "var(--f-display), 'Sora', sans-serif",
-                              fontSize: "1.1875rem",
-                              lineHeight: 1.25,
-                              color: "var(--ink)",
-                            }}
-                            className="font-semibold tracking-tight"
-                          >
-                            {svc.title}
-                          </h4>
-
-                          {svc.fullName && (
-                            <p
-                              style={{
-                                fontFamily: "var(--f-label), 'Michroma', sans-serif",
-                                fontSize: "9px",
-                                letterSpacing: "0.08em",
-                                color: "var(--muted)",
-                                marginTop: "3px",
-                              }}
-                              className="uppercase"
-                            >
-                              {svc.fullName}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Promise: 14px, muted */}
-                      <p
+                  <div className="diagonal-slice-unskew relative">
+                    {!isCurrent ? (
+                      /* COLLAPSED DIAGONAL SLICE */
+                      <button
+                        type="button"
+                        onClick={() => goTo(i)}
+                        aria-label={`Open ${slide.num} ${slide.group} services`}
+                        className="group w-full h-full flex flex-col justify-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent cursor-pointer transition-transform duration-300"
                         style={{
-                          fontFamily: "var(--f-body), 'Manrope', sans-serif",
-                          fontSize: "14px",
-                          lineHeight: 1.45,
-                          color: "var(--muted)",
-                          marginBottom: "14px",
+                          paddingLeft: isFirst ? `${bleedX + 18}px` : "18px",
+                          paddingRight: isLast ? `${bleedX + 14}px` : "14px",
                         }}
                       >
-                        {svc.promise}
-                      </p>
-
-                      {/* 3 Bullets with 5px accent squares */}
-                      <ul className="space-y-2 mb-4">
-                        {svc.bullets.map((b, bIdx) => (
-                          <li
-                            key={bIdx}
+                        <div className="transform transition-transform duration-300 group-hover:-translate-y-1">
+                          <span
                             style={{
-                              fontFamily: "var(--f-body), 'Manrope', sans-serif",
-                              fontSize: "13px",
-                              lineHeight: 1.4,
-                              color: "var(--ink)",
+                              fontFamily: "var(--f-display), 'Sora', sans-serif",
+                              fontSize:
+                                viewportW >= 1100
+                                  ? "clamp(2.35rem, 3.2vw, 3.1rem)"
+                                  : "2rem",
+                              lineHeight: 0.94,
+                              letterSpacing: "-0.04em",
                             }}
-                            className="flex items-start gap-2.5"
+                            className="block font-light text-ink/80 group-hover:text-accent transition-colors select-none"
                           >
+                            {slide.num}
+                          </span>
+
+                          <span
+                            style={{
+                              fontFamily: "var(--f-display), 'Sora', sans-serif",
+                              fontSize: viewportW >= 1100 ? "11.5px" : "9.5px",
+                              letterSpacing: "0.09em",
+                            }}
+                            className="block mt-2 uppercase font-semibold text-ink group-hover:text-accent transition-colors whitespace-nowrap select-none"
+                          >
+                            {slide.group}
+                          </span>
+
+                          <span
+                            style={{
+                              fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                              fontSize: "8.5px",
+                              letterSpacing: "0.08em",
+                            }}
+                            className="mt-4 inline-flex items-center gap-1 uppercase text-muted group-hover:text-ink transition-colors select-none"
+                          >
+                            <span>{slide.services.length} Services</span>
+                            <span
+                              aria-hidden="true"
+                              className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                            >
+                              ↗
+                            </span>
+                          </span>
+                        </div>
+                      </button>
+                    ) : (
+                      /* EXPANDED ACTIVE SLICE */
+                      <div
+                        className="no-scrollbar h-full w-full overflow-y-auto flex flex-col justify-between"
+                        style={{
+                          paddingTop: "24px",
+                          paddingBottom: "22px",
+                          paddingLeft: isFirst ? `${bleedX + 26}px` : "66px",
+                          paddingRight: isLast ? `${bleedX + 26}px` : "66px",
+                        }}
+                      >
+                        {/* Header Row */}
+                        <div>
+                          <div className="flex items-start justify-between gap-4 mb-4">
+                            <div className="flex items-baseline gap-3.5 min-w-0">
+                              <span
+                                style={{
+                                  fontFamily: "var(--f-display), 'Sora', sans-serif",
+                                  fontSize: "clamp(2rem, 2.8vw, 2.65rem)",
+                                  lineHeight: 0.95,
+                                  letterSpacing: "-0.04em",
+                                  color: "var(--accent)",
+                                }}
+                                className="font-light select-none shrink-0"
+                              >
+                                {slide.num}
+                              </span>
+
+                              <div className="min-w-0">
+                                <span
+                                  style={{
+                                    fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                                    fontSize: "10px",
+                                    letterSpacing: "0.14em",
+                                    color: "var(--accent)",
+                                  }}
+                                  className="uppercase font-medium block mb-1 select-none"
+                                >
+                                  {slide.group}
+                                </span>
+                                <h3
+                                  style={{
+                                    fontFamily: "var(--f-display), 'Sora', sans-serif",
+                                    fontSize: "clamp(1.35rem, 2.1vw, 1.85rem)",
+                                    lineHeight: 1.12,
+                                    letterSpacing: "-0.025em",
+                                    color: "var(--ink)",
+                                  }}
+                                  className="font-medium"
+                                >
+                                  {slide.tagline}
+                                </h3>
+                              </div>
+                            </div>
+
                             <span
                               style={{
-                                width: "5px",
-                                height: "5px",
-                                minWidth: "5px",
-                                background: "var(--accent)",
-                                marginTop: "6px",
+                                fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                                fontSize: "10px",
+                                letterSpacing: "0.14em",
+                                background: "var(--glass-b)",
+                                border: "1px solid var(--glass-line)",
+                                borderRadius: "999px",
+                                padding: "4px 12px 3px",
                               }}
-                              className="shrink-0 rounded-[1px]"
-                              aria-hidden="true"
-                            />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                              className="text-muted uppercase select-none shrink-0"
+                            >
+                              <span className="text-ink font-semibold">{slide.num}</span> / 04
+                            </span>
+                          </div>
 
-                    {/* Hairline divider, YOU GET label, and Pinned link */}
-                    <div>
-                      <div
-                        style={{
-                          height: "1px",
-                          background: "var(--glass-line)",
-                          margin: "12px 0 10px",
-                        }}
-                        aria-hidden="true"
-                      />
-
-                      <div className="mb-3">
-                        <span
-                          style={{
-                            fontFamily: "var(--f-label), 'Michroma', sans-serif",
-                            fontSize: "9px",
-                            letterSpacing: "0.14em",
-                            color: "var(--muted)",
-                          }}
-                          className="uppercase block mb-1"
-                        >
-                          YOU GET
-                        </span>
-                        <p
-                          style={{
-                            fontFamily: "var(--f-body), 'Manrope', sans-serif",
-                            fontSize: "13px",
-                            lineHeight: 1.4,
-                            color: "var(--ink)",
-                          }}
-                          className="font-medium"
-                        >
-                          {svc.youGet}
-                        </p>
-                      </div>
-
-                      {/* Explore link pinned to the bottom of the panel */}
-                      <div className="pt-2">
-                        <Link
-                          href={svc.href}
-                          style={{
-                            fontFamily: "var(--f-label), 'Michroma', sans-serif",
-                            fontSize: "10px",
-                            letterSpacing: "0.1em",
-                            color: "var(--ink)",
-                          }}
-                          className="group inline-flex items-center gap-1.5 uppercase font-medium hover:text-accent transition-colors"
-                        >
-                          <span>Explore {svc.title}</span>
-                          <span
-                            aria-hidden="true"
-                            className="inline-block transition-transform duration-200 group-hover:translate-x-1"
+                          {/* Inner Glass Service Cards */}
+                          <div
+                            className={`grid gap-[13px] ${
+                              isThreeCol
+                                ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                                : "grid-cols-1 md:grid-cols-2"
+                            }`}
                           >
-                            &rarr;
-                          </span>
-                        </Link>
+                            {slide.services.map((svc) => (
+                              <div
+                                key={svc.title}
+                                style={{
+                                  borderRadius: "16px",
+                                  padding: isThreeCol
+                                    ? "15px 15px 14px"
+                                    : "18px 18px 16px",
+                                  border: "1px solid var(--glass-line)",
+                                  background: "var(--glass-in)",
+                                  WebkitBackdropFilter: "blur(16px)",
+                                  backdropFilter: "blur(16px)",
+                                }}
+                                className="flex flex-col justify-between transition-colors hover:border-accent/50"
+                              >
+                                <div>
+                                  {/* Icon + Title */}
+                                  <div className="flex items-start gap-2.5 mb-2">
+                                    <div
+                                      style={{
+                                        width: "34px",
+                                        height: "34px",
+                                        minWidth: "34px",
+                                        borderRadius: "9px",
+                                        border: "1px solid var(--glass-line)",
+                                        background: "var(--glass-a)",
+                                      }}
+                                      className="flex items-center justify-center shrink-0"
+                                    >
+                                      {renderServiceIcon(svc.icon)}
+                                    </div>
+
+                                    <div className="min-w-0">
+                                      <h4
+                                        style={{
+                                          fontFamily: "var(--f-display), 'Sora', sans-serif",
+                                          fontSize: isThreeCol ? "1.05rem" : "1.15rem",
+                                          lineHeight: 1.22,
+                                          color: "var(--ink)",
+                                        }}
+                                        className="font-semibold tracking-tight"
+                                      >
+                                        {svc.title}
+                                      </h4>
+
+                                      {svc.fullName && (
+                                        <p
+                                          style={{
+                                            fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                                            fontSize: "8.5px",
+                                            letterSpacing: "0.07em",
+                                            color: "var(--muted)",
+                                            marginTop: "2px",
+                                          }}
+                                          className="uppercase"
+                                        >
+                                          {svc.fullName}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  {/* Promise */}
+                                  <p
+                                    style={{
+                                      fontFamily: "var(--f-body), 'Manrope', sans-serif",
+                                      fontSize: isThreeCol ? "12.5px" : "13.5px",
+                                      lineHeight: 1.42,
+                                      color: "var(--muted)",
+                                      marginBottom: "11px",
+                                    }}
+                                  >
+                                    {svc.promise}
+                                  </p>
+
+                                  {/* 3 Bullets */}
+                                  <ul className="space-y-1.5 mb-3">
+                                    {svc.bullets.map((b, bIdx) => (
+                                      <li
+                                        key={bIdx}
+                                        style={{
+                                          fontFamily: "var(--f-body), 'Manrope', sans-serif",
+                                          fontSize: isThreeCol ? "12px" : "12.5px",
+                                          lineHeight: 1.38,
+                                          color: "var(--ink)",
+                                        }}
+                                        className="flex items-start gap-2"
+                                      >
+                                        <span
+                                          style={{
+                                            width: "5px",
+                                            height: "5px",
+                                            minWidth: "5px",
+                                            background: "var(--accent)",
+                                            marginTop: "5.5px",
+                                          }}
+                                          className="shrink-0 rounded-[1px]"
+                                          aria-hidden="true"
+                                        />
+                                        <span>{b}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+
+                                {/* Divider, YOU GET, Explore Link */}
+                                <div>
+                                  <div
+                                    style={{
+                                      height: "1px",
+                                      background: "var(--glass-line)",
+                                      margin: "10px 0 8px",
+                                    }}
+                                    aria-hidden="true"
+                                  />
+
+                                  <div className="mb-2.5">
+                                    <span
+                                      style={{
+                                        fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                                        fontSize: "8.5px",
+                                        letterSpacing: "0.14em",
+                                        color: "var(--muted)",
+                                      }}
+                                      className="uppercase block mb-0.5"
+                                    >
+                                      YOU GET
+                                    </span>
+                                    <p
+                                      style={{
+                                        fontFamily: "var(--f-body), 'Manrope', sans-serif",
+                                        fontSize: isThreeCol ? "12px" : "12.5px",
+                                        lineHeight: 1.35,
+                                        color: "var(--ink)",
+                                      }}
+                                      className="font-medium"
+                                    >
+                                      {svc.youGet}
+                                    </p>
+                                  </div>
+
+                                  <div className="pt-1">
+                                    <Link
+                                      href={svc.href}
+                                      style={{
+                                        fontFamily: "var(--f-label), 'Michroma', sans-serif",
+                                        fontSize: "9.5px",
+                                        letterSpacing: "0.1em",
+                                        color: "var(--ink)",
+                                      }}
+                                      className="group inline-flex items-center gap-1.5 uppercase font-medium hover:text-accent transition-colors"
+                                    >
+                                      <span>Explore {svc.title}</span>
+                                      <span
+                                        aria-hidden="true"
+                                        className="inline-block transition-transform duration-200 group-hover:translate-x-1"
+                                      >
+                                        &rarr;
+                                      </span>
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        /* MOBILE: Diagonal-Accented Vertical Glass Accordion */
+        <div
+          className="absolute left-1/2 no-scrollbar overflow-y-auto space-y-2.5"
+          style={{
+            top: `${areaCenterY}px`,
+            width: `${deckWidth}px`,
+            maxHeight: `${areaHeight}px`,
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {SLIDES.map((slide, i) => {
+            const isCurrent = i === activeSlide;
+
+            return (
+              <article
+                key={slide.num}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of 4: ${slide.group}`}
+                style={{
+                  borderRadius: "18px",
+                  background: "linear-gradient(135deg, var(--glass-a), var(--glass-b))",
+                  WebkitBackdropFilter: "blur(10px) saturate(1.5)",
+                  backdropFilter: "blur(10px) saturate(1.5)",
+                  border: isCurrent
+                    ? "1px solid var(--accent)"
+                    : "1px solid var(--glass-line)",
+                  boxShadow:
+                    "inset 0 1px 0 var(--glass-edge), 0 14px 32px -14px var(--glass-shadow)",
+                }}
+                className="overflow-hidden transition-all duration-300"
+              >
+                <button
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-expanded={isCurrent}
+                  className="w-full px-4 py-3.5 flex items-center justify-between gap-3 text-left"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span
+                      style={{
+                        fontFamily: "var(--f-display), 'Sora', sans-serif",
+                        color: isCurrent ? "var(--accent)" : "var(--ink)",
+                        transform: "skewX(-12deg)",
+                      }}
+                      className="text-2xl font-light tracking-tight shrink-0"
+                    >
+                      {slide.num}
+                    </span>
+
+                    <span
+                      style={{
+                        width: "1px",
+                        height: "22px",
+                        background: isCurrent ? "var(--accent)" : "var(--glass-line)",
+                        transform: "skewX(-12deg)",
+                      }}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+
+                    <div className="min-w-0">
+                      <span
+                        style={{
+                          fontFamily: "var(--f-display), 'Sora', sans-serif",
+                          fontSize: "11px",
+                          letterSpacing: "0.09em",
+                          color: isCurrent ? "var(--accent)" : "var(--ink)",
+                        }}
+                        className="uppercase font-semibold block truncate"
+                      >
+                        {slide.group}
+                      </span>
+                      <span className="text-xs text-muted block truncate">
+                        {slide.tagline}
+                      </span>
                     </div>
                   </div>
-                ))}
-              </div>
-            </article>
-          );
-        })}
-      </div>
 
-      {/* Controls centred at the bottom (30px from edge) */}
+                  <span className="font-mono text-[10px] text-muted shrink-0">
+                    {isCurrent ? "OPEN" : `${slide.services.length} SVC ↗`}
+                  </span>
+                </button>
+
+                {isCurrent && (
+                  <div className="px-4 pb-4 pt-1 space-y-3">
+                    {slide.services.map((svc) => (
+                      <div
+                        key={svc.title}
+                        style={{
+                          borderRadius: "14px",
+                          padding: "14px",
+                          border: "1px solid var(--glass-line)",
+                          background: "var(--glass-in)",
+                          WebkitBackdropFilter: "blur(16px)",
+                          backdropFilter: "blur(16px)",
+                        }}
+                      >
+                        <div className="flex items-center gap-2.5 mb-2">
+                          <div
+                            style={{
+                              width: "32px",
+                              height: "32px",
+                              borderRadius: "8px",
+                              border: "1px solid var(--glass-line)",
+                              background: "var(--glass-a)",
+                            }}
+                            className="flex items-center justify-center shrink-0"
+                          >
+                            {renderServiceIcon(svc.icon)}
+                          </div>
+                          <div>
+                            <h4 className="font-display text-base font-semibold text-ink">
+                              {svc.title}
+                            </h4>
+                            {svc.fullName && (
+                              <p className="font-label text-[8.5px] uppercase text-muted">
+                                {svc.fullName}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        <p className="text-xs text-muted mb-2.5 leading-relaxed">
+                          {svc.promise}
+                        </p>
+
+                        <ul className="space-y-1.5 mb-3">
+                          {svc.bullets.map((b, bIdx) => (
+                            <li
+                              key={bIdx}
+                              className="flex items-start gap-2 text-xs text-ink"
+                            >
+                              <span
+                                style={{
+                                  width: "5px",
+                                  height: "5px",
+                                  background: "var(--accent)",
+                                  marginTop: "5px",
+                                }}
+                                className="shrink-0 rounded-[1px]"
+                                aria-hidden="true"
+                              />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="pt-2 border-t border-line/50 flex items-center justify-between gap-2">
+                          <span className="text-[11px] font-medium text-ink line-clamp-1">
+                            {svc.youGet}
+                          </span>
+                          <Link
+                            href={svc.href}
+                            className="font-label text-[9.5px] uppercase text-accent font-semibold shrink-0"
+                          >
+                            Explore &rarr;
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Controls centred at the bottom */}
       <div
         className="absolute left-1/2 flex items-center gap-[18px]"
         style={{
-          bottom: "30px",
+          bottom: "28px",
           transform: "translateX(-50%)",
           zIndex: 30,
         }}
       >
-        {/* Previous Button: round 42px glass */}
+        {/* Previous Button */}
         <button
           type="button"
           aria-label="Previous services"
@@ -690,21 +944,31 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
             WebkitBackdropFilter: "blur(14px)",
             backdropFilter: "blur(14px)",
             border: "1px solid var(--glass-line)",
-            boxShadow: "inset 0 1px 0 var(--glass-edge), 0 4px 14px rgba(0,0,0,0.06)",
+            boxShadow:
+              "inset 0 1px 0 var(--glass-edge), 0 4px 14px rgba(0,0,0,0.06)",
             opacity: activeSlide === 0 ? 0.35 : 1,
             cursor: activeSlide === 0 ? "not-allowed" : "pointer",
             pointerEvents: activeSlide === 0 ? "none" : "auto",
           }}
           className="flex items-center justify-center text-ink hover:border-accent transition-colors shrink-0"
         >
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4"
+            aria-hidden="true"
+          >
             <path d="M10 3L5 8L10 13" />
           </svg>
         </button>
 
-        {/* 4 Dots: 9px circle with 1px ink border; active is 26px filled pill */}
+        {/* 4 Dots */}
         <div className="flex items-center gap-2">
-          {SLIDES.map((slide, dotIdx) => {
+          {SLIDES.map((_, dotIdx) => {
             const isActive = dotIdx === activeSlide;
             let dotLabel = "Foundation services";
             if (dotIdx === 1) dotLabel = "Connect services";
@@ -732,7 +996,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
           })}
         </div>
 
-        {/* Next Button: round 42px glass */}
+        {/* Next Button */}
         <button
           type="button"
           aria-label="Next services"
@@ -746,19 +1010,29 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ s }) => {
             WebkitBackdropFilter: "blur(14px)",
             backdropFilter: "blur(14px)",
             border: "1px solid var(--glass-line)",
-            boxShadow: "inset 0 1px 0 var(--glass-edge), 0 4px 14px rgba(0,0,0,0.06)",
+            boxShadow:
+              "inset 0 1px 0 var(--glass-edge), 0 4px 14px rgba(0,0,0,0.06)",
             opacity: activeSlide === 3 ? 0.35 : 1,
             cursor: activeSlide === 3 ? "not-allowed" : "pointer",
             pointerEvents: activeSlide === 3 ? "none" : "auto",
           }}
           className="flex items-center justify-center text-ink hover:border-accent transition-colors shrink-0"
         >
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-4 h-4"
+            aria-hidden="true"
+          >
             <path d="M6 3L11 8L6 13" />
           </svg>
         </button>
 
-        {/* Small note under controls: appears only on card 4, Michroma 9px, uppercase, muted, hidden on mobile */}
+        {/* Small note under controls: appears only on slide 4 */}
         <p
           style={{
             fontFamily: "var(--f-label), 'Michroma', sans-serif",

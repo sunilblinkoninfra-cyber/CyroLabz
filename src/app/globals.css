@@ -312,35 +312,45 @@ main [class*="text-[11px]"] {
 .story-connect-chassis {
   margin-top: 5rem;
   position: relative;
-  border: 1px solid var(--line);
+  border: 1px solid var(--glass-line);
   border-radius: 20px;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.90) 0%,
-    rgba(244, 245, 247, 0.80) 100%
+    rgba(255, 255, 255, 0.68) 0%,
+    rgba(244, 245, 247, 0.44) 100%
   );
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
   box-shadow:
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
-    0 24px 56px -12px rgba(11, 12, 14, 0.08),
-    0 4px 16px -2px rgba(11, 12, 14, 0.03);
+    inset 0 1px 0 var(--glass-edge),
+    0 24px 56px -12px var(--glass-shadow);
 }
 
-:root[data-theme="dark"] .story-connect-chassis,
+:root[data-theme="dark"] .story-connect-chassis {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(10, 11, 13, 0.42) 100%
+  );
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 32px 0 rgba(108, 151, 255, 0.04),
+    0 28px 64px -12px var(--glass-shadow);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .story-connect-chassis {
     background: linear-gradient(
       135deg,
-      rgba(18, 20, 24, 0.90) 0%,
-      rgba(10, 11, 13, 0.82) 100%
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(10, 11, 13, 0.42) 100%
     );
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid var(--glass-line);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      inset 0 1px 0 var(--glass-edge),
       inset 0 0 32px 0 rgba(108, 151, 255, 0.04),
-      0 28px 64px -12px rgba(0, 0, 0, 0.75),
-      0 6px 20px -2px rgba(0, 0, 0, 0.5);
+      0 28px 64px -12px var(--glass-shadow);
   }
 }
 
@@ -349,32 +359,42 @@ main [class*="text-[11px]"] {
   position: relative;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(244, 245, 247, 0.76) 100%
+    rgba(255, 255, 255, 0.68) 0%,
+    rgba(244, 245, 247, 0.44) 100%
   );
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(211, 215, 220, 0.85);
-  box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
-    0 20px 48px -12px rgba(11, 12, 14, 0.08),
-    0 4px 16px -2px rgba(11, 12, 14, 0.03);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    0 20px 48px -12px var(--glass-shadow);
 }
 
-:root[data-theme="dark"] .readable-hero-plate,
+:root[data-theme="dark"] .readable-hero-plate {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(10, 11, 13, 0.42) 100%
+  );
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 24px 0 rgba(108, 151, 255, 0.03),
+    0 24px 56px -12px var(--glass-shadow);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .readable-hero-plate {
     background: linear-gradient(
       135deg,
-      rgba(18, 20, 24, 0.88) 0%,
-      rgba(10, 11, 13, 0.80) 100%
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(10, 11, 13, 0.42) 100%
     );
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    border: 1px solid var(--glass-line);
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
       inset 0 0 24px 0 rgba(108, 151, 255, 0.03),
-      0 24px 56px -12px rgba(0, 0, 0, 0.72),
-      0 4px 16px -2px rgba(0, 0, 0, 0.45);
+      0 24px 56px -12px var(--glass-shadow);
   }
 }
 
@@ -651,9 +671,13 @@ html.lenis body {
   margin: 0;
   pointer-events: none;
   max-width: 90%;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--glass-b);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-line);
+  box-shadow: inset 0 1px 0 var(--glass-edge);
   font: 600 0.75rem/1.4 var(--f-body);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -715,33 +739,43 @@ html.lenis body {
   border-radius: 20px;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(244, 245, 247, 0.76) 100%
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(244, 245, 247, 0.36) 100%
   );
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(211, 215, 220, 0.85);
-  box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9),
-    0 24px 56px -12px rgba(11, 12, 14, 0.08),
-    0 4px 16px -2px rgba(11, 12, 14, 0.03);
+  backdrop-filter: blur(14px) saturate(1.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    0 24px 52px -18px var(--glass-shadow);
   position: relative;
 }
 
-:root[data-theme="dark"] .tilt,
+:root[data-theme="dark"] .tilt {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(10, 11, 13, 0.40) 100%
+  );
+  border: 1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 24px 0 rgba(108, 151, 255, 0.04),
+    0 28px 60px -18px var(--glass-shadow);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .tilt {
     background: linear-gradient(
       135deg,
-      rgba(18, 20, 24, 0.88) 0%,
-      rgba(10, 11, 13, 0.80) 100%
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(10, 11, 13, 0.40) 100%
     );
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
-      inset 0 0 28px 0 rgba(108, 151, 255, 0.035),
-      0 28px 64px -12px rgba(0, 0, 0, 0.75),
-      0 4px 16px -2px rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--glass-line);
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 0 24px 0 rgba(108, 151, 255, 0.04),
+      0 28px 60px -18px var(--glass-shadow);
   }
 }
 
@@ -829,10 +863,23 @@ html.lenis body {
 }
 
 .tags li {
+  padding: 6px 12px;
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: var(--glass-b);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  font: 600 0.78rem/1.3 var(--f-body);
+  letter-spacing: 0.02em;
+  list-style: none;
+}
+
+.tags li:has(a) {
   padding: 0;
   border: 0;
   background: transparent;
-  list-style: none;
+  backdrop-filter: none;
 }
 
 .tags a {
@@ -840,9 +887,11 @@ html.lenis body {
   align-items: center;
   min-height: 36px;
   padding: 8px 12px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--surface);
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: var(--glass-b);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   color: var(--ink);
   font: 600 0.8125rem/1.3 var(--f-body);
   letter-spacing: 0.01em;
@@ -869,18 +918,23 @@ html.lenis body {
   align-items: center;
   gap: 10px;
   padding: 11px 16px;
-  background: var(--bg);
-  border: 1px solid var(--ink);
+  border-radius: 8px;
+  background: var(--glass-b);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-line);
+  color: var(--ink);
   cursor: pointer;
   font: 400 0.6875rem/1.2 var(--f-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .replay:hover {
   background: var(--ink);
   color: var(--bg);
+  border-color: var(--ink);
 }
 
 .replay svg {
@@ -1284,4 +1338,54 @@ html.lenis body {
     transform: none !important;
     transition: border-color 0.2s ease !important;
   }
+  .diagonal-slice {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   DIAGONAL SLANTED ACCORDION SERVICES DECK
+   ========================================================================== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.diagonal-slice {
+  position: relative;
+  transform: skewX(-11deg);
+  background: linear-gradient(135deg, var(--glass-a), var(--glass-b));
+  -webkit-backdrop-filter: blur(10px) saturate(1.5);
+  backdrop-filter: blur(10px) saturate(1.5);
+  border-left: 1px solid var(--glass-line);
+  box-shadow:
+    18px 0 38px -10px var(--glass-shadow),
+    inset 1px 0 0 var(--glass-edge);
+  transition:
+    flex 0.62s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.diagonal-slice[data-active="true"] {
+  border-left-color: var(--accent);
+  box-shadow:
+    22px 0 48px -10px var(--glass-shadow),
+    inset 1px 0 0 var(--glass-edge),
+    inset 0 1px 0 var(--glass-edge);
+}
+
+.diagonal-slice[data-active="false"]:hover {
+  border-left-color: var(--accent);
+}
+
+.diagonal-slice-unskew {
+  transform: skewX(11deg);
+  width: 100%;
+  height: 100%;
 }
