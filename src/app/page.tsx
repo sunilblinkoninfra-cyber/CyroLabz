@@ -38,11 +38,6 @@ export default function HomePage() {
     });
   }, []);
 
-  const handleReplay = useCallback(() => {
-    go(0);
-    travelTo(0);
-  }, [go, travelTo]);
-
   // Pointer movement tracking over stage and 3D copy tilt
   useEffect(() => {
     const stageEl = stageRef.current;
@@ -232,7 +227,6 @@ export default function HomePage() {
                   <li>Consulting</li>
                   <li>Audits</li>
                 </ul>
-                <p className="cue z4">Scroll to continue &darr;</p>
               </div>
             </article>
 
@@ -310,24 +304,6 @@ export default function HomePage() {
                   <li>Audits</li>
                   <li>SEO · AEO · GEO</li>
                 </ul>
-                <button
-                  className="replay z4"
-                  id="replay"
-                  type="button"
-                  onClick={handleReplay}
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    aria-hidden="true"
-                  >
-                    <path d="M2.5 8a5.5 5.5 0 1 0 1.8-4.07" />
-                    <path d="M2.5 2.5v3h3" />
-                  </svg>
-                  Back to the start
-                </button>
               </div>
             </article>
           </div>
