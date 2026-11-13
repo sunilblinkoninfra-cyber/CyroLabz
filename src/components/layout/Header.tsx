@@ -114,16 +114,16 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 sm:h-20 glass-header transition-colors duration-200">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 sm:h-20 glass-header pointer-events-none transition-colors duration-200">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo: C:\Users\CyroLabz\logo.png */}
         <Link
           href="/"
           onClick={() => handleNavClick("/")}
-          className="flex items-center gap-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm group"
+          className="header-pill-btn px-3 sm:px-3.5 py-1.5 gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent group pointer-events-auto"
           aria-label="Cyrolabz Home"
         >
-          <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0">
+          <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0">
             <Image
               src="/assets/logo.png"
               alt="Cyrolabz Logo"
@@ -132,13 +132,16 @@ export const Header: React.FC = () => {
               className="object-contain brand-logo-img"
             />
           </div>
-          <span className="font-display font-bold tracking-tight text-lg sm:text-xl text-ink group-hover:text-accent transition-colors">
+          <span className="font-display font-bold tracking-tight text-base sm:text-lg text-ink group-hover:text-accent transition-colors">
             Cyrolabz
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
+        {/* Desktop Navigation — Glassmorphic Button Island */}
+        <nav
+          className="hidden md:flex items-center header-nav-island pointer-events-auto"
+          aria-label="Main navigation"
+        >
           {navLinks.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -156,18 +159,18 @@ export const Header: React.FC = () => {
                     href={item.href}
                     onClick={() => handleNavClick(item.href)}
                     onFocus={() => setServicesOpen(true)}
-                    className={`font-sans text-sm tracking-wide transition-colors relative py-1 inline-flex items-center gap-1 ${
-                      isActive
-                        ? "text-ink font-semibold"
-                        : "text-muted hover:text-ink font-medium"
-                    }`}
+                    data-active={isActive ? "true" : undefined}
+                    className="header-nav-btn"
                     aria-expanded={servicesOpen}
                     aria-haspopup="true"
                   >
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                    )}
                     <span>{item.label}</span>
                     <svg
                       className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        servicesOpen ? "rotate-180 text-accent" : "text-muted"
+                        servicesOpen ? "rotate-180 text-accent" : "opacity-60"
                       }`}
                       fill="none"
                       stroke="currentColor"
@@ -176,15 +179,12 @@ export const Header: React.FC = () => {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
-                    {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />
-                    )}
                   </Link>
 
                   {/* Dropdown Menu */}
                   {servicesOpen && (
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-[460px] rounded-lg services-panel p-4 shadow-xl border border-line z-50 animate-in fade-in zoom-in-95 duration-150"
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[460px] rounded-xl services-panel p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
                       role="menu"
                       aria-label="Services list"
                     >
@@ -194,7 +194,7 @@ export const Header: React.FC = () => {
                             key={svc.href}
                             href={svc.href}
                             onClick={() => handleNavClick(svc.href)}
-                            className="p-2 rounded hover:bg-surface/80 group transition-colors block text-left"
+                            className="p-2 rounded-lg hover:bg-[var(--glass-b)] hover:border hover:border-[var(--glass-line)] border border-transparent group transition-all block text-left"
                             role="menuitem"
                           >
                             <div className="flex items-center gap-2">
@@ -212,7 +212,10 @@ export const Header: React.FC = () => {
                         ))}
                       </div>
 
-                      <div className="mt-3 pt-3 border-t border-line/60 flex items-center justify-between text-xs">
+                      <div
+                        className="mt-3 pt-3 flex items-center justify-between text-xs"
+                        style={{ borderTop: "1px solid var(--glass-line)" }}
+                      >
                         <Link
                           href="/services"
                           onClick={() => handleNavClick("/services")}
@@ -239,28 +242,25 @@ export const Header: React.FC = () => {
                 key={item.href}
                 href={item.href}
                 onClick={() => handleNavClick(item.href)}
-                className={`font-sans text-sm tracking-wide transition-colors relative py-1 ${
-                  isActive
-                    ? "text-ink font-semibold"
-                    : "text-muted hover:text-ink font-medium"
-                }`}
+                data-active={isActive ? "true" : undefined}
+                className="header-nav-btn"
               >
-                {item.label}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                 )}
+                <span>{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Right side controls: Theme Toggle + CTA */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
           {/* Single Round 38px Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
-            className="w-[38px] h-[38px] rounded-full border border-line hover:border-ink flex items-center justify-center text-ink transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="header-pill-btn w-9 h-9 sm:w-10 sm:h-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             aria-label={
               effectiveTheme === "dark"
                 ? "Switch to light theme"
@@ -312,7 +312,7 @@ export const Header: React.FC = () => {
           <Link
             href="/contact"
             onClick={() => handleNavClick("/contact")}
-            className="hidden sm:inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-4 py-2.5 rounded bg-accent text-on-accent hover:bg-accent-hover transition-colors font-semibold"
+            className="hidden sm:inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-4 py-2 sm:py-2.5 rounded-full bg-accent text-on-accent hover:bg-accent-hover transition-all font-semibold shadow-sm hover:shadow-[0_0_20px_var(--accent-glow)] border border-accent/40"
           >
             Start a project
           </Link>
@@ -320,7 +320,7 @@ export const Header: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-ink border border-line rounded"
+            className="md:hidden header-pill-btn w-9 h-9 sm:w-10 sm:h-10 p-2"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -352,7 +352,7 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass-header border-t-0 px-4 py-6 space-y-4 shadow-lg max-h-[85vh] overflow-y-auto">
+        <div className="md:hidden mx-4 mt-2 p-5 rounded-2xl services-panel space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto pointer-events-auto animate-in fade-in zoom-in-95 duration-150">
           <nav className="flex flex-col space-y-3" aria-label="Mobile navigation">
             {navLinks.map((item) => {
               if (item.hasDropdown) {
