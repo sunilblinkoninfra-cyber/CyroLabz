@@ -21,6 +21,7 @@ export function ConstellationLinesLayer() {
   }, []);
 
   const linePositions = useMemo(() => {
+    void redrawKey;
     const nodes: THREE.Vector3[] = [];
     for (let i = 0; i < NODE_COUNT; i++) {
       const angle = (i / NODE_COUNT) * Math.PI * 2;

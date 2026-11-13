@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useStoryStore, getTargetChapterForPath } from "@/lib/storyStore";
+import { LiquidNavbar, LiquidNavItem } from "@/components/ui/liquid-glass-navbar";
 
 export const Header: React.FC = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const travelTo = useStoryStore((state) => state.travelTo);
   const [effectiveTheme, setEffectiveTheme] = useState<"light" | "dark">("light");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -99,18 +101,94 @@ export const Header: React.FC = () => {
   ];
 
   const navLinks = [
-    { label: "Services", href: "/services", hasDropdown: true },
-    { label: "Work", href: "/work" },
     { label: "About", href: "/about" },
+    { label: "Services", href: "/services", hasDropdown: true },
     { label: "Insights", href: "/insights" },
+    { label: "Case studies", href: "/work" },
     { label: "Contact", href: "/contact" },
   ];
+
+  const liquidNavItems: LiquidNavItem[] = [
+    {
+      label: "About",
+      href: "/about",
+      icon: (
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8.5" r="3.8" />
+          <path d="M4.8 20c1.2-3.4 4-5 7.2-5s6 1.6 7.2 5" />
+        </svg>
+      ),
+      fx: "wave",
+    },
+    {
+      label: "Services",
+      href: "/services",
+      icon: (
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="m12 3-8 4.5 8 4.5 8-4.5L12 3Z" />
+          <path d="m4 12 8 4.5 8-4.5" />
+          <path d="m4 16.5 8 4.5 8-4.5" />
+        </svg>
+      ),
+      fx: "drop",
+    },
+    {
+      label: "Insights",
+      href: "/insights",
+      icon: (
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="m12 3 1.9 4.8L19 9.5l-4 3.6 1.2 5.4-4.2-2.8-4.2 2.8 1.2-5.4-4-3.6 5.1-1.7L12 3Z" />
+        </svg>
+      ),
+      fx: "glow",
+    },
+    {
+      label: "Case studies",
+      href: "/work",
+      icon: (
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2h7.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-10Z" />
+          <path d="M8 13h8" />
+          <path d="M8 16h5" />
+        </svg>
+      ),
+      fx: "pop",
+    },
+    {
+      label: "Contact",
+      href: "/contact",
+      icon: (
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 12.2 3.6 5.4l2.7 6.8-2.7 6.4L21 12.2Zm-14.7 0H13" />
+        </svg>
+      ),
+      fx: "plane",
+    },
+  ];
+
+  const getActiveIndex = () => {
+    if (pathname === "/about" || pathname.startsWith("/about/")) return 0;
+    if (pathname === "/services" || pathname.startsWith("/services/")) return 1;
+    if (pathname === "/insights" || pathname.startsWith("/insights/")) return 2;
+    if (pathname === "/work" || pathname.startsWith("/work/")) return 3;
+    if (pathname === "/contact" || pathname.startsWith("/contact/")) return 4;
+    return -1;
+  };
+
+  const activeIndex = getActiveIndex();
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
     const targetChapter = getTargetChapterForPath(href);
     travelTo(targetChapter);
+  };
+
+  const handleLiquidNavChange = (index: number, item: LiquidNavItem) => {
+    if (item.href) {
+      handleNavClick(item.href);
+      router.push(item.href);
+    }
   };
 
   return (
@@ -137,124 +215,80 @@ export const Header: React.FC = () => {
           </span>
         </Link>
 
-        {/* Desktop Navigation — Glassmorphic Button Island */}
-        <nav
-          className="hidden md:flex items-center header-nav-island pointer-events-auto"
-          aria-label="Main navigation"
+        {/* Desktop Navigation — Liquid Glass Navbar */}
+        <div
+          className="relative hidden md:flex items-center justify-center pointer-events-auto"
+          onMouseLeave={() => setServicesOpen(false)}
         >
-          {navLinks.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
+          <LiquidNavbar
+            items={liquidNavItems}
+            active={activeIndex >= 0 ? activeIndex : undefined}
+            tone={effectiveTheme}
+            onChange={handleLiquidNavChange}
+            onItemMouseEnter={(i) => {
+              if (i === 1) setServicesOpen(true);
+              else setServicesOpen(false);
+            }}
+            sound={false}
+          />
 
-            if (item.hasDropdown) {
-              return (
-                <div
-                  key={item.href}
-                  className="relative"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
-                >
+          {/* Services Dropdown Menu */}
+          {servicesOpen && (
+            <div
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[460px] rounded-xl services-panel p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+              role="menu"
+              aria-label="Services list"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                {servicesList.map((svc) => (
                   <Link
-                    href={item.href}
-                    onClick={() => handleNavClick(item.href)}
-                    onFocus={() => setServicesOpen(true)}
-                    data-active={isActive ? "true" : undefined}
-                    className="header-nav-btn"
-                    aria-expanded={servicesOpen}
-                    aria-haspopup="true"
+                    key={svc.href}
+                    href={svc.href}
+                    onClick={() => handleNavClick(svc.href)}
+                    className="p-2 rounded-lg hover:bg-[var(--glass-b)] hover:border hover:border-[var(--glass-line)] border border-transparent group transition-all block text-left"
+                    role="menuitem"
                   >
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                    )}
-                    <span>{item.label}</span>
-                    <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        servicesOpen ? "rotate-180 text-accent" : "opacity-60"
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </Link>
-
-                  {/* Dropdown Menu */}
-                  {servicesOpen && (
-                    <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[460px] rounded-xl services-panel p-4 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
-                      role="menu"
-                      aria-label="Services list"
-                    >
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                        {servicesList.map((svc) => (
-                          <Link
-                            key={svc.href}
-                            href={svc.href}
-                            onClick={() => handleNavClick(svc.href)}
-                            className="p-2 rounded-lg hover:bg-[var(--glass-b)] hover:border hover:border-[var(--glass-line)] border border-transparent group transition-all block text-left"
-                            role="menuitem"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-[10px] text-accent font-semibold">
-                                {svc.num}
-                              </span>
-                              <span className="font-sans text-xs font-semibold text-ink group-hover:text-accent transition-colors truncate">
-                                {svc.label}
-                              </span>
-                            </div>
-                            <span className="font-mono text-[9px] uppercase tracking-wider text-muted block pl-5">
-                              {svc.group}
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-
-                      <div
-                        className="mt-3 pt-3 flex items-center justify-between text-xs"
-                        style={{ borderTop: "1px solid var(--glass-line)" }}
-                      >
-                        <Link
-                          href="/services"
-                          onClick={() => handleNavClick("/services")}
-                          className="font-mono text-[11px] text-accent hover:underline font-semibold"
-                        >
-                          All 10 services overview →
-                        </Link>
-                        <Link
-                          href="/contact"
-                          onClick={() => handleNavClick("/contact")}
-                          className="text-muted hover:text-ink text-[11px]"
-                        >
-                          Start a project
-                        </Link>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[10px] text-accent font-semibold">
+                        {svc.num}
+                      </span>
+                      <span className="font-sans text-xs font-semibold text-ink group-hover:text-accent transition-colors truncate">
+                        {svc.label}
+                      </span>
                     </div>
-                  )}
-                </div>
-              );
-            }
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-muted block pl-5">
+                      {svc.group}
+                    </span>
+                  </Link>
+                ))}
+              </div>
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => handleNavClick(item.href)}
-                data-active={isActive ? "true" : undefined}
-                className="header-nav-btn"
+              <div
+                className="mt-3 pt-3 flex items-center justify-between text-xs"
+                style={{ borderTop: "1px solid var(--glass-line)" }}
               >
-                {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                )}
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+                <Link
+                  href="/services"
+                  onClick={() => handleNavClick("/services")}
+                  className="font-mono text-[11px] text-accent hover:underline font-semibold"
+                >
+                  All 10 services overview →
+                </Link>
+                <Link
+                  href="/contact"
+                  onClick={() => handleNavClick("/contact")}
+                  className="text-muted hover:text-ink text-[11px]"
+                >
+                  Contact studio →
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
-        {/* Right side controls: Theme Toggle + CTA */}
+        {/* Right side controls: Theme Toggle & Mobile Menu */}
         <div className="flex items-center gap-2.5 sm:gap-3 pointer-events-auto">
           {/* Single Round 38px Theme Toggle Button */}
           <button
@@ -307,15 +341,6 @@ export const Header: React.FC = () => {
               </svg>
             )}
           </button>
-
-          {/* Primary Action Button */}
-          <Link
-            href="/contact"
-            onClick={() => handleNavClick("/contact")}
-            className="hidden sm:inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-4 py-2 sm:py-2.5 rounded-full bg-accent text-on-accent hover:bg-accent-hover transition-all font-semibold shadow-sm hover:shadow-[0_0_20px_var(--accent-glow)] border border-accent/40"
-          >
-            Start a project
-          </Link>
 
           {/* Mobile Menu Button */}
           <button
@@ -399,13 +424,6 @@ export const Header: React.FC = () => {
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              onClick={() => handleNavClick("/contact")}
-              className="mt-4 w-full flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-4 py-3 rounded bg-accent text-on-accent font-semibold"
-            >
-              Start a project
-            </Link>
           </nav>
         </div>
       )}
