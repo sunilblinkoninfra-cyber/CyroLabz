@@ -14,16 +14,16 @@ export const INSIGHTS_DATA: Record<string, Article> = {
     slug: "evaluating-rag-hallucinations-in-production",
     title: "Evaluating RAG Hallucinations: Moving Past Faithfulness Scores",
     excerpt:
-      "Why standard benchmark evals fail in real-world enterprise RAG pipelines, and how deterministic verification harnesses catch subtle failure modes before users do.",
+      "Why a high average score can hide the failures that matter, and what to measure instead.",
     date: "Oct 12, 2026",
-    readTime: "6 min read",
+    readTime: "2 min read",
     chapter: "Intelligence",
     chapterNum: "03",
     content: [
       "Most enterprise retrieval-augmented generation (RAG) initiatives stall right after the pilot stage. In demo environments with curated queries, the model appears brilliant. In production, edge cases compound: slight variations in document formatting degrade chunk semantic relevance, and the LLM confidently interpolates facts from its training weights rather than retrieved source chunks.",
-      "Traditional evaluation frameworks like RAGAS or basic cosine similarity calculate aggregate metric scores that mask critical failures. A 94% average faithfulness score means that 6 out of every 100 client-facing answers contain hallucinations. In legal, healthcare, or financial domains, a 6% failure rate is an unacceptable operational risk.",
-      "To achieve production-grade reliability, engineering teams must implement multi-stage deterministic assertion trees. Rather than allowing the LLM to generate unstructured prose directly, the generation pipeline must be constrained by strict JSON schema contracts, citation token anchoring, and secondary verification agents that cross-examine each extracted factual claim against raw chunk byte ranges.",
-      "By isolating retrieval quality, context condensation, and token generation into separate testable units, teams can isolate regressions automatically whenever models or vector embeddings are upgraded.",
+      "Averaged metrics, such as RAGAS-style scores or simple similarity measures, can mask critical failures. A 94% average faithfulness score tells you the average share of supported claims, not how many answers fail. The unsupported 6% could sit inside a handful of answers, and in legal, healthcare or financial settings one wrong answer is enough to matter.",
+      "To reach production-grade reliability, teams should use multi-stage, rule-based checks. Rather than letting the model write free-form prose, constrain the pipeline with strict JSON schemas, citation anchoring, and a second verification step that checks each factual claim against the retrieved source text.",
+      "By isolating retrieval quality, context condensation, and token generation into separate testable units, teams can catch regressions automatically whenever models or vector embeddings are upgraded.",
     ],
   },
 
@@ -31,7 +31,7 @@ export const INSIGHTS_DATA: Record<string, Article> = {
     slug: "decoupling-legacy-erps-event-driven-architecture",
     title: "Decoupling Legacy Systems with Event-Driven Contracts",
     excerpt:
-      "A pragmatic engineering blueprint for carving modern services out of monolithic legacy databases without risking transaction integrity or downtime.",
+      "A practical approach to carving modern services out of a legacy database while protecting transactions and uptime.",
     date: "Sep 28, 2026",
     readTime: "8 min read",
     chapter: "Connect",
@@ -46,9 +46,9 @@ export const INSIGHTS_DATA: Record<string, Article> = {
 
   "what-to-look-for-in-codebase-audits": {
     slug: "what-to-look-for-in-codebase-audits",
-    title: "What Forensic Technical Audits Look For Before a Tech Acquisition",
+    title: "What a Technical Audit Looks For Before an Acquisition",
     excerpt:
-      "A technical due diligence checklist covering architectural debt, dependency licensing, hidden security vulnerabilities, and real scaling ceilings.",
+      "A due-diligence checklist covering architecture debt, licensing, security gaps and real scaling limits.",
     date: "Sep 15, 2026",
     readTime: "7 min read",
     chapter: "Foundation",
@@ -65,7 +65,7 @@ export const INSIGHTS_DATA: Record<string, Article> = {
     slug: "webgl-and-webgpu-for-enterprise-applications",
     title: "Real-Time 3D in the Browser: When to Use Three.js vs Plain Canvas",
     excerpt:
-      "Navigating the performance trade-offs between Canvas 2D, WebGL, and WebGPU for enterprise data visualization and product interactive experiences.",
+      "How to choose between Canvas 2D, WebGL and WebGPU for data visualisation and interactive product experiences.",
     date: "Aug 30, 2026",
     readTime: "5 min read",
     chapter: "Connect",

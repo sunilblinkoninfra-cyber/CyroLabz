@@ -8,18 +8,18 @@ export const HomeStoryGateway: React.FC = () => {
   const proofTiles = [
     {
       num: "01",
-      title: "End-to-End Continuity",
-      desc: "The architects who map your legacy systems are the senior engineers who author the code, write the tests, and defend the audit.",
+      title: "One team, start to finish",
+      desc: "The people who map your systems are the people who build and test them, and who stand behind the audit.",
     },
     {
       num: "02",
       title: "Secure by Design",
-      desc: "Cryptographic boundaries, immutable audit logging, and private-tenant AI deployments with zero client IP exposure.",
+      desc: "Security and privacy are designed in from the first architecture decision, not added at the end.",
     },
     {
       num: "03",
-      title: "Outcome-Led Telemetry",
-      desc: "Success measured in production: sub-100ms latency, high-concurrency ceilings, and verifiable business impact.",
+      title: "Results you can check",
+      desc: "We agree measurable targets up front, such as speed, uptime or time saved, and report against them after launch.",
     },
   ];
 
@@ -169,10 +169,10 @@ export const HomeStoryGateway: React.FC = () => {
         >
           <div>
             <h4 className="font-display text-xl font-bold text-ink">
-              Ready to begin your transformation?
+              Ready to begin?
             </h4>
             <p className="text-xs sm:text-sm text-muted mt-0.5">
-              Begin at Foundation (Chapter 01) or schedule an engineering consultation with our leads.
+              Start at Foundation, or book a 30-minute call with one of our leads.
             </p>
           </div>
 

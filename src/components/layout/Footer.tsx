@@ -38,8 +38,7 @@ export const Footer: React.FC = () => {
               </span>
             </Link>
             <p className="text-xs leading-relaxed max-w-xs text-muted">
-              Transformation, engineered. High-performance software engineering,
-              applied AI systems, and technical auditing for modern enterprises.
+              Transformation, engineered. Strategy, software, AI and audits for modern businesses.
             </p>
             <div className="font-mono text-[11px] text-accent">
               01 → 02 → 03 → 04
@@ -174,7 +173,7 @@ export const Footer: React.FC = () => {
                 <span>Secure by Design</span>
               </div>
               <p className="text-[11px] leading-relaxed text-muted">
-                Enterprise IP protection, zero vendor lock-in, reproducible pipelines, and thorough automated regression testing.
+                Secure by design. You own what we build. Reproducible builds, documented systems and automated regression testing.
               </p>
             </div>
           </div>

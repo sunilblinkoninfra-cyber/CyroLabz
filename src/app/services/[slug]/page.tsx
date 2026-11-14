@@ -21,9 +21,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = SERVICES_DATA[slug];
   if (!service) return { title: "Service Not Found" };
 
+  const title =
+    slug === "consulting"
+      ? "Technology Consulting & Modernisation Roadmaps"
+      : slug === "seo"
+        ? "SEO for Technical & Enterprise Sites"
+        : `${service.title} — ${service.chapter}`;
+
+  const description = service.promise;
+
   return {
-    title: `${service.title} — ${service.chapter} | Cyrolabz`,
-    description: service.promise,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+    twitter: {
+      title,
+      description,
+    },
   };
 }
 
@@ -146,7 +163,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       {/* 5. Proof: Linked Case Study */}
       <div className="mb-20 p-8 rounded-lg border border-line bg-surface/75">
         <div className="text-xs font-mono uppercase tracking-eyebrow text-muted mb-2">
-          Verified Outcome Proof
+          Proof from the work
         </div>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
@@ -171,7 +188,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       <div className="mb-24">
         <div className="border-b border-line pb-4 mb-6">
           <h3 className="font-mono text-xs uppercase tracking-eyebrow text-muted">
-            Neighbouring Services in Chapter {service.chapterNum}
+            Related services in Chapter {service.chapterNum}
           </h3>
         </div>
         <div className="flex flex-wrap gap-4">
@@ -198,7 +215,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           Start your {service.title} project.
         </h3>
         <p className="text-sm text-muted">
-          Schedule an engineering consultation or submit your specifications for a comprehensive proposal.
+          Book a 30-minute discovery call, or send us your requirements and we&apos;ll prepare a proposal.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
@@ -211,7 +228,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             href="/contact"
             className="inline-flex items-center justify-center font-mono text-xs uppercase tracking-eyebrow px-6 py-3.5 rounded border border-line hover:border-ink font-medium text-ink transition-colors"
           >
-            Book a Free Consultation
+            Book a 30-minute discovery call
           </Link>
         </div>
       </div>

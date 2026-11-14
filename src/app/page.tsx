@@ -294,7 +294,7 @@ export default function HomePage() {
                 </p>
                 <h2 className="z3">Transformation, engineered.</h2>
                 <p className="lead z2">
-                  One team takes you from strategy to build to audit. Every
+                  AI consulting, custom software and technical audits from one team, so nothing is lost between hand-offs. Every
                   point in this mark began as a point in your business.
                 </p>
                 <p className="out z2">Let&rsquo;s engineer yours.</p>

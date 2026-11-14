@@ -48,12 +48,12 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
         <div className="space-y-1">
           <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold">
             <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-            <span>Story Spine Navigation</span>
+            <span>Where you are in the journey</span>
             <span className="text-muted">•</span>
             <span className="text-muted">Chapter {beat.num}</span>
           </div>
           <h3 className="font-display text-lg sm:text-xl font-semibold text-ink">
-            Current Node: <span className="text-accent">{node.title}</span>
+            You are here: <span className="text-accent">{node.title}</span>
             <span className="text-xs font-mono font-normal text-muted ml-2">
               ({progress.step})
             </span>
@@ -80,7 +80,7 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
       {/* The 4-Beat Highway Rail */}
       <div className="py-6">
         <div className="text-[11px] font-mono uppercase tracking-eyebrow text-muted mb-3">
-          Transformation Highway (4 Beats)
+          The four chapters
         </div>
         <nav aria-label="Transformation Chapters">
           <ol className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -233,10 +233,12 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
             <div className="space-y-2 max-w-2xl">
               <div className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-eyebrow text-accent font-semibold">
                 <span className="w-2 h-2 rounded-full bg-accent" />
-                <span>Next Transformation Node</span>
+                <span>Up next</span>
                 <span className="text-muted">•</span>
                 <span className="text-muted">
-                  Chapter {getBeat(next.beat).num} / {getBeat(next.beat).name}
+                  {next.id === "contact"
+                    ? "Contact"
+                    : `Chapter ${getBeat(next.beat).num} / ${getBeat(next.beat).name}`}
                 </span>
                 {next.stepNum && (
                   <>
@@ -256,7 +258,7 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
 
               {next.deliverable && (
                 <div className="pt-2 flex items-center gap-2 text-xs font-mono text-muted">
-                  <span className="text-accent font-semibold">Deliverable:</span>
+                  <span className="text-accent font-semibold">You get:</span>
                   <span className="text-ink font-medium">{next.deliverable}</span>
                 </div>
               )}
@@ -348,7 +350,7 @@ export function StoryConnect({ nodeId, className = "" }: StoryConnectProps) {
             <span>Back to {previous.title}</span>
           </Link>
           <span className="text-[11px] text-muted">
-            Cyrolabz Transformation Sequence
+            The full journey
           </span>
         </div>
       )}

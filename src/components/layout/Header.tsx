@@ -22,7 +22,7 @@ export const Header: React.FC = () => {
       let stored: string | null = null;
       try {
         stored = localStorage.getItem("cyrolabz-theme");
-      } catch (e) {}
+      } catch (e) { }
 
       if (stored === "dark" || stored === "light") {
         document.documentElement.setAttribute("data-theme", stored);
@@ -43,7 +43,7 @@ export const Header: React.FC = () => {
       let stored: string | null = null;
       try {
         stored = localStorage.getItem("cyrolabz-theme");
-      } catch (err) {}
+      } catch (err) { }
 
       // If no choice has been saved, follow system changes live
       if (!stored) {
@@ -200,19 +200,19 @@ export const Header: React.FC = () => {
           href="/"
           onClick={() => handleNavClick("/")}
           className="header-pill-btn px-3 sm:px-3.5 py-1.5 gap-2.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent group pointer-events-auto"
-          aria-label="Cyrolabz Home"
+          aria-label="CyroLabz Home"
         >
           <div className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0">
             <Image
               src="/assets/logo.png"
-              alt="Cyrolabz Logo"
+              alt="CyroLabz Logo"
               fill
               priority
               className="object-contain brand-logo-img"
             />
           </div>
           <span className="font-display font-bold tracking-tight text-base sm:text-lg text-ink group-hover:text-accent transition-colors">
-            Cyrolabz
+            CyroLabz
           </span>
         </Link>
 

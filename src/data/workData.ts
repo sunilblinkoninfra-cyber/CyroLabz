@@ -146,7 +146,7 @@ export const CASE_STUDIES: Record<string, CaseStudy> = {
     serviceCategory: "AI Enablement",
     beats: {
       foundation:
-        "Terabytes of multi-hospital EHR records and radiology reports stored in unindexed siloes, with strict regulatory risk preventing any commercial LLM adoption.",
+        "Terabytes of multi-hospital EHR records and radiology reports stored in unindexed silos, with strict regulatory risk preventing any commercial LLM adoption.",
       connect:
         "Engineered an automated PII de-identification pipeline and private embeddings index. Built a deterministic policy validation firewall between clinical users and model endpoints.",
       intelligence:

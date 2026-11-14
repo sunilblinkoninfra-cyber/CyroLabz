@@ -6,32 +6,42 @@ import { StoryConnect } from "@/components/story/StoryConnect";
 import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export const metadata: Metadata = {
-  title: "About — Engineering Principles & Founding Story",
+  title: "About Cyrolabz: One Team from Strategy to Audit",
   description:
-    "Cyrolabz is a technology studio that carries companies from technical strategy to custom software build to forensic audit.",
+    "Why we combine strategy, build and audit in one studio, and how we work with your team.",
+  openGraph: {
+    title: "About Cyrolabz: One Team from Strategy to Audit",
+    description:
+      "Why we combine strategy, build and audit in one studio, and how we work with your team.",
+  },
+  twitter: {
+    title: "About Cyrolabz: One Team from Strategy to Audit",
+    description:
+      "Why we combine strategy, build and audit in one studio, and how we work with your team.",
+  },
 };
 
 export default function AboutPage() {
   const principles = [
     {
       num: "01",
-      title: "End-to-End Continuity",
-      body: "We do not hand off architectural blueprints to offshore subcontractors. The architects who map your systems are the engineers who write the code, author the tests, and defend the audit.",
+      title: "One team, start to finish",
+      body: "The people who map your systems also build and test them. Delivery stays with the team that designed it.",
     },
     {
       num: "02",
       title: "Secure by Design",
-      body: "Security and data sovereignty are never an afterthought. Every data pipeline, vector index, and API contract is engineered with strict cryptographic boundaries, zero PII exposure, and immutable audit logs.",
+      body: "Security and data protection are designed into every pipeline, index and API from the start, not added at the end.",
     },
     {
       num: "03",
-      title: "Outcome-Led Engineering",
-      body: "We measure success in production telemetry: latency reduction, concurrency ceilings, error rate declines, and verified business conversions. We ship working software, not speculative decks.",
+      title: "Results you can check",
+      body: "We report on speed, uptime, error rates and business outcomes after launch. We ship working software, not slide decks.",
     },
     {
       num: "04",
-      title: "Zero Vendor Lock-in",
-      body: "You own all code, repositories, infrastructure definitions, and trained weights. Everything we build is modular, strictly typed, and cleanly documented so your internal teams can maintain it independently.",
+      title: "You own what we build",
+      body: "You own the code, repositories, infrastructure definitions and trained models. Everything is documented so your team can run it.",
     },
   ];
 
@@ -47,9 +57,9 @@ export default function AboutPage() {
         <div className="max-w-2xl text-left">
           <Text3DBlock
             headlineAs="h1"
-            kicker="04 / CYROLABZ STUDIO"
-            headline="One multidisciplinary team. Built for continuous transformation."
-            body="Years of tools, spreadsheets and systems do not fix themselves. We bridge the gap between high-level architectural strategy, custom full-stack development, real-time 3D graphics, and applied intelligence."
+            kicker="CYROLABZ STUDIO"
+            headline="One team, from the map to the build to the audit."
+            body="Years of tools, spreadsheets and systems do not fix themselves. We bring strategy, software, 3D and AI together in one team."
           />
         </div>
       </div>
@@ -64,10 +74,10 @@ export default function AboutPage() {
         </h2>
         <div className="space-y-4 text-muted text-base leading-relaxed">
           <p>
-            Most technology engagements fail at the seams. Management consultants propose theoretical transformations without writing a line of code. Software shops build feature tickets without understanding underlying system bottlenecks. AI agencies bolt speculative models onto unindexed, broken data pipelines.
+            Many projects fail at the seams: strategy that never reaches code, code built without understanding the system, and AI added on top of data that isn&apos;t ready.
           </p>
           <p>
-            Cyrolabz was founded to collapse those siloes into one unified discipline. We treat every client engagement as a coherent four-beat progression: understanding the existing Foundation, Connecting disparate platforms into a unified nervous system, deploying Intelligence to automate decisions, and proving the Result in production.
+            Cyrolabz exists to close those seams. Every engagement follows the same arc: understand what you have, connect it, add intelligence, and prove the result in production.
           </p>
           <p>
             Every point in our mark began as a point in our clients’ businesses. We engineer systems designed to last, adapt, and scale.
@@ -117,26 +127,26 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 rounded border border-line/60 bg-bg/50 space-y-3">
             <h4 className="font-display text-lg font-semibold text-ink">
-              1. Targeted Sprints
+              Targeted sprints
             </h4>
             <p className="text-xs text-muted leading-relaxed">
-              2 to 6 week fixed-scope engagements: Forensic Audits, Architecture Blueprints, or rapid Proof-of-Concept AI agent prototypes.
+              2 to 6 week fixed-scope engagements: audits, architecture plans, or quick proof-of-concept AI prototypes.
             </p>
           </div>
           <div className="p-6 rounded border border-line/60 bg-bg/50 space-y-3">
             <h4 className="font-display text-lg font-semibold text-ink">
-              2. Full-Cycle Delivery
+              Full-cycle delivery
             </h4>
             <p className="text-xs text-muted leading-relaxed">
-              Complete end-to-end builds: Custom Software, Website Development, or 3D Interactive Design from technical discovery through production deployment.
+              Complete builds, from discovery to launch: custom software, websites or 3D interactive design.
             </p>
           </div>
           <div className="p-6 rounded border border-line/60 bg-bg/50 space-y-3">
             <h4 className="font-display text-lg font-semibold text-ink">
-              3. Strategic Retainers
+              Ongoing advisory
             </h4>
             <p className="text-xs text-muted leading-relaxed">
-              Dedicated engineering advisory, continuous AI model benchmarking, and infrastructure oversight for high-velocity technology teams.
+              Ongoing senior advice, regular AI model benchmarking, and infrastructure oversight for your team.
             </p>
           </div>
         </div>
@@ -148,10 +158,10 @@ export default function AboutPage() {
       {/* CTA */}
       <div className="text-center max-w-xl mx-auto space-y-6 pt-10 border-t border-line/70">
         <h3 className="font-display text-2xl sm:text-3xl font-semibold text-ink">
-          Let’s discuss your technical challenges.
+          Let’s talk about your challenge.
         </h3>
         <p className="text-sm text-muted">
-          Connect with an engineering director. We speak in concrete architectures, not sales jargon.
+          Speak with a senior lead, in plain language.
         </p>
         <div>
           <Link

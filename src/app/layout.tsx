@@ -31,15 +31,15 @@ const michroma = Michroma({
 export const metadata: Metadata = {
   metadataBase: new URL("https://cyrolabz.com"),
   title: {
-    default: "Cyrolabz — Transformation, engineered",
+    default: "Cyrolabz | AI Consulting, Custom Software & Technical Audits",
     template: "%s | Cyrolabz",
   },
   description:
-    "Cyrolabz engineers high-impact software, 3D interactive design, applied AI systems, consulting, technical audits, and search, answer and generative engine optimisation (SEO, AEO, GEO).",
+    "AI consulting, custom software and technical audits for companies whose systems have outgrown their tools. Strategy, build and audit from one team.",
   openGraph: {
-    title: "Cyrolabz — Transformation, engineered",
+    title: "Cyrolabz | AI Consulting, Custom Software & Technical Audits",
     description:
-      "Website Development, 3D Interactive Design, AI Enablement & Implementation, Custom Software, Consulting, Audits, and Search, Answer & Generative Engine Optimisation.",
+      "AI consulting, custom software and technical audits for companies whose systems have outgrown their tools.",
     images: [
       {
         url: "/assets/hero-orbital.png",
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cyrolabz — Transformation, engineered",
+    title: "Cyrolabz | AI Consulting, Custom Software & Technical Audits",
     description:
-      "AI Consulting, Software Development, Technical Audits, and Search, Answer & Generative Engine Optimisation.",
+      "AI consulting, custom software and technical audits for companies whose systems have outgrown their tools.",
     images: ["/assets/hero-orbital.png"],
   },
   icons: {

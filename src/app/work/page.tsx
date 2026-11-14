@@ -52,9 +52,9 @@ export default function WorkPage() {
         <div className="max-w-2xl text-left">
           <Text3DBlock
             headlineAs="h1"
-            kicker="02 → 03 / CONNECTED RESULTS"
+            kicker="CASE STUDIES"
             headline="Proof, measured in production."
-            body="Real client engineering transformations across legacy modernisations, high-concurrency custom platforms, 3D interactive graphics, and secure AI agent deployments."
+            body="Selected engagements across legacy modernisation, custom platforms, 3D interactive graphics and secure AI deployments."
           />
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function WorkPage() {
                   Timeline: {study.timeline}
                 </span>
                 <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-eyebrow px-4 py-2.5 rounded border border-line group-hover:border-ink group-hover:bg-accent group-hover:text-on-accent transition-all text-ink font-semibold">
-                  <span>View beats</span>
+                  <span>See the full story</span>
                   <span>→</span>
                 </span>
               </div>

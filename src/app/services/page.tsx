@@ -7,9 +7,19 @@ import { StoryConnect } from "@/components/story/StoryConnect";
 import { StoryNodeBadge } from "@/components/story/StoryNodeBadge";
 
 export const metadata: Metadata = {
-  title: "Services — Connected Engineering & Applied AI",
+  title: "Services: Consulting, Audits, Software, AI & Search",
   description:
-    "Ten disciplines across four transformation chapters: Strategy, Systems, Intelligence, and Visibility (including SEO, AEO and GEO).",
+    "Ten services across four chapters, from mapping your systems to AI in production and search visibility. Use one, or take the full path.",
+  openGraph: {
+    title: "Services: Consulting, Audits, Software, AI & Search",
+    description:
+      "Ten services across four chapters, from mapping your systems to AI in production and search visibility. Use one, or take the full path.",
+  },
+  twitter: {
+    title: "Services: Consulting, Audits, Software, AI & Search",
+    description:
+      "Ten services across four chapters, from mapping your systems to AI in production and search visibility. Use one, or take the full path.",
+  },
 };
 
 export default function ServicesPage() {
@@ -17,13 +27,13 @@ export default function ServicesPage() {
     {
       chapter: "01 Foundation",
       headline: "Your business, as it stands",
-      description: "Assess tech debt, audit codebases, and map modernisation architectures.",
+      description: "Find out where you stand: a clear map of your systems, risks and opportunities.",
       services: [SERVICES_DATA["consulting"], SERVICES_DATA["audits"]],
     },
     {
       chapter: "02 Connect",
       headline: "Every system becomes a signal",
-      description: "We digitise your processes and wire platforms, APIs and custom software into one connected whole.",
+      description: "Join your tools, data and platforms into one working whole.",
       services: [
         SERVICES_DATA["custom-software"],
         SERVICES_DATA["website-development"],
@@ -33,7 +43,7 @@ export default function ServicesPage() {
     {
       chapter: "03 Intelligence",
       headline: "Then the system starts to think",
-      description: "Deploy secure RAG pipelines, fine-tuned copilots, and autonomous agents.",
+      description: "Put AI to work on connected data, with governance built in.",
       services: [
         SERVICES_DATA["ai-enablement"],
         SERVICES_DATA["ai-implementation"],
@@ -42,7 +52,7 @@ export default function ServicesPage() {
     {
       chapter: "04 Visibility",
       headline: "Be found. Be answered. Be cited.",
-      description: "Search, answer and generative engine optimisation built on factual consistency, structured schema, and verifiable authority.",
+      description: "Be found, answered and cited by search engines and AI assistants.",
       services: [
         SERVICES_DATA["seo"],
         SERVICES_DATA["aeo"],
@@ -63,9 +73,9 @@ export default function ServicesPage() {
         <div className="max-w-2xl text-left">
           <Text3DBlock
             headlineAs="h1"
-            kicker="02 / CONNECTED PLATFORM"
-            headline="Engineering disciplines built for continuous transformation."
-            body="We do not build isolated widgets or deliver slide decks that collect dust. Every service is a stage in one journey: moving from legacy systems to connected, intelligent software."
+            kicker="ALL SERVICES"
+            headline="From tangled systems to AI that holds up in production."
+            body="Take one service or the whole path. Each stands alone; together they remove the hand-offs where projects fail."
           />
         </div>
       </div>
@@ -112,8 +122,8 @@ export default function ServicesPage() {
                   </div>
 
                   <div className="mt-8 pt-4 border-t border-line/60 flex items-center justify-between text-xs font-mono text-muted">
-                    <span>Learn more</span>
-                    <span className="text-ink font-medium">Read specs</span>
+                    <span>See the service</span>
+                    <span className="text-ink font-medium">What&apos;s included</span>
                   </div>
                 </Link>
               ))}
@@ -138,22 +148,22 @@ export default function ServicesPage() {
             {
               num: "01",
               title: "Discover & Audit",
-              desc: "Forensic code review, dependency mapping, and data readiness check.",
+              desc: "We review your systems, code and data to see what you really have.",
             },
             {
               num: "02",
-              title: "Architect & Contract",
-              desc: "Strict type schemas, OpenAPI contracts, and blueprint authoring.",
+              title: "Architect & Agree",
+              desc: "We define the target design and the contracts between systems, and agree the success measures.",
             },
             {
               num: "03",
-              title: "Engineer & Iterate",
-              desc: "Rapid delivery in small, tested increments with immutable CI/CD.",
+              title: "Build & Iterate",
+              desc: "We deliver in small, tested increments you can see and review.",
             },
             {
               num: "04",
-              title: "Audit & Scale",
-              desc: "Load stress testing, security validation, and long-term telemetry.",
+              title: "Test & Scale",
+              desc: "We stress-test, validate security, and set up the monitoring to keep it healthy.",
             },
           ].map((step) => (
             <div key={step.num} className="space-y-3 p-4 rounded border border-line/50 bg-bg/50">
@@ -177,10 +187,10 @@ export default function ServicesPage() {
       {/* Closing Call to Action */}
       <div className="text-center max-w-xl mx-auto space-y-6">
         <h3 className="font-display text-2xl sm:text-3xl font-semibold text-ink">
-          Ready to engineer your transformation?
+          Ready to get started?
         </h3>
         <p className="text-sm text-muted">
-          Talk directly with our lead architects. We provide an initial technical scope within 48 hours.
+          Talk directly with a senior lead. We provide an initial scope within 48 hours.
         </p>
         <div>
           <Link

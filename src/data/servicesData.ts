@@ -25,46 +25,46 @@ export const SERVICES_DATA: Record<string, ServiceItem> = {
     sceneTarget: 0,
     title: "Consulting",
     promise:
-      "Architecture, tech roadmap, and modernisation strategy for businesses ready to move past legacy friction.",
+      "A clear map of your systems, a ranked list of what to fix first, and a costed roadmap.",
     whoItIsFor:
-      "Executive and engineering leaders managing fragmented enterprise systems, siloed tools, or preparing for high-scale modernisation.",
+      "For leaders whose systems have grown into a patchwork and who need a clear plan before committing budget.",
     whatWeDo: [
-      "Technical debt and system architecture mapping across distributed stacks",
-      "Cloud infrastructure, API interoperability, and platform topology audit",
-      "Technology selection with zero vendor bias and concrete risk profiles",
-      "Multi-quarter engineering roadmaps with phased migration milestones",
+      "Map your systems, data and processes, and where the technical debt sits.",
+      "Review your cloud setup, integrations and how the pieces connect.",
+      "Compare technology options on facts and risk, with no vendor preference.",
+      "Build a multi-quarter roadmap with milestones, so you know what happens when.",
     ],
     howWeWork: [
       {
         step: "01",
-        title: "Discover",
+        title: "Listen",
         description:
-          "Deep-dive interviews, codebase inspection, and infrastructure dependency mapping.",
+          "Interviews with your leaders and engineers, plus a review of code and infrastructure.",
       },
       {
         step: "02",
-        title: "Evaluate",
+        title: "Test the assumptions",
         description:
-          "Rigorous stress-testing of assumptions, data pipelines, latency, and compliance requirements.",
+          "We check what everyone believes about speed, data quality and compliance against what the systems show.",
       },
       {
         step: "03",
-        title: "Blueprint",
+        title: "Draw the target",
         description:
-          "Authoring exact target architectures, integration contracts, and phased rollout plans.",
+          "We design where you're going and the steps to get there.",
       },
       {
         step: "04",
-        title: "Enable",
+        title: "Hand over",
         description:
-          "Engineering team handoff, technical steering, and measurable benchmark reviews.",
+          "We brief your team, set up steering sessions, and review progress against agreed benchmarks.",
       },
     ],
     whatYouGet: [
-      "Comprehensive Architecture Blueprint & Topology Specification",
-      "System Modernisation Roadmap with Capex/Opex projections",
-      "API & Data Governance Protocol Documentation",
-      "Quarterly Milestone & Risk Mitigation Register",
+      "A target architecture your team can build from",
+      "A modernisation roadmap with cost estimates",
+      "Clear rules for who owns which data and APIs",
+      "A quarterly milestone and risk register",
     ],
     caseStudy: {
       title: "Global Supply Platform Legacy Migration",
@@ -439,43 +439,43 @@ export const SERVICES_DATA: Record<string, ServiceItem> = {
     title: "SEO",
     promise: "Be found where people search.",
     whoItIsFor:
-      "Businesses with digital platforms or web applications aiming to improve technical indexability, structured authority, and qualified organic search discovery.",
+      "For businesses with a website or web application that want to be found by the right people.",
     whatWeDo: [
-      "Technical audit: crawling, speed and indexing",
-      "Content and keyword strategy built on intent",
-      "Structured data and authority building",
+      "Fix what stops search engines reading your site.",
+      "Plan content around what your customers actually search for.",
+      "Add structured data and build authority.",
     ],
     howWeWork: [
       {
         step: "01",
-        title: "Crawl & Audit",
+        title: "Crawl & Review",
         description:
-          "In-depth technical analysis of core web vitals, indexation barriers, and information architecture.",
+          "We check speed, indexing problems and how your site is organised.",
       },
       {
         step: "02",
-        title: "Strategy & Intent",
+        title: "Plan by Intent",
         description:
-          "Mapping user query intents to content schemas and high-relevance topical clusters.",
+          "We match what people search for to the pages and topics you need.",
       },
       {
         step: "03",
-        title: "Markup & Build",
+        title: "Mark Up & Build",
         description:
-          "Deploying JSON-LD schema, canonical hierarchies, and performance optimizations.",
+          "We add structured data, fix duplicate-page signals and speed up key pages.",
       },
       {
         step: "04",
-        title: "Measure & Iterate",
+        title: "Measure & Adjust",
         description:
-          "Tracking crawl telemetry, search impressions, and organic conversions without artificial rank guarantees.",
+          "We track crawling, impressions and organic enquiries, with no artificial rank guarantees.",
       },
     ],
     whatYouGet: [
       "A search plan with measurable targets.",
-      "Technical crawling and indexing remediation specification",
-      "Structured JSON-LD schema architecture across primary entity models",
-      "Intent-aligned content and keyword cluster map",
+      "A prioritised fix list for crawling and indexing",
+      "Structured data for your key pages",
+      "A content map organised by customer intent",
     ],
     caseStudy: {
       title: "Global Supply Platform Legacy Migration",

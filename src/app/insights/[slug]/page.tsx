@@ -21,9 +21,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = INSIGHTS_DATA[slug];
   if (!article) return { title: "Article Not Found" };
 
+  const title = `${article.title} | Cyrolabz Insights`;
   return {
-    title: `${article.title} | Cyrolabz Insights`,
+    title: {
+      absolute: title,
+    },
     description: article.excerpt,
+    openGraph: {
+      title,
+      description: article.excerpt,
+    },
+    twitter: {
+      title,
+      description: article.excerpt,
+    },
   };
 }
 
@@ -82,10 +93,10 @@ export default async function InsightArticlePage({ params }: Props) {
       <div className="mt-16 p-8 rounded border border-line/60 bg-surface/50 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div>
           <h4 className="font-display text-lg font-semibold text-ink">
-            Discuss this architecture with our team
+            Talk through this with our team
           </h4>
           <p className="text-xs text-muted mt-1">
-            We provide concrete architectural feedback and technical scope evaluations.
+            We&apos;ll give you honest feedback on your architecture and a clear scope for next steps.
           </p>
         </div>
         <div>

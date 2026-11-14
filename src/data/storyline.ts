@@ -50,7 +50,7 @@ export const STORY_BEATS: StoryBeat[] = [
     id: "visibility",
     num: "04",
     name: "Visibility",
-    line: "Be found, answered, and cited.",
+    line: "Be found. Be answered. Be cited.",
     description: "Search, answer and generative engine optimisation (SEO, AEO, GEO) with structured authority.",
     href: "/services/seo",
   },
@@ -203,7 +203,7 @@ export const STUDIO_NODES: StoryNode[] = [
     title: "About the Studio",
     line: "One team, from the map to the build to the audit.",
     category: "Studio Principles",
-    deliverable: "Founding thesis & engineering governance standards",
+    deliverable: "Our story and how we work",
     nextId: "insights",
   },
   {
@@ -211,9 +211,9 @@ export const STUDIO_NODES: StoryNode[] = [
     beat: "intelligence",
     href: "/insights",
     title: "Technical Insights",
-    line: "Field notes and telemetry from the work.",
+    line: "Field notes from the work.",
     category: "Engineering Analysis",
-    deliverable: "Forensic articles on modern architectures & AI systems",
+    deliverable: "Practical articles on modern architectures and AI systems",
     nextId: "contact",
   },
   {
@@ -223,7 +223,7 @@ export const STUDIO_NODES: StoryNode[] = [
     title: "Start a Project",
     line: "Tell us what you want to change.",
     category: "Consultation & Scoping",
-    deliverable: "Direct architectural discovery & 48-hour initial scope",
+    deliverable: "A direct conversation and an initial scope within 48 hours",
     nextId: "consulting", // Loops back cleanly
   },
 ];

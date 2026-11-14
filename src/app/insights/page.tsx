@@ -29,9 +29,9 @@ export default function InsightsPage() {
         <div className="max-w-2xl text-left">
           <Text3DBlock
             headlineAs="h1"
-            kicker="04 / INSIGHTS & ENGINEERING"
-            headline="Technical analysis, architecture patterns, and production telemetry."
-            body="Field notes from our engineering team on software modernisation, applied AI pipelines, 3D graphics, and forensic technical auditing."
+            kicker="INSIGHTS & ENGINEERING"
+            headline="Field notes on making legacy systems and AI work together."
+            body="Practical writing on modernisation, AI in production, security and search visibility."
           />
         </div>
       </div>
